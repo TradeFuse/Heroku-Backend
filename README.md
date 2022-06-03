@@ -1,1 +1,1 @@
-# TradersIQ-backend
+# TradersIQBackend

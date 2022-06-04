@@ -34,7 +34,6 @@ app.get("/", (req, res) => {
 
 app.post("/", async (req, res) => {
   const bodyData = req.body;
-  console.log(bodyData);
   let today = new Date().toISOString();
   if (req.method == "OPTIONS") {
     res.set("Access-Control-Allow-Origin", "*");
@@ -43,7 +42,7 @@ app.post("/", async (req, res) => {
   } else {
     switch (bodyData.action) {
       case "createStripeCustomer":
-        const customer = await stripe.customers.create({
+        const created_customer = await stripe.customers.create({
           name: "",
           email: "",
           metadata: {
@@ -55,12 +54,12 @@ app.post("/", async (req, res) => {
             "Storage Used": `0 KB`,
           },
         });
-        res.json(customer);
+        res.json(created_customer);
         break;
       case "getStripeCustomer":
         const customerId = bodyData.data.customerId;
-        const getcustomer = await stripe.customers.retrieve(customerId);
-        res.json(getcustomer);
+        const retrieved_customer = await stripe.customers.retrieve(customerId);
+        res.json(retrieved_customer);
       default:
       // code block
     }

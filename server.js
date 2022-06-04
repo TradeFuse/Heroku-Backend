@@ -30,6 +30,7 @@ app.get("/", (req, res) => {
 app.post("/", async (req, res) => {
   const bodyData = req.body;
   console.log(bodyData)
+  let today = new Date().toISOString();
   if (bodyData.action === "createStripeCustomer") {
     const customer = await stripe.customers.create({
       name: "",

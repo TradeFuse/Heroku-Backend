@@ -2,9 +2,8 @@
 
 const express = require("express");
 const cors = require('cors');
-const stripe = require('stripe')(process.env.PLATFORM_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const moment = require("moment/moment");
-require('dotenv').config();
 
 // Constants
 const PORT = process.env.PORT || 80;

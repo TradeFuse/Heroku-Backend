@@ -90,7 +90,7 @@ discordClient.on("guildUnavailable", (guild) => {
   );
 });
 
-discordClient.login("NzE5MTIyMzc3ODIwMDc4MTAw.Xty12Q.p1_n3XjeRtZ4HjxC7URUtDU52MQ");
+discordClient.login(process.env.DISCORD_LOGIN_KEY);
 
 
 console.log(`Running on http://${PORT}`);

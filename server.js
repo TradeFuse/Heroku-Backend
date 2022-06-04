@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors());
-//app.use(express.json());
+app.use(express.json());
 app.listen(PORT);
 
 app.get("/", (req, res) => {
@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-  const bodyData = req.body;
+  const bodyData = JSON.parse(req.body);
   let today = new Date().toISOString();
   if (req.method == "OPTIONS") {
     res.set("Access-Control-Allow-Origin", "*");

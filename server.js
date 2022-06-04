@@ -1,6 +1,7 @@
 "use strict";
 
 import express from "express";
+const cors = require('cors');
 
 // Constants
 const PORT = process.env.PORT || 80;
@@ -17,7 +18,7 @@ app.use((req, res, next) => {
   );
   next();
 });
-
+app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello World");
 });

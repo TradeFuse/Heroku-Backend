@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-  const bodyData = JSON.parse(req.body);
+  const bodyData = req.body.json();
   let today = new Date().toISOString();
   if (req.method == "OPTIONS") {
     res.set("Access-Control-Allow-Origin", "*");

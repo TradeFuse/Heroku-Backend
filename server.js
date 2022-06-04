@@ -24,14 +24,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  const bodyData = req.body;
-  if (bodyData.action === "createStripeCustomer") {
-    res.send("createStripeCustomer Request Called");
-    console.log(`createStripeCustomer Request Called`);
-
-  }
+  res.send("POST Request Called");
 });
 
+app.post("/createStripeCustomer", (req, res) => {
+  res.send("create stripe customer");
+});
 
 app.listen(PORT);
 console.log(`Running on http://${PORT}`);

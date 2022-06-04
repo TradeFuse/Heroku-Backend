@@ -1,5 +1,6 @@
 "use strict";
-
+const Discord = require("discord.js");
+const discordClient = new Discord.Client();
 const express = require("express");
 const cors = require('cors');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -50,6 +51,46 @@ app.post("/", async (req, res) => {
     res.json(customer);
   }
 });
+
+
+// ----- DISCORD BOT ----- 
+
+discordClient.on("ready", () => {
+  console.log("Ready.");
+});
+
+discordClient.on("guildMemberRemove", function(member){
+  const channel = member.guild.channels.cache.find(
+    (ch) => ch.name === "community"
+  );
+  channel.send(
+    `${member} has left the party.`
+  );
+});
+
+discordClient.on("messageDeleteBulk", function (message) {
+  const channel = message.guild.channels
+  const usernamebuff = message.author;
+  channel
+    .find("name", "community")
+    .send(
+      `${usernamebuff} is deleting a lot of messages. Looks suspicious.`
+    );
+});
+
+discordClient.on('guildMemberAdd', (member) => {
+  const role = member.guild.roles.cache.find(role => role.name === "Community");
+  member.roles.add(role);
+});
+
+discordClient.on("guildUnavailable", (guild) => {
+  const channel = guild.channels.cache.find((ch) => ch.name === "community");
+  channel.send(
+    `Woah, looks like the ${guild} server is down. Check again later for continuation of awesomeness.`
+  );
+});
+
+discordClient.login("NzE5MTIyMzc3ODIwMDc4MTAw.Xty12Q.p1_n3XjeRtZ4HjxC7URUtDU52MQ");
 
 
 console.log(`Running on http://${PORT}`);

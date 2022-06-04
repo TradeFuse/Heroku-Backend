@@ -29,8 +29,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-  const bodyData = res.json({requestBody: req.body});
-  if (bodyData.requestBody.action === "createStripeCustomer") {
+  if (req.body.action === "createStripeCustomer") {
     const customer = await stripe.customers.create({
       name: "",
       email: "",
@@ -43,8 +42,8 @@ app.post("/", async (req, res) => {
         "Storage Used": `0 KB`
       },
     });
-    const resCustomer = res.json(customer);
-    res.send(resCustomer);
+    res.json(customer);
+    res.send(customer);
   }
 
 });

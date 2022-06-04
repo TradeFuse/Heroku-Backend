@@ -1,9 +1,8 @@
 "use strict";
+
 const express = require("express");
 const cors = require('cors');
 const stripe = require('stripe')(process.env.PLATFORM_SECRET_KEY);
-const moment = require("moment/moment");
-require('dotenv').config();
 
 // Constants
 const PORT = process.env.PORT || 80;
@@ -28,8 +27,8 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.post("/", async (req, res) => {
-  const bodyData = JSON.parse(req.body);
+app.post("/", (req, res) => {
+  const bodyData = res.json({requestBody: req.body});
   if (bodyData.requestBody.action === "createStripeCustomer") {
     const customer = await stripe.customers.create({
       name: "",
@@ -47,6 +46,10 @@ app.post("/", async (req, res) => {
     res.send(resCustomer);
   }
 
+});
+
+app.post("/createStripeCustomer", (req, res) => {
+  res.send("create stripe customer");
 });
 
 console.log(`Running on http://${PORT}`);

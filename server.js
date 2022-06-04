@@ -1,6 +1,6 @@
 "use strict";
 
-import express from "express";
+const express = require("express");
 const cors = require('cors');
 
 // Constants

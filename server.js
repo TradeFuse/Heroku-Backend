@@ -27,12 +27,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  res.send("POST Request Called");
   const bodyData = res.json({requestBody: req.body});
   res.send(bodyData);
-  res.send(req.body);
 
-  res.json({requestBody: req.body});
 
 });
 

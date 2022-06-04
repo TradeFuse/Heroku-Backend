@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require("express");
 const cors = require('cors');
 const stripe = require('stripe')(process.env.PLATFORM_SECRET_KEY);
-import moment from "moment/moment";
+const moment = require("moment/moment");
 
 // Constants
 const PORT = process.env.PORT || 80;
@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.post("/", (req, res) => {
+app.post("/", async (req, res) => {
   const bodyData = res.json({requestBody: req.body});
   if (bodyData.requestBody.action === "createStripeCustomer") {
     const customer = await stripe.customers.create({

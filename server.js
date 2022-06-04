@@ -22,7 +22,6 @@ app.use((req, res, next) => {
 });
 app.use(cors());
 app.use(express.json());
-app.listen(PORT);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -45,11 +44,8 @@ app.post("/", async (req, res) => {
     res.json(customer);
     res.send(customer);
   }
-
 });
 
-app.post("/createStripeCustomer", (req, res) => {
-  res.send("create stripe customer");
-});
+app.listen(PORT);
 
 console.log(`Running on http://${PORT}`);

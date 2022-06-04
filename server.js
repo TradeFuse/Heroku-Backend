@@ -1,10 +1,13 @@
 "use strict";
-const Discord = require("discord.js");
-const discordClient = new Discord.Client();
+
 const express = require("express");
-const cors = require('cors');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const cors = require("cors");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const moment = require("moment/moment");
+const { Discord, Intents } = require("discord.js");
+const discordClient = new Discord.Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
 
 // Constants
 const PORT = process.env.PORT || 80;
@@ -31,7 +34,7 @@ app.get("/", (req, res) => {
 
 app.post("/", async (req, res) => {
   const bodyData = req.body;
-  console.log(bodyData)
+  console.log(bodyData);
   let today = new Date().toISOString();
   if (bodyData.action === "createStripeCustomer") {
     const customer = await stripe.customers.create({
@@ -43,43 +46,40 @@ app.post("/", async (req, res) => {
         Trades: 0,
         "Shared Trades": 0,
         Tier: "Free",
-        "Storage Used": `0 KB`
+        "Storage Used": `0 KB`,
       },
     });
-    console.log(customer)
+    console.log(customer);
 
     res.json(customer);
   }
 });
 
-
-// ----- DISCORD BOT ----- 
+// ----- DISCORD BOT -----
 
 discordClient.on("ready", () => {
   console.log("Ready.");
 });
 
-discordClient.on("guildMemberRemove", function(member){
+discordClient.on("guildMemberRemove", function (member) {
   const channel = member.guild.channels.cache.find(
     (ch) => ch.name === "community"
   );
-  channel.send(
-    `${member} has left the party.`
-  );
+  channel.send(`${member} has left the party.`);
 });
 
 discordClient.on("messageDeleteBulk", function (message) {
-  const channel = message.guild.channels
+  const channel = message.guild.channels;
   const usernamebuff = message.author;
   channel
     .find("name", "community")
-    .send(
-      `${usernamebuff} is deleting a lot of messages. Looks suspicious.`
-    );
+    .send(`${usernamebuff} is deleting a lot of messages. Looks suspicious.`);
 });
 
-discordClient.on('guildMemberAdd', (member) => {
-  const role = member.guild.roles.cache.find(role => role.name === "Community");
+discordClient.on("guildMemberAdd", (member) => {
+  const role = member.guild.roles.cache.find(
+    (role) => role.name === "Community"
+  );
   member.roles.add(role);
 });
 
@@ -91,6 +91,5 @@ discordClient.on("guildUnavailable", (guild) => {
 });
 
 discordClient.login(process.env.DISCORD_LOGIN_KEY);
-
 
 console.log(`Running on http://${PORT}`);

@@ -49,9 +49,12 @@ app.post("/", async (req, res) => {
         "Storage Used": `0 KB`,
       },
     });
-    console.log(customer);
-
     res.json(customer);
+  } else if (bodyData.action === "getStripeCustomer") {
+    const customerId = bodyData.data.customerId;
+    const customer = await stripe.customers.retrieve(customerId);
+    res.json(customer);
+  } else if (bodyData.action === "updateStripeCustomer") {
   }
 });
 

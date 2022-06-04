@@ -2,6 +2,7 @@
 
 const express = require("express");
 const cors = require('cors');
+const stripe = require('stripe')(process.env.PLATFORM_SECRET_KEY);
 
 // Constants
 const PORT = process.env.PORT || 80;
@@ -28,8 +29,21 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   const bodyData = res.json({requestBody: req.body});
-  res.send(bodyData);
-
+  if (bodyData.requestBody.action === "createStripeCustomer") {
+    const customer = await stripe.customers.create({
+      name: "",
+      email: "",
+      metadata: {
+        Logins: 1,
+        "Last Login": String(moment(today).format("MM/DD/YYYY hh:mm:ss A")),
+        Trades: 0,
+        "Shared Trades": 0,
+        Tier: "Free",
+        "Storage Used": `0 KB`
+      },
+    });
+    res.send(res.json(customer));
+  }
 
 });
 

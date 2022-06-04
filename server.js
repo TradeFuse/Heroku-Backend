@@ -4,8 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const moment = require("moment/moment");
-const { Discord, Intents } = require("discord.js");
-const discordClient = new Discord.Client({
+const { Client, Intents } = require("discord.js");
+const discordClient = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 

@@ -19,17 +19,25 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors());
+app.use(express.json());
+app.listen(PORT);
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
 app.post("/", (req, res) => {
   res.send("POST Request Called");
+  const bodyData = res.json({requestBody: req.body});
+  res.send(bodyData);
+  res.send(req.body);
+
+  res.json({requestBody: req.body});
+
 });
 
 app.post("/createStripeCustomer", (req, res) => {
   res.send("create stripe customer");
 });
 
-app.listen(PORT);
 console.log(`Running on http://${PORT}`);

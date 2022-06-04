@@ -25,7 +25,9 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   res.send("POST Request Called");
-  res.send(res);
+});
+
+app.post("/createStripeCustomer", (req, res) => {
   res.send(req);
 });
 

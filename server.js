@@ -8,13 +8,6 @@ const PORT = process.env.PORT || 80;
 
 // App
 const app = express();
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-app.post("/", (req, res) => {
-  res.send("POST Request Called");
-});
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -23,6 +16,14 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+app.post("/", (req, res) => {
+  res.send("POST Request Called");
 });
 
 app.listen(PORT);

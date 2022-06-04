@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.post("/", (req, res) => {
+app.post("/", async (req, res) => {
   const bodyData = req.body;
   console.log(bodyData)
   if (bodyData.action === "createStripeCustomer") {

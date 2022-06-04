@@ -25,7 +25,8 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   res.send("POST Request Called");
-  res.send(res, req);
+  res.send(res);
+  res.send(req);
 });
 
 app.listen(PORT);

@@ -29,6 +29,7 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   const bodyData = req.body;
+  console.log(bodyData)
   if (bodyData.action === "createStripeCustomer") {
     const customer = await stripe.customers.create({
       name: "",
@@ -42,6 +43,8 @@ app.post("/", (req, res) => {
         "Storage Used": `0 KB`
       },
     });
+    console.log(customer)
+
     res.json(customer);
   }
 });

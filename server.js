@@ -1,5 +1,5 @@
 "use strict";
-
+require('dotenv').config();
 const express = require("express");
 const cors = require('cors');
 const stripe = require('stripe')(process.env.PLATFORM_SECRET_KEY);
@@ -42,7 +42,8 @@ app.post("/", (req, res) => {
         "Storage Used": `0 KB`
       },
     });
-    res.send(res.json(customer));
+    const resCustomer = res.json(customer);
+    res.send(resCustomer);
   }
 
 });

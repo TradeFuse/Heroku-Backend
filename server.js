@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require("express");
 const cors = require('cors');
 const stripe = require('stripe')(process.env.PLATFORM_SECRET_KEY);
+import moment from "moment/moment";
 
 // Constants
 const PORT = process.env.PORT || 80;

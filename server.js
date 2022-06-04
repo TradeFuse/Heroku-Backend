@@ -31,8 +31,5 @@ app.post("/", (req, res) => {
 
 });
 
-app.post("/createStripeCustomer", (req, res) => {
-  res.send("create stripe customer");
-});
 
 console.log(`Running on http://${PORT}`);

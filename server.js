@@ -60,7 +60,25 @@ app.post("/", async (req, res) => {
         const customerId = bodyData.data.customerId;
         const retrieved_customer = await stripe.customers.retrieve(customerId);
         res.json(retrieved_customer);
+        break;
+      case "updateStripeCustomer":
+        const updatecustomerId = bodyData.data.customerId;
+        await stripe.customers.update(updatecustomerId, {
+          name: bodyData.data.update.name,
+          email: bodyData.data.update.email,
+          metadata: {
+            Logins: bodyData.data.update.metadata["Logins"],
+            "Last Login": bodyData.data.update.metadata["Last Login"],
+            Trades: bodyData.data.update.metadata["Trades"],
+            "Shared Trades": bodyData.data.update.metadata["Shared Trades"],
+            Tier: bodyData.data.update.metadata["Tier"],
+            "Storage Used": bodyData.data.update.metadata["Storage Used"],
+          },
+        });
+        break;
       default:
+        break;
+
       // code block
     }
   }

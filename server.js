@@ -36,25 +36,34 @@ app.post("/", async (req, res) => {
   const bodyData = req.body;
   console.log(bodyData);
   let today = new Date().toISOString();
-  if (bodyData.action === "createStripeCustomer") {
-    const customer = await stripe.customers.create({
-      name: "",
-      email: "",
-      metadata: {
-        Logins: 1,
-        "Last Login": String(moment(today).format("MM/DD/YYYY hh:mm:ss A")),
-        Trades: 0,
-        "Shared Trades": 0,
-        Tier: "Free",
-        "Storage Used": `0 KB`,
-      },
-    });
-    res.json(customer);
-  } else if (bodyData.action === "getStripeCustomer") {
-    const customerId = bodyData.data.customerId;
-    const getcustomer = await stripe.customers.retrieve(customerId);
-    res.json(getcustomer);
-  } else if (bodyData.action === "updateStripeCustomer") {
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+    res.status(204).send("");
+  } else {
+    switch (bodyData.action) {
+      case "createStripeCustomer":
+        const customer = await stripe.customers.create({
+          name: "",
+          email: "",
+          metadata: {
+            Logins: 1,
+            "Last Login": String(moment(today).format("MM/DD/YYYY hh:mm:ss A")),
+            Trades: 0,
+            "Shared Trades": 0,
+            Tier: "Free",
+            "Storage Used": `0 KB`,
+          },
+        });
+        res.json(customer);
+        break;
+      case "getStripeCustomer":
+        const customerId = bodyData.data.customerId;
+        const getcustomer = await stripe.customers.retrieve(customerId);
+        res.json(getcustomer);
+      default:
+      // code block
+    }
   }
 });
 

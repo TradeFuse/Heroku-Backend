@@ -52,8 +52,8 @@ app.post("/", async (req, res) => {
     res.json(customer);
   } else if (bodyData.action === "getStripeCustomer") {
     const customerId = bodyData.data.customerId;
-    const customer = await stripe.customers.retrieve(customerId);
-    res.json(customer);
+    const getcustomer = await stripe.customers.retrieve(customerId);
+    res.json(getcustomer);
   } else if (bodyData.action === "updateStripeCustomer") {
   }
 });

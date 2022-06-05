@@ -61,7 +61,7 @@ module.exports = async function discordBot() {
     const channel = message.channel.id;
     console.log(channel);
 
-    if (channel === "bugs-and-feedback") {
+    if (channel === "983038189092630578") {
       const channelNew = message.guild.channels.cache.find(
         (ch) => ch.name === "user-feedback"
       );
@@ -71,7 +71,7 @@ module.exports = async function discordBot() {
       } else {
         console.log("should send");
 
-        channelNew.send(message);
+        channelNew.send(message.content);
       }
     }
 

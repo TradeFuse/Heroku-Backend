@@ -2,6 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const moment = require("moment/moment");
 
 module.exports = async function createCustomer() {
+  let today = new Date().toISOString();
   const customer = await stripe.customers.create({
     name: "",
     email: "",

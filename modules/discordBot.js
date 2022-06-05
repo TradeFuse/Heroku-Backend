@@ -1,7 +1,11 @@
 "use strict";
 const { Client, Intents } = require("discord.js");
 const discordClient = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.DIRECT_MESSAGES,
+  ],
 });
 const prefix = require("discord-prefix");
 let defaultPrefix = "!";

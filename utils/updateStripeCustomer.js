@@ -7,12 +7,12 @@ module.exports = async function updateCustomer(bodyData) {
     name: bodyData.data.update.name,
     email: bodyData.data.update.email,
     metadata: {
-      Logins: bodyData.data.update.metadata["Logins"],
-      "Last Login": bodyData.data.update.metadata["Last Login"],
-      Trades: bodyData.data.update.metadata["Trades"],
-      "Shared Trades": bodyData.data.update.metadata["Shared Trades"],
-      Tier: bodyData.data.update.metadata["Tier"],
-      "Storage Used": bodyData.data.update.metadata["Storage Used"],
+      Logins: bodyData.data.update["Logins"],
+      "Last Login": bodyData.data.update["Last Login"],
+      Trades: bodyData.data.update["Trades"],
+      "Shared Trades": bodyData.data.update["Shared Trades"],
+      Tier: bodyData.data.update["Tier"],
+      "Storage Used": bodyData.data.update["Storage Used"],
     },
   });
 };

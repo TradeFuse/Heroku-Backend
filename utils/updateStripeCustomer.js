@@ -4,15 +4,15 @@ module.exports = async function updateCustomer(bodyData) {
   const updatecustomerId = bodyData.data.customerId;
   console.log("updateCustomer", bodyData)
   await stripe.customers.update(updatecustomerId, {
-    name: bodyData.data.update.name,
-    email: bodyData.data.update.email,
+    name: bodyData.data.name,
+    email: bodyData.data.email,
     metadata: {
-      Logins: bodyData.data.update["Logins"],
-      "Last Login": bodyData.data.update["Last Login"],
-      Trades: bodyData.data.update["Trades"],
-      "Shared Trades": bodyData.data.update["Shared Trades"],
-      Tier: bodyData.data.update["Tier"],
-      "Storage Used": bodyData.data.update["Storage Used"],
+      Logins: bodyData.data["Logins"],
+      "Last Login": bodyData.data["Last Login"],
+      Trades: bodyData.data["Trades"],
+      "Shared Trades": bodyData.data["Shared Trades"],
+      Tier: bodyData.data["Tier"],
+      "Storage Used": bodyData.data["Storage Used"],
     },
   });
 };

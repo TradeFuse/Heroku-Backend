@@ -3,17 +3,20 @@ const moment = require("moment/moment");
 
 module.exports = async function createCustomer() {
   let today = new Date().toISOString();
+  const timeZoneString = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const customer = await stripe.customers.create({
     name: "",
     email: "",
     metadata: {
       Logins: 1,
-      "Last Login": String(moment(today).local().format("MM/DD/YYYY hh:mm:ss A")),
+      "Last Login": String(
+        moment(today).tz(timeZoneString).format("MM/DD/YYYY hh:mm:ss A zz")
+      ),
       Trades: 0,
       "Shared Trades": 0,
       Tier: "Free",
       "Storage Used": `0 KB`,
     },
   });
-  return customer
+  return customer;
 };

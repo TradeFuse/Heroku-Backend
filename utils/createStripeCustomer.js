@@ -15,7 +15,7 @@ module.exports = async function createCustomer() {
       Trades: 0,
       "Shared Trades": 0,
       Tier: "Free",
-      "Storage Used": `0 KB`,
+      "Storage Used": `2.94 KB`, // default data usage
     },
   });
   return customer;

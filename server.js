@@ -49,6 +49,7 @@ app.post("/", async (req, res) => {
         break;
       case "updateStripeCustomer":
         await updateCustomer(bodyData);
+        res.send("customer updated");
         break;
       default:
         break;

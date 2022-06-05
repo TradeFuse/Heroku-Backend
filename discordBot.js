@@ -5,7 +5,7 @@ const discordClient = new Client({
 });
 module.exports = async function discordBot() {
   discordClient.on("ready", () => {
-    console.log("Ready.");
+    console.log("Discord bot ready.");
   });
 
   discordClient.on("guildMemberRemove", function (member) {

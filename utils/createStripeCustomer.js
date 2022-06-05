@@ -1,5 +1,5 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const moment = require("moment/moment");
+const moment = require("moment-timezone");
 
 module.exports = async function createCustomer() {
   let today = new Date().toISOString();

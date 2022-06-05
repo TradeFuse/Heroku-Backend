@@ -2,12 +2,10 @@
 
 const express = require("express");
 const cors = require("cors");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const moment = require("moment/moment");
-const { Client, Intents } = require("discord.js");
-const discordClient = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
-});
+const discordBot = require("./discordBot");
+const createCustomer = require("./utils/createStripeCustomer");
+const getCustomer = require("./utils/getStripeCustomer");
+const updateCustomer = require("./utils/updateStripeCustomer");
 
 // Constants
 const PORT = process.env.PORT || 80;
@@ -42,39 +40,16 @@ app.post("/", async (req, res) => {
   } else {
     switch (bodyData.action) {
       case "createStripeCustomer":
-        const created_customer = await stripe.customers.create({
-          name: "",
-          email: "",
-          metadata: {
-            Logins: 1,
-            "Last Login": String(moment(today).format("MM/DD/YYYY hh:mm:ss A")),
-            Trades: 0,
-            "Shared Trades": 0,
-            Tier: "Free",
-            "Storage Used": `0 KB`,
-          },
-        });
-        res.json(created_customer);
+        const createdCustomer = await createCustomer();
+        res.json(createdCustomer);
         break;
       case "getStripeCustomer":
         const customerId = bodyData.data.customerId;
-        const retrieved_customer = await stripe.customers.retrieve(customerId);
-        res.json(retrieved_customer);
+        const retrievedCustomer = await getCustomer(customerId);
+        res.json(retrievedCustomer);
         break;
       case "updateStripeCustomer":
-        const updatecustomerId = bodyData.data.customerId;
-        await stripe.customers.update(updatecustomerId, {
-          name: bodyData.data.update.name,
-          email: bodyData.data.update.email,
-          metadata: {
-            Logins: bodyData.data.update.metadata["Logins"],
-            "Last Login": bodyData.data.update.metadata["Last Login"],
-            Trades: bodyData.data.update.metadata["Trades"],
-            "Shared Trades": bodyData.data.update.metadata["Shared Trades"],
-            Tier: bodyData.data.update.metadata["Tier"],
-            "Storage Used": bodyData.data.update.metadata["Storage Used"],
-          },
-        });
+        updateCustomer(bodyData);
         break;
       default:
         break;
@@ -84,41 +59,4 @@ app.post("/", async (req, res) => {
   }
 });
 
-// ----- DISCORD BOT -----
-
-discordClient.on("ready", () => {
-  console.log("Ready.");
-});
-
-discordClient.on("guildMemberRemove", function (member) {
-  const channel = member.guild.channels.cache.find(
-    (ch) => ch.name === "community"
-  );
-  channel.send(`${member} has left the party.`);
-});
-
-discordClient.on("messageDeleteBulk", function (message) {
-  const channel = message.guild.channels;
-  const usernamebuff = message.author;
-  channel
-    .find("name", "community")
-    .send(`${usernamebuff} is deleting a lot of messages. Looks suspicious.`);
-});
-
-discordClient.on("guildMemberAdd", (member) => {
-  const role = member.guild.roles.cache.find(
-    (role) => role.name === "Community"
-  );
-  member.roles.add(role);
-});
-
-discordClient.on("guildUnavailable", (guild) => {
-  const channel = guild.channels.cache.find((ch) => ch.name === "community");
-  channel.send(
-    `Woah, looks like the ${guild} server is down. Check again later for continuation of awesomeness.`
-  );
-});
-
-discordClient.login(process.env.DISCORD_LOGIN_KEY);
-
-console.log(`Running on http://${PORT}`);
+discordBot();

@@ -67,7 +67,7 @@ module.exports = async function discordBot() {
       } else {
         const newContent = message.content.substring(1);
         const user = message.author.username;
-        channelNew.send(`User: ${user}, Bug/Feedback: ${newContent}`);
+        channelNew.send(`User: **${user}**, Bug/Feedback: **${newContent}**`);
       }
     }
 

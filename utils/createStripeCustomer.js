@@ -8,7 +8,7 @@ module.exports = async function createCustomer() {
     email: "",
     metadata: {
       Logins: 1,
-      "Last Login": String(moment(today).format("MM/DD/YYYY hh:mm:ss A")),
+      "Last Login": String(moment(today).local().format("MM/DD/YYYY hh:mm:ss A")),
       Trades: 0,
       "Shared Trades": 0,
       Tier: "Free",

@@ -57,7 +57,7 @@ module.exports = async function discordBot() {
     //rest of the message event
     //let args = message.content.slice(guildPrefix.length).split(" ");
     const channel = message.channel.id;
-    if (channel === "bug-and-feedback") {
+    if (channel === "bugs-and-feedback") {
       const channelNew = guild.channels.cache.find(
         (ch) => ch.name === "user-feedback"
       );

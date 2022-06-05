@@ -2,7 +2,7 @@
 
 const express = require("express");
 const cors = require("cors");
-const discordBot = require("./discordBot");
+const discordBot = require("./modules/discordBot");
 const createCustomer = require("./utils/createStripeCustomer");
 const getCustomer = require("./utils/getStripeCustomer");
 const updateCustomer = require("./utils/updateStripeCustomer");

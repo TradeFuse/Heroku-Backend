@@ -53,16 +53,24 @@ module.exports = async function discordBot() {
 
     //set prefix to the default prefix if there isn't one
     if (!guildPrefix) guildPrefix = defaultPrefix;
+    console.log(message);
+    console.log(guildPrefix);
 
     //rest of the message event
     //let args = message.content.slice(guildPrefix.length).split(" ");
     const channel = message.channel.id;
+    console.log(channel);
+
     if (channel === "bugs-and-feedback") {
       const channelNew = message.guild.channels.cache.find(
         (ch) => ch.name === "user-feedback"
       );
+      console.log(channelNew);
+
       if (!message.content.startsWith(guildPrefix)) {
       } else {
+        console.log("should send");
+
         channelNew.send(message);
       }
     }

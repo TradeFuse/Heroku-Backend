@@ -40,7 +40,7 @@ module.exports = async function discordBot() {
     );
   });
 
-  discordClient.on("message", (message) => {
+  discordClient.on("messageCreate", (message) => {
     /*     //stop code execution if message is received in DMs
     if (!message.guild) return; */
 

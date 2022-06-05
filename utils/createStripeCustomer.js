@@ -2,7 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const moment = require("moment-timezone");
 
 module.exports = async function createCustomer() {
-  let today = new Date().toISOString();
+  let today = new Date().toLocaleString();
   const timeZoneString = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const customer = await stripe.customers.create({
     name: "",

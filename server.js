@@ -39,7 +39,7 @@ app.post("/", async (req, res) => {
   } else {
     switch (bodyData.action) {
       case "createStripeCustomer":
-        const createdCustomer = await createCustomer();
+        const createdCustomer = await createCustomer(bodyData);
         res.json(createdCustomer);
         break;
       case "getStripeCustomer":

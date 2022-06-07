@@ -8,7 +8,7 @@ const getCustomer = require("./utils/getStripeCustomer");
 const updateCustomer = require("./utils/updateStripeCustomer");
 
 // Constants
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 //const HOST = "0.0.0.0";
 
 // App

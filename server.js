@@ -13,6 +13,11 @@ const PORT = process.env.PORT || 3000;
 
 // App
 const app = express();
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -22,7 +27,7 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.listen(PORT);
 
@@ -34,7 +39,8 @@ app.post("/", async (req, res) => {
   const bodyData = req.body;
   if (req.method == "OPTIONS") {
     res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Content-Type");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
     res.status(204).send("");
   } else {
     switch (bodyData.action) {

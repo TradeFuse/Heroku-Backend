@@ -37,6 +37,7 @@ app.post("/", async (req, res) => {
     res.set("Access-Control-Allow-Headers", "Content-Type");
     res.status(204).send("");
   } else {
+    console.log(bodyData)
     switch (bodyData.action) {
       case "createStripeCustomer":
         const createdCustomer = await createCustomer(bodyData);

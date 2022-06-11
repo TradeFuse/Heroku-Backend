@@ -13,5 +13,8 @@ module.exports = async function createCustomer(bodyData) {
       "Storage Used": `2.94 KB`, // default data usage
     },
   });
+  if (!customer) {
+    throw (`Didn't create customer.`)
+  }
   return customer;
 };

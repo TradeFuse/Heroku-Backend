@@ -14,6 +14,9 @@ module.exports = async function updateCustomer(bodyData) {
       "Storage Used": bodyData.data["Storage Used"],
     },
   });
-  return updatedCustomer
+  if (!updatedCustomer) {
+    throw (`${updatedCustomer} is invalid`)
+  }
+  return updatedCustomer;
 
 };

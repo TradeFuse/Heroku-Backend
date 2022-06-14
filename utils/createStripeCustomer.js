@@ -7,6 +7,7 @@ module.exports = async function createCustomer(bodyData) {
     metadata: {
       Logins: 1,
       "Last Login": bodyData.data["Last Login"],
+      "Last Session": bodyData.data["Last Session"],
       Trades: 0,
       "Shared Trades": 0,
       Tier: "Free",

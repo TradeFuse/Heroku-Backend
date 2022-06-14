@@ -8,6 +8,7 @@ module.exports = async function updateCustomer(bodyData) {
     metadata: {
       Logins: bodyData.data["Logins"],
       "Last Login": bodyData.data["Last Login"],
+      "Last Session": bodyData.data["Last Session"],
       Trades: bodyData.data["Trades"],
       "Shared Trades": bodyData.data["Shared Trades"],
       Tier: bodyData.data["Tier"],

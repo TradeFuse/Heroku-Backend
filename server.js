@@ -6,6 +6,7 @@ const discordBot = require("./modules/discordBot");
 const createCustomer = require("./utils/createStripeCustomer");
 const getCustomer = require("./utils/getStripeCustomer");
 const updateCustomer = require("./utils/updateStripeCustomer");
+const initializeRobinhood = require("./brokerHandling/robinhood/initializeRobinhood");
 
 // Constants
 const PORT = process.env.PORT || 3000;
@@ -56,6 +57,10 @@ app.post("/", async (req, res) => {
       case "updateStripeCustomer":
         const updatedCustomer = await updateCustomer(bodyData);
         res.json(updatedCustomer);
+        break;
+      case "initializeRobinhood":
+        const initializedRobinhood = await initializeRobinhood(bodyData);
+        res.json(initializedRobinhood);
         break;
       default:
         break;

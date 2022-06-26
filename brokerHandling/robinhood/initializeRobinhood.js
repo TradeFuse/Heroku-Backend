@@ -1,6 +1,6 @@
 const robinhood = require("robinhood");
 
-module.exports = async function initializeRobinhood(bodyData) {
+module.exports = async function initializeRobinhood(bodyData, app) {
   const email = bodyData.data["email"];
   const password = bodyData.data["password"];
   const mfaCode = bodyData.data["mfaCode"];
@@ -11,40 +11,6 @@ module.exports = async function initializeRobinhood(bodyData) {
       password: password,
     };
   };
-  let returnObj = {};
-
-  const RobinhoodTry = robinhood(
-    credentials(email, password),
-    () => {}
-  );
-
-  console.log("RobinhoodTry", RobinhoodTry);
-
-  var mfa_code = mfaCode; // set mfa_code here
-
-  const token = RobinhoodTry.set_mfa_code(mfa_code, async () => {
-    return RobinhoodTry.auth_token();
-  });
-console.log("token", token)
-  const orders =
-    token &&
-    RobinhoodTry.orders(null, function (err, response, body) {
-      if (err) {
-        throw err;
-      } else {
-        return body;
-      }
-    });
-  propsToChange = {
-    linkedBrokerInfo: {
-      broker: "robinhood",
-      token: token,
-      /*                         askforcode: checked,
-       */
-    },
-  };
-  returnObj.propsToChange = propsToChange;
-  returnObj.orders = orders;
 
   var Robinhood = robinhood(credentials(email, password), (err, data) => {
     if (err) {
@@ -62,7 +28,7 @@ console.log("token", token)
                  */
               },
             };
-            returnObj.propsToChange = propsToChange;
+            app.set('robinhoodInfo', { propsToChange: propsToChange });
 
             /*         $(".linkRobinhoodMFAErrorMsg").css({ display: "none" });
               $(".linkRobinhoodMFAErrorMsg").html(""); */
@@ -71,7 +37,7 @@ console.log("token", token)
                 console.error(err);
               } else {
                 console.log("orders", body);
-                returnObj.orders = body;
+                app.set('robinhoodInfo', { orders: body });
               }
             });
           } else {
@@ -81,5 +47,5 @@ console.log("token", token)
       }
     }
   });
-  return returnObj;
+  return {}
 };

@@ -1,6 +1,6 @@
 const robinhood = require("robinhood");
 
-module.exports = async function initializeRobinhood(bodyData, app) {
+module.exports = async function initializeRobinhood(bodyData, req) {
   const email = bodyData.data["email"];
   const password = bodyData.data["password"];
   const mfaCode = bodyData.data["mfaCode"];
@@ -28,7 +28,7 @@ module.exports = async function initializeRobinhood(bodyData, app) {
                  */
               },
             };
-            app.set('robinhoodInfo', { propsToChange: propsToChange });
+            req.app.set('robinhoodInfo', { propsToChange: propsToChange });
 
             /*         $(".linkRobinhoodMFAErrorMsg").css({ display: "none" });
               $(".linkRobinhoodMFAErrorMsg").html(""); */
@@ -37,7 +37,7 @@ module.exports = async function initializeRobinhood(bodyData, app) {
                 console.error(err);
               } else {
                 console.log("orders", body);
-                app.set('robinhoodInfo', { orders: body });
+                req.app.set('robinhoodInfo', { orders: body });
               }
             });
           } else {

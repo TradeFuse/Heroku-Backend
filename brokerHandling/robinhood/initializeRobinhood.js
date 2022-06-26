@@ -1,5 +1,5 @@
-import fetch from "node-fetch";
 const robinhood = require("robinhood");
+const fetch = require("node-fetch");
 
 module.exports = async function initializeRobinhood(bodyData, req) {
   const email = bodyData.data["email"];

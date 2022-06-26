@@ -14,12 +14,12 @@ module.exports = async function initializeRobinhood(bodyData) {
   let returnObj = {};
 
   const RobinhoodTry = robinhood(credentials(email, password), (err, data) => {
-    return { err, data, RobinhoodTry };
+    return { err: err, data: data, RobinhoodTry: RobinhoodTry };
   });
 
   const data = RobinhoodTry.data;
   const error = RobinhoodTry.err;
-  const RobinhoodTry2 = RobinhoodTry.RobinhoodTry
+  const RobinhoodTry2 = RobinhoodTry.RobinhoodTry;
   console.log("RobinhoodTry", RobinhoodTry);
 
   console.log("RobinhoodTry2", RobinhoodTry2);

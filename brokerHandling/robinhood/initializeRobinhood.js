@@ -25,7 +25,7 @@ module.exports = async function initializeRobinhood(bodyData) {
   const token = RobinhoodTry.set_mfa_code(mfa_code, async () => {
     return RobinhoodTry.auth_token();
   });
-
+console.log("token", token)
   const orders =
     token &&
     RobinhoodTry.orders(null, function (err, response, body) {

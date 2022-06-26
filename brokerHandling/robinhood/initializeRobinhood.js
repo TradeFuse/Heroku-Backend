@@ -12,7 +12,7 @@ module.exports = async function initializeRobinhood(bodyData) {
     };
   };
   let returnObj = {};
-  
+
   const RobinhoodTry = robinhood(credentials(email, password), (err, data) => {
     return { err, data, RobinhoodTry };
   });
@@ -20,7 +20,7 @@ module.exports = async function initializeRobinhood(bodyData) {
   const data = RobinhoodTry.data;
   const error = RobinhoodTry.err;
   const RobinhoodTry2 = RobinhoodTry.RobinhoodTry
-  console.log(RobinhoodTry2);
+  console.log("RobinhoodTry2", RobinhoodTry2);
   if (data && data.mfa_required) {
     var mfa_code = mfaCode; // set mfa_code here
 
@@ -74,8 +74,7 @@ module.exports = async function initializeRobinhood(bodyData) {
               if (err) {
                 console.error(err);
               } else {
-                console.log("orders");
-                console.log(body);
+                console.log("orders", body);
                 returnObj.orders = body;
               }
             });

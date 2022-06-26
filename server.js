@@ -65,6 +65,7 @@ app.post("/", async (req, res) => {
           initializedRobinhood: initializedRobinhood,
           appRHInfo: appRHInfo
         }
+        console.log("response", response)
         res.json(response);
         break;
       default:

@@ -13,44 +13,38 @@ module.exports = async function initializeRobinhood(bodyData) {
   };
   let returnObj = {};
 
-  const RobinhoodTry = robinhood(credentials(email, password), (err, data) => {
-    return { err: err, data: data, RobinhoodTry: RobinhoodTry };
-  });
+  const RobinhoodTry = robinhood(
+    credentials(email, password),
+    () => {}
+  );
 
-  const data = RobinhoodTry.data;
-  const error = RobinhoodTry.err;
-  const RobinhoodTry2 = RobinhoodTry.RobinhoodTry;
   console.log("RobinhoodTry", RobinhoodTry);
 
-  console.log("RobinhoodTry2", RobinhoodTry2);
-  if (data && data.mfa_required) {
-    var mfa_code = mfaCode; // set mfa_code here
+  var mfa_code = mfaCode; // set mfa_code here
 
-    const token = RobinhoodTry2.set_mfa_code(mfa_code, async () => {
-      return RobinhoodTry2.auth_token();
+  const token = RobinhoodTry.set_mfa_code(mfa_code, async () => {
+    return RobinhoodTry.auth_token();
+  });
+
+  const orders =
+    token &&
+    RobinhoodTry.orders(null, function (err, response, body) {
+      if (err) {
+        throw err;
+      } else {
+        return body;
+      }
     });
-
-    const orders =
-      token &&
-      RobinhoodTry2.orders(null, function (err, response, body) {
-        if (err) {
-          throw err;
-        } else {
-          return body;
-        }
-      });
-    propsToChange = {
-      linkedBrokerInfo: {
-        broker: "robinhood",
-        token: token,
-        /*                         askforcode: checked,
-         */
-      },
-    };
-    returnObj.propsToChange = propsToChange;
-    returnObj.orders = orders;
-  } else {
-  }
+  propsToChange = {
+    linkedBrokerInfo: {
+      broker: "robinhood",
+      token: token,
+      /*                         askforcode: checked,
+       */
+    },
+  };
+  returnObj.propsToChange = propsToChange;
+  returnObj.orders = orders;
 
   var Robinhood = robinhood(credentials(email, password), (err, data) => {
     if (err) {

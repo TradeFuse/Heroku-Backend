@@ -1,7 +1,8 @@
 const robinhood = require("robinhood");
-const fetch = await import("node-fetch");
 
 module.exports = async function initializeRobinhood(bodyData, req) {
+  const fetch = await import("node-fetch");
+
   const email = bodyData.data["email"];
   const password = bodyData.data["password"];
   const mfaCode = bodyData.data["mfaCode"];

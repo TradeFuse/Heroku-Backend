@@ -31,10 +31,6 @@ module.exports = async function initializeRobinhood(bodyData, req) {
         'Accept-Encoding': 'gzip, deflate',
         Referer: 'https://robinhood.com/',
         Origin: 'https://robinhood.com',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods":
-          "OPTIONS, DELETE, POST, GET, PATCH, PUT",
-        "Access-Control-Allow-Headers": "Content-Type",
       },
       body: JSON.stringify(dataIn),
     }).catch((err) => {

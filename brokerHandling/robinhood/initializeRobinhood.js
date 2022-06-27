@@ -26,15 +26,13 @@ module.exports = async function initializeRobinhood(bodyData, req) {
 
     const response = await axios({
       method: "POST", // *GET, POST, PUT, DELETE, etc.
-      url: "api.robinhood.com/api-token-auth/",
+      url: "https://api.robinhood.com/api-token-auth/",
       headers: {
-        Host: "api.robinhood.com",
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods":
-          "OPTIONS, DELETE, POST, GET, PATCH, PUT",
-        "Access-Control-Allow-Headers": "Content-Type",
+        Host: 'api.robinhood.com',
+        Accept: '*/*',
+        'Accept-Encoding': 'gzip, deflate',
+        Referer: 'https://robinhood.com/',
+        Origin: 'https://robinhood.com'
       },
       data: JSON.stringify(dataIn)
     });

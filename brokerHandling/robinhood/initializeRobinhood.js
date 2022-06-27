@@ -1,7 +1,8 @@
 const robinhood = require("robinhood");
-const axios = require('axios').default;
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 module.exports = async function initializeRobinhood(bodyData, req) {
+
   const email = bodyData.data["email"];
   const password = bodyData.data["password"];
   const mfaCode = bodyData.data["mfaCode"];
@@ -13,6 +14,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
     };
   };
 
+
   const step1Robinhood = async () => {
     const dataIn = {
       action: "initializeRobinhood",
@@ -21,22 +23,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
         password: password,
       },
     };
-
-    const axios = require('axios').default;
-
-    const response = await axios({
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      url: "https://api.robinhood.com/api-token-auth/",
-      headers: {
-        Host: 'api.robinhood.com',
-        Accept: '*/*',
-        'Accept-Encoding': 'gzip, deflate',
-        Referer: 'https://robinhood.com/',
-        Origin: 'https://robinhood.com'
-      },
-      data: JSON.stringify(dataIn)
-    });
-/*     const response = await fetch("api.robinhood.com/api-token-auth/", {
+    const response = await fetch("api.robinhood.com/api-token-auth/", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         Host: "api.robinhood.com",
@@ -50,11 +37,11 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       body: JSON.stringify(dataIn),
     }).catch((err) => {
       throw err;
-    }); */
+    });
     return response.json(); // parses JSON response into native JavaScript objects
   };
   const mfaData = await step1Robinhood();
-  console.log(mfaData);
+  console.log(mfaData)
   var Robinhood = robinhood(credentials(email, password), (err, data) => {
     if (err) {
     } else {
@@ -71,7 +58,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
                  */
               },
             };
-            req.app.set("robinhoodInfo", { propsToChange: propsToChange });
+            req.app.set('robinhoodInfo', { propsToChange: propsToChange });
 
             /*         $(".linkRobinhoodMFAErrorMsg").css({ display: "none" });
               $(".linkRobinhoodMFAErrorMsg").html(""); */
@@ -80,7 +67,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
                 console.error(err);
               } else {
                 console.log("orders", body);
-                req.app.set("robinhoodInfo", { orders: body });
+                req.app.set('robinhoodInfo', { orders: body });
               }
             });
           } else {
@@ -90,5 +77,5 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       }
     }
   });
-  return {};
+  return {}
 };

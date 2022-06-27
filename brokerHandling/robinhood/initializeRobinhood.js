@@ -21,6 +21,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       data: {
         username: email,
         password: password,
+        mfa_code: mfaCode
       },
     };
     const response = await fetch("https://api.robinhood.com/api-token-auth/", {

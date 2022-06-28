@@ -17,6 +17,7 @@
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
     "node-fetch": "^3.2.6",
+    "query-string": "^7.1.1",
     "robinhood": "github:TradersIQ/robinhood-node",
     "stripe": "^9.6.0"
   }

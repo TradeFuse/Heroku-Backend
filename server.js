@@ -68,7 +68,7 @@ app.post("/", async (req, res) => {
       case "getRobinhoodOrders":
         const gotRobinhood = await getRobinhoodOrders(bodyData, req);
         const responsegotRH = {
-          initializedRobinhood: gotRobinhood,
+          gotRobinhood: gotRobinhood,
         };
         res.json(responsegotRH);
         break;

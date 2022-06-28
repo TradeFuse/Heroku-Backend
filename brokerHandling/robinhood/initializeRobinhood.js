@@ -52,7 +52,8 @@ module.exports = async function initializeRobinhood(bodyData, req) {
 
   const firstResponse = await loginRobinhood();
   const set_mfa_code = async () => {
-    await loginRobinhood(mfaCode);
+    const rhData = await loginRobinhood(mfaCode);
+    return rhData
   };
   if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();

@@ -48,38 +48,6 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();
   }
-  console.log("firstResponse", firstResponse);
-  console.log("returnObj", returnObj);
-  /*   var Robinhood = robinhood(credentials(email, password), (err, data) => {
-    if (err) {
-    } else {
-      if (data && data.mfa_required) {
-        var mfa_code = mfaCode;
 
-        Robinhood.set_mfa_code(mfa_code, async () => {
-          if (Robinhood.auth_token()) {
-            propsToChange = {
-              linkedBrokerInfo: {
-                broker: "robinhood",
-                token: Robinhood.auth_token(),
-              },
-            };
-            req.app.set('robinhoodInfo', { propsToChange: propsToChange });
-
-            Robinhood.orders(null, function (err, response, body) {
-              if (err) {
-                console.error(err);
-              } else {
-                console.log("orders", body);
-                req.app.set('robinhoodInfo', { orders: body });
-              }
-            });
-          } else {
-          }
-        });
-      } else {
-      }
-    }
-  }); */
   return returnObj;
 };

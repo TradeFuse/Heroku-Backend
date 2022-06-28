@@ -10,8 +10,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   const _clientId = "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS";
   const _deviceToken = "ea9fa5c6-01e0-46c9-8430-5b422c99bd16";
 
-  let loginRobinhood;
-  (loginRobinhood = async function (mfaCodeIn) {
+  const loginRobinhood = async (mfaCodeIn) => {
     let dataIn = {
       username: email,
       password: password,
@@ -39,13 +38,15 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       throw err;
     });
     return response.json(); // parses JSON response into native JavaScript objects
-  })();
-  const secondResponse = await loginRobinhood();
+  };
+
+  const firstResponse = await loginRobinhood();
+  console.log(firstResponse);
   const set_mfa_code = async () => {
     const rhData = await loginRobinhood(mfaCode);
     return rhData;
   };
-  if (secondResponse && secondResponse.mfa_required) {
+  if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();
   }
 

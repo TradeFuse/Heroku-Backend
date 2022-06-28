@@ -17,9 +17,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       device_token: _deviceToken,
       auth_token: _authToken,
     };
-    if (mfaCodeIn) {
-      dataIn.mfa_code = mfaCodeIn;
-    }
+
     const response = await fetch("https://api.robinhood.com/orders/", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {

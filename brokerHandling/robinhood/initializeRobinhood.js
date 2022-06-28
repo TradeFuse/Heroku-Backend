@@ -6,7 +6,18 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   const email = bodyData.data["email"];
   const password = bodyData.data["password"];
   const mfaCode = bodyData.data["mfaCode"];
+  const _clientId = 'c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS';
+  const _deviceToken = 'ea9fa5c6-01e0-46c9-8430-5b422c99bd16';
 
+  let _private = {
+    username: email,
+    password: password,
+    grant_type: 'password',
+    scope: 'internal',
+    client_id: _clientId,
+    expires_in: 86400,
+    device_token: _deviceToken
+  }
   const credentials = (email, password) => {
     return {
       username: email,
@@ -14,19 +25,19 @@ module.exports = async function initializeRobinhood(bodyData, req) {
     };
   };
 
-  const step1Robinhood = async () => {
-    const _clientId = 'c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS';
-    const _deviceToken = 'ea9fa5c6-01e0-46c9-8430-5b422c99bd16';
-    const dataIn = {
-      username: email,
-      password: password,
-      mfa_code: mfaCode,
-      grant_type: 'password',
-      scope: 'internal',
-      client_id: _clientId,
-      expires_in: 86400,
-      device_token: _deviceToken
+  const loginRobinhood = async (callback) => {
+    let dataIn = {
+      username: _private.username,
+      password: _private.password,
+      grant_type: _private.grant_type,
+      scope: _private.scope,
+      client_id: _private.client_id,
+      expires_in: _private.expires_in,
+      device_token: _private.device_token
     };
+    if(_private.mfa_code) {
+      dataIn.mfa_code = _private.mfa_code;
+    }
     const response = await fetch("https://api.robinhood.com/oauth2/token/", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
@@ -44,13 +55,19 @@ module.exports = async function initializeRobinhood(bodyData, req) {
     return response.json(); // parses JSON response into native JavaScript objects
   };
 
-  const mfaData = await step1Robinhood();
-  console.log("mfaData", mfaData)
-  var Robinhood = robinhood(credentials(email, password), (err, data) => {
+  const firstResponse = await loginRobinhood();
+  console.log(firstResponse)
+  const set_mfa_code = async () => {
+    _private.mfa_code = mfaCode;
+    await loginRobinhood();
+  }
+  await set_mfa_code();
+  console.log("mfaData", mfaCode)
+/*   var Robinhood = robinhood(credentials(email, password), (err, data) => {
     if (err) {
     } else {
       if (data && data.mfa_required) {
-        var mfa_code = mfaCode; // set mfa_code here
+        var mfa_code = mfaCode;
 
         Robinhood.set_mfa_code(mfa_code, async () => {
           if (Robinhood.auth_token()) {
@@ -58,14 +75,10 @@ module.exports = async function initializeRobinhood(bodyData, req) {
               linkedBrokerInfo: {
                 broker: "robinhood",
                 token: Robinhood.auth_token(),
-                /*                         askforcode: checked,
-                 */
               },
             };
             req.app.set('robinhoodInfo', { propsToChange: propsToChange });
 
-            /*         $(".linkRobinhoodMFAErrorMsg").css({ display: "none" });
-              $(".linkRobinhoodMFAErrorMsg").html(""); */
             Robinhood.orders(null, function (err, response, body) {
               if (err) {
                 console.error(err);
@@ -80,6 +93,6 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       } else {
       }
     }
-  });
+  }); */
   return {}
 };

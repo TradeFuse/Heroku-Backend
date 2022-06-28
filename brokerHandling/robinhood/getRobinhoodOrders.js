@@ -1,4 +1,4 @@
-let queryString = require('query-string');
+let queryString = require("query-string");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
@@ -8,7 +8,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 
   const getRobinhoodO = async () => {
     let options = {
-      updated_at: "2017-08-25",
+      "updated_at[gte]": "2017-08-25",
     };
     const headerOptions = queryString.stringify(options);
     const response = await fetch(

@@ -53,12 +53,12 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   const firstResponse = await loginRobinhood();
   const set_mfa_code = async () => {
     const rhData = await loginRobinhood(mfaCode);
-    return rhData
+    return rhData;
   };
   if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();
   }
-  console.log("firstResponse", firstResponse)
+  console.log("firstResponse", firstResponse);
   console.log("returnObj", returnObj);
   /*   var Robinhood = robinhood(credentials(email, password), (err, data) => {
     if (err) {

@@ -40,11 +40,11 @@ module.exports = async function initializeRobinhood(bodyData, req) {
     return response.json(); // parses JSON response into native JavaScript objects
   };
 
-  var firstResponse;
-  (firstResponse = async function () {
+  var firstResponse = (async function f() {
     await loginRobinhood();
+    return f;
   })();
-
+  console.log(firstResponse)
   const set_mfa_code = async () => {
     const rhData = await loginRobinhood(mfaCode);
     return rhData;

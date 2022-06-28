@@ -1,4 +1,3 @@
-const robinhood = require("robinhood");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
@@ -19,7 +18,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     };
 
     const response = await fetch("https://api.robinhood.com/orders/", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
       headers: {
         Host: "api.robinhood.com",
         Accept: "application/json",

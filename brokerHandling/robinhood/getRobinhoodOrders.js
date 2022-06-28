@@ -36,7 +36,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   };
 
   const ordersResponse = await getRobinhoodO();
-  if (firstResponse) {
+  if (ordersResponse) {
     returnObj = ordersResponse;
   }
 

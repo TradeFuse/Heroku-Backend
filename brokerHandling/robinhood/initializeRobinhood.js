@@ -16,12 +16,9 @@ module.exports = async function initializeRobinhood(bodyData, req) {
 
   const step1Robinhood = async () => {
     const dataIn = {
-      action: "initializeRobinhood",
-      data: {
-        username: email,
-        password: password,
-        mfa_code: mfaCode
-      },
+      username: email,
+      password: password,
+      mfa_code: mfaCode
     };
     const response = await fetch("https://api.robinhood.com/oauth2/token/", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -32,7 +29,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
         Referer: 'https://robinhood.com/',
         Origin: 'https://robinhood.com',
       },
-      body: JSON.stringify(dataIn),
+      body: dataIn,
     }).catch((err) => {
       throw err;
     });

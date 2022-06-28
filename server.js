@@ -7,7 +7,7 @@ const createCustomer = require("./utils/createStripeCustomer");
 const getCustomer = require("./utils/getStripeCustomer");
 const updateCustomer = require("./utils/updateStripeCustomer");
 const initializeRobinhood = require("./brokerHandling/robinhood/initializeRobinhood");
-
+const getRobinhoodOrders = require("./brokerHandling/robinhood/getRobinhoodOrders")
 // Constants
 const PORT = process.env.PORT || 3000;
 //const HOST = "0.0.0.0";
@@ -60,14 +60,17 @@ app.post("/", async (req, res) => {
         break;
       case "initializeRobinhood":
         const initializedRobinhood = await initializeRobinhood(bodyData, req);
-        const appRHInfo = req.app.get('robinhoodInfo');
-        const response = {
+        const responseInitRH = {
           initializedRobinhood: initializedRobinhood,
-          appRHInfo: appRHInfo
-        }
-        console.log("appRHInfo", appRHInfo)
-        console.log("response", response)
-        res.json(response);
+        };
+        res.json(responseInitRH);
+        break;
+      case "getRobinhoodOrders":
+        const gotRobinhood = await getRobinhoodOrders(bodyData, req);
+        const responsegotRH = {
+          initializedRobinhood: gotRobinhood,
+        };
+        res.json(responsegotRH);
         break;
       default:
         break;

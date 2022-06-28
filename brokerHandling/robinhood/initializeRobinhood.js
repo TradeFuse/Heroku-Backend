@@ -14,21 +14,19 @@ module.exports = async function initializeRobinhood(bodyData, req) {
     };
   };
 
-
   const step1Robinhood = async () => {
     const dataIn = {
       action: "initializeRobinhood",
       data: {
         username: email,
         password: password,
-        mfa_code: mfaCode
       },
     };
     const response = await fetch("https://api.robinhood.com/api-token-auth/", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         Host: "api.robinhood.com",
-        Accept: '*/*',
+        Accept: 'application/json',
         'Accept-Encoding': 'gzip, deflate',
         Referer: 'https://robinhood.com/',
         Origin: 'https://robinhood.com',
@@ -39,8 +37,9 @@ module.exports = async function initializeRobinhood(bodyData, req) {
     });
     return response.json(); // parses JSON response into native JavaScript objects
   };
+
   const mfaData = await step1Robinhood();
-  console.log(mfaData)
+  console.log("mfaData", mfaData)
   var Robinhood = robinhood(credentials(email, password), (err, data) => {
     if (err) {
     } else {

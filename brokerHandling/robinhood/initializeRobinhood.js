@@ -20,13 +20,14 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       data: {
         username: email,
         password: password,
+        mfa_code: mfaCode
       },
     };
     const response = await fetch("https://api.robinhood.com/oauth2/token/", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         Host: "api.robinhood.com",
-        Accept: 'application/json',
+        Accept: '*/*',
         'Accept-Encoding': 'gzip, deflate',
         Referer: 'https://robinhood.com/',
         Origin: 'https://robinhood.com',

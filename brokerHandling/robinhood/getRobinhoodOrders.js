@@ -3,21 +3,13 @@ const fetch = (...args) =>
 
 module.exports = async function getRobinhoodOrders(bodyData, req) {
   let returnObj = {};
-  const _clientId = "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS";
-  const _deviceToken = "ea9fa5c6-01e0-46c9-8430-5b422c99bd16";
-  const _authToken = bodyData.data["token"];
 
   const getRobinhoodO = async () => {
-    let dataIn = {
-      grant_type: "password",
-      scope: "internal",
-      client_id: _clientId,
-      expires_in: 86400,
-      device_token: _deviceToken,
-      auth_token: _authToken,
+    let options = {
+      updated_at: '2017-08-25',
     };
-
-    const response = await fetch("https://api.robinhood.com/orders/", {
+    const headerOptions = queryString.stringify(options);
+    const response = await fetch("https://api.robinhood.com/orders/" + headerOptions, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       headers: {
         Host: "api.robinhood.com",
@@ -27,7 +19,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         Referer: "https://robinhood.com/",
         Origin: "https://robinhood.com",
       },
-      body: JSON.stringify(dataIn),
     }).catch((err) => {
       throw err;
     });

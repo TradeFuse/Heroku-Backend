@@ -1,3 +1,4 @@
+const robinhood = require("robinhood");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
@@ -39,7 +40,11 @@ module.exports = async function initializeRobinhood(bodyData, req) {
     return response.json(); // parses JSON response into native JavaScript objects
   };
 
-  const firstResponse = await loginRobinhood();
+  var firstResponse;
+  (firstResponse = async function () {
+    await loginRobinhood();
+  })();
+
   const set_mfa_code = async () => {
     const rhData = await loginRobinhood(mfaCode);
     return rhData;

@@ -20,7 +20,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
     device_token: _deviceToken,
   };
 
-  const loginRobinhood = async (callback) => {
+  const loginRobinhood = async (mfaCode) => {
     let dataIn = {
       username: _private.username,
       password: _private.password,
@@ -30,8 +30,8 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       expires_in: _private.expires_in,
       device_token: _private.device_token,
     };
-    if (_private.mfa_code) {
-      dataIn.mfa_code = _private.mfa_code;
+    if (mfaCode) {
+      dataIn.mfa_code = mfaCode;
     }
     const response = await fetch("https://api.robinhood.com/oauth2/token/", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -52,12 +52,12 @@ module.exports = async function initializeRobinhood(bodyData, req) {
 
   const firstResponse = await loginRobinhood();
   const set_mfa_code = async () => {
-    _private.mfa_code = mfaCode;
-    await loginRobinhood();
+    await loginRobinhood(mfaCode);
   };
   if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();
   }
+  console.log("firstResponse", firstResponse)
   console.log("returnObj", returnObj);
   /*   var Robinhood = robinhood(credentials(email, password), (err, data) => {
     if (err) {

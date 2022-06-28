@@ -15,10 +15,17 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   };
 
   const step1Robinhood = async () => {
+    const _clientId = 'c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS';
+    const _deviceToken = 'ea9fa5c6-01e0-46c9-8430-5b422c99bd16';
     const dataIn = {
       username: email,
       password: password,
-      mfa_code: mfaCode
+      mfa_code: mfaCode,
+      grant_type: 'password',
+      scope: 'internal',
+      client_id: _clientId,
+      expires_in: 86400,
+      device_token: _deviceToken
     };
     const response = await fetch("https://api.robinhood.com/oauth2/token/", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.

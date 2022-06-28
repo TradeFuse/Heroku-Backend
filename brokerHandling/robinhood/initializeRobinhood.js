@@ -24,12 +24,13 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         Host: "api.robinhood.com",
-        Accept: '*/*',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
         'Accept-Encoding': 'gzip, deflate',
         Referer: 'https://robinhood.com/',
         Origin: 'https://robinhood.com',
       },
-      body: dataIn,
+      body: JSON.stringify(dataIn),
     }).catch((err) => {
       throw err;
     });

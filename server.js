@@ -7,7 +7,7 @@ const createCustomer = require("./utils/createStripeCustomer");
 const getCustomer = require("./utils/getStripeCustomer");
 const updateCustomer = require("./utils/updateStripeCustomer");
 const initializeRobinhood = require("./brokerHandling/robinhood/initializeRobinhood");
-const getRobinhoodOrders = require("./brokerHandling/robinhood/getRobinhoodOrders")
+const getRobinhoodOrders = require("./brokerHandling/robinhood/getRobinhoodOrders");
 // Constants
 const PORT = process.env.PORT || 3000;
 //const HOST = "0.0.0.0";

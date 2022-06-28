@@ -10,25 +10,15 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   const _clientId = "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS";
   const _deviceToken = "ea9fa5c6-01e0-46c9-8430-5b422c99bd16";
 
-  let _private = {
-    username: email,
-    password: password,
-    grant_type: "password",
-    scope: "internal",
-    client_id: _clientId,
-    expires_in: 86400,
-    device_token: _deviceToken,
-  };
-
   const loginRobinhood = async (mfaCode) => {
     let dataIn = {
-      username: _private.username,
-      password: _private.password,
-      grant_type: _private.grant_type,
-      scope: _private.scope,
-      client_id: _private.client_id,
-      expires_in: _private.expires_in,
-      device_token: _private.device_token,
+      username: email,
+      password: password,
+      grant_type: "password",
+      scope: "internal",
+      client_id: _clientId,
+      expires_in: 86400,
+      device_token: _deviceToken,
     };
     if (mfaCode) {
       dataIn.mfa_code = mfaCode;

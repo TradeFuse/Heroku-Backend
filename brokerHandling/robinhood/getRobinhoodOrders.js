@@ -10,7 +10,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     let options = {
       "updated_at[gte]": "2017-08-25",
     };
-    const headerOptions = queryString.stringify(options);
+    const headerOptions = '?' + queryString.stringify(options);
     const response = await fetch(
       "https://api.robinhood.com/orders/" + headerOptions,
       {

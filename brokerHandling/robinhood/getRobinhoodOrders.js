@@ -37,7 +37,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   while (isNextExist) {
     const ordersResponse = await getRobinhoodO(nextURL);
     if (ordersResponse) {
-      allorders.push(ordersResponse.results);
+      allorders.push(...ordersResponse.results);
       if (!ordersResponse.next) {
         isNextExist = false;
       } else {

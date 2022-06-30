@@ -9,6 +9,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   const getRobinhoodO = async () => {
     let options = {
       "updated_at[gte]": "2017-08-25",
+      page: 1
     };
     const headerOptions = '?' + queryString.stringify(options);
     const response = await fetch(

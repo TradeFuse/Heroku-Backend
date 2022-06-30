@@ -34,6 +34,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     return response.json(); // parses JSON response into native JavaScript objects
   };
 
+  let bankURL = "https://api.robinhood.com/ach/transfers/" + headerOptions;
+
   while (isNextExist) {
     const ordersResponse = await getRobinhoodO(nextURL);
     if (ordersResponse) {
@@ -45,6 +47,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       }
     }
   }
+  const bankResponse = await getRobinhoodO(bankURL);
 
+  console.log(bankResponse);
   return allorders;
 };

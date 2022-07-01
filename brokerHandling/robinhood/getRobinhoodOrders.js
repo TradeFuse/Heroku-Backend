@@ -93,7 +93,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       if (!instrumentsResponse.next) {
         isNextExistInstruments = false;
       } else {
-        bankURL = instrumentsResponse.next;
+        instrumentsURL = instrumentsResponse.next;
       }
     }
   }

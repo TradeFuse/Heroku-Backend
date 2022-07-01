@@ -4,16 +4,21 @@ const fetch = (...args) =>
 
 module.exports = async function getRobinhoodOrders(bodyData, req) {
   const _authToken = bodyData.data["token"];
+  const _assetClasses = bodyData.data["assetClasses"];
 
   let allorders = [];
   let isNextExist = true;
+  let isNextExistOptions = true;
+  let isNextExistDW = true;
 
   // INITAL HEADER OPTIONS
   let options = {
     "updated_at[gte]": "2017-08-25",
   };
   const headerOptions = "?" + queryString.stringify(options);
-  let nextURL = "https://api.robinhood.com/orders/" + headerOptions;
+  let ordersURL = "https://api.robinhood.com/orders/" + headerOptions;
+  let optionsURL = "https://api.robinhood.com/options/orders/" + headerOptions;
+
   // -----------------
 
   const getRobinhoodO = async (url) => {
@@ -36,19 +41,46 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 
   let bankURL = "https://api.robinhood.com/ach/transfers/" + headerOptions;
 
-  while (isNextExist) {
-    const ordersResponse = await getRobinhoodO(nextURL);
-    if (ordersResponse) {
-      allorders.push(...ordersResponse.results);
-      if (!ordersResponse.next) {
-        isNextExist = false;
-      } else {
-        nextURL = ordersResponse.next;
+  // Get regular orders
+  if (_assetClasses.includes("Stocks")) {
+    while (isNextExist) {
+      const ordersResponse = await getRobinhoodO(ordersURL);
+      if (ordersResponse) {
+        allorders.push(...ordersResponse.results);
+        if (!ordersResponse.next) {
+          isNextExist = false;
+        } else {
+          ordersURL = ordersResponse.next;
+        }
       }
     }
   }
-  const bankResponse = await getRobinhoodO(bankURL);
+  // Get options orders
+  if (_assetClasses.includes("Options")) {
+    while (isNextExistOptions) {
+      const ordersResponse = await getRobinhoodO(optionsURL);
+      if (ordersResponse) {
+        allorders.push(...ordersResponse.results);
+        if (!ordersResponse.next) {
+          isNextExistOptions = false;
+        } else {
+          optionsURL = ordersResponse.next;
+        }
+      }
+    }
+  }
+  // Get bank transfers
+  while (isNextExistDW) {
+    const bankResponse = await getRobinhoodO(bankURL);
+    if (bankResponse) {
+      allorders.push(...bankResponse.results);
+      if (!bankResponse.next) {
+        isNextExistDW = false;
+      } else {
+        bankURL = bankResponse.next;
+      }
+    }
+  }
 
-  console.log(bankResponse);
   return allorders;
 };

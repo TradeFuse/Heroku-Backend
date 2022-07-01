@@ -18,6 +18,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   const headerOptions = "?" + queryString.stringify(options);
   let ordersURL = "https://api.robinhood.com/orders/" + headerOptions;
   let optionsURL = "https://api.robinhood.com/options/orders/" + headerOptions;
+  let instrumentsURL = "https://api.robinhood.com/instruments/" + headerOptions;
 
   // -----------------
 
@@ -81,6 +82,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       }
     }
   }
-
-  return allorders;
+  const instruments = await getRobinhoodO(ordersURL);
+  return { allorders: allorders, instruments: instruments };
 };

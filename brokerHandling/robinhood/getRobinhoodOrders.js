@@ -82,6 +82,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       }
     }
   }
-  const instruments = await getRobinhoodO(ordersURL);
+  const instruments = await getRobinhoodO(instrumentsURL);
   return { allorders: allorders, instruments: instruments };
 };

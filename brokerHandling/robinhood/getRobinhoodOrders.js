@@ -10,6 +10,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   let isNextExist = true;
   let isNextExistOptions = true;
   let isNextExistDW = true;
+  let isNextExistInstruments = true;
 
   // INITAL HEADER OPTIONS
   let options = {
@@ -82,6 +83,19 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       }
     }
   }
-  const instruments = await getRobinhoodO(instrumentsURL);
+
+  // Get bank transfers
+  let instruments = [];
+  while (isNextExistInstruments) {
+    const instrumentsResponse = await getRobinhoodO(instrumentsURL);
+    if (instrumentsResponse) {
+      instruments.push(...instrumentsResponse.results);
+      if (!instrumentsResponse.next) {
+        isNextExistInstruments = false;
+      } else {
+        bankURL = instrumentsResponse.next;
+      }
+    }
+  }
   return { allorders: allorders, instruments: instruments };
 };

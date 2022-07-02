@@ -89,6 +89,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   while (isNextExistInstruments) {
     const instrumentsResponse = await getRobinhoodO(instrumentsURL);
     if (instrumentsResponse) {
+      console.log(instrumentsResponse.results)
       instruments.push(...instrumentsResponse.results);
       if (!instrumentsResponse.next) {
         isNextExistInstruments = false;

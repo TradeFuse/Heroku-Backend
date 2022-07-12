@@ -88,20 +88,17 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   let i = 0;
   let instruments = [];
   while (isNextExistInstruments) {
-    const instrumentsResponse = await getRobinhoodO(instrumentsURL);
-    if (i < 5) {
-      console.log(instrumentsResponse.results);
-      if (instrumentsResponse) {
-        instruments.push(...instrumentsResponse.results);
-        if (!instrumentsResponse.next) {
-          isNextExistInstruments = false;
-        } else {
-          instrumentsURL = instrumentsResponse.next;
-        }
-      }
-    }
-
     i++;
+  }
+  const instrumentsResponse = await getRobinhoodO(instrumentsURL);
+  console.log(instrumentsResponse.results);
+  if (instrumentsResponse) {
+    instruments.push(...instrumentsResponse.results);
+    if (!instrumentsResponse.next) {
+      isNextExistInstruments = false;
+    } else {
+      instrumentsURL = instrumentsResponse.next;
+    }
   }
   console.log(instruments);
   return { allorders: allorders, instruments: instruments };

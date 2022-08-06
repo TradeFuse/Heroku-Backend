@@ -1,6 +1,6 @@
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-  
+
 module.exports = async function getAssetData(bodyData) {
   const assets = bodyData.assets;
   const options = {

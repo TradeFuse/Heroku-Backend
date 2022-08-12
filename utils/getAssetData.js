@@ -8,15 +8,19 @@ module.exports = async function getAssetData(bodyData) {
     headers: { Accept: "application/json", "Content-Type": "application/json" },
     body: JSON.stringify({
       assets: assets,
+      periodUnit: "Day",
+      startTime: 1640995200000,
+      periodLength: 1,
     }),
   };
 
   const response = await fetch(
-    "https://platform.atom.finance/api/2.0/price/snapshot" + "?api_key=" + process.env.ATOM_FINANCE_KEY,
+    "https://platform.atom.finance/api/2.0/price/history" +
+      "?api_key=" +
+      process.env.ATOM_FINANCE_KEY,
     options
   ).catch((err) => {
     throw err;
   });
   return response.json(); // parses JSON response into native JavaScript objects
-
 };

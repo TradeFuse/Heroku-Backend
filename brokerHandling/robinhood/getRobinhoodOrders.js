@@ -95,19 +95,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get bank transfers
   let i = 0;
   let instruments = [];
-  /*   while (isNextExistInstruments) {
-    i++;
-  } */
-  const instrumentsResponse = await getRobinhoodO(instrumentsURL);
-  console.log(instrumentsResponse);
-  /*   if (instrumentsResponse) {
-    instruments.push(...instrumentsResponse.results);
-    if (!instrumentsResponse.next) {
-      isNextExistInstruments = false;
-    } else {
-      instrumentsURL = instrumentsResponse.next;
-    }
-  } */
-  console.log(instruments);
+
   return { allorders: allorders, instruments: instruments };
 };

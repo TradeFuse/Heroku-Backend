@@ -31,7 +31,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   let instrumentsURL = "https://api.robinhood.com/instruments/";
 
   // -----------------
-
+  const bearerString = `Bearer ` + _authToken;
+  console.log(bearerString)
   const getRobinhoodO = async (url) => {
     const response = await fetch(url, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -42,7 +43,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         "Accept-Encoding": "gzip, deflate",
         Referer: "https://robinhood.com/",
         Origin: "https://robinhood.com",
-        Authorization: "Bearer " + _authToken,
+        Authorization: bearerString,
       },
     }).catch((err) => {
       throw err;

@@ -55,8 +55,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   if (_assetClasses.includes("Stocks")) {
     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);
-      console.log(ordersResponse);
-
       if (ordersResponse && isIterable(ordersResponse)) {
         allorders.push(...ordersResponse.results);
         if (!ordersResponse.next) {

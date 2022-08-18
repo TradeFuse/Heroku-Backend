@@ -25,6 +25,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     "updated_at[gte]": "2017-08-25",
   };
   const headerOptions = "?" + queryString.stringify(options);
+  let bankURL = "https://api.robinhood.com/ach/transfers/" + headerOptions;
   let ordersURL = "https://api.robinhood.com/orders/" + headerOptions;
   let optionsURL = "https://api.robinhood.com/options/orders/" + headerOptions;
   let instrumentsURL = "https://api.robinhood.com/instruments/";
@@ -48,8 +49,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     });
     return response.json(); // parses JSON response into native JavaScript objects
   };
-
-  let bankURL = "https://api.robinhood.com/ach/transfers/" + headerOptions;
 
   // Get regular orders
   if (_assetClasses.includes("Stocks")) {

@@ -2,6 +2,14 @@ let queryString = require("query-string");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
+function isIterable(obj) {
+  // checks for null and undefined
+  if (obj == null) {
+    return false;
+  }
+  return typeof obj[Symbol.iterator] === "function";
+}
+
 module.exports = async function getRobinhoodOrders(bodyData, req) {
   const _authToken = bodyData.data["token"];
   const _assetClasses = bodyData.data["assetClasses"];
@@ -47,7 +55,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   if (_assetClasses.includes("Stocks")) {
     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);
-      if (ordersResponse) {
+      console.log(ordersResponse);
+
+      if (ordersResponse && isIterable(ordersResponse)) {
         allorders.push(...ordersResponse.results);
         if (!ordersResponse.next) {
           isNextExist = false;
@@ -60,13 +70,13 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get options orders
   if (_assetClasses.includes("Options")) {
     while (isNextExistOptions) {
-      const ordersResponse = await getRobinhoodO(optionsURL);
-      if (ordersResponse) {
-        allorders.push(...ordersResponse.results);
-        if (!ordersResponse.next) {
+      const optionsResponse = await getRobinhoodO(optionsURL);
+      if (optionsResponse && isIterable(optionsResponse)) {
+        allorders.push(...optionsResponse.results);
+        if (!optionsResponse.next) {
           isNextExistOptions = false;
         } else {
-          optionsURL = ordersResponse.next;
+          optionsURL = optionsResponse.next;
         }
       }
     }
@@ -74,7 +84,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get bank transfers
   while (isNextExistDW) {
     const bankResponse = await getRobinhoodO(bankURL);
-    if (bankResponse) {
+    if (bankResponse && isIterable(bankResponse)) {
       allorders.push(...bankResponse.results);
       if (!bankResponse.next) {
         isNextExistDW = false;
@@ -87,12 +97,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get bank transfers
   let i = 0;
   let instruments = [];
-/*   while (isNextExistInstruments) {
+  /*   while (isNextExistInstruments) {
     i++;
   } */
   const instrumentsResponse = await getRobinhoodO(instrumentsURL);
   console.log(instrumentsResponse);
-/*   if (instrumentsResponse) {
+  /*   if (instrumentsResponse) {
     instruments.push(...instrumentsResponse.results);
     if (!instrumentsResponse.next) {
       isNextExistInstruments = false;

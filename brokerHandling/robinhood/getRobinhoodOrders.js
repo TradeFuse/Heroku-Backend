@@ -87,9 +87,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get bank transfers
   let i = 0;
   let instruments = [];
-  while (isNextExistInstruments) {
+/*   while (isNextExistInstruments) {
     i++;
-  }
+  } */
   const instrumentsResponse = await getRobinhoodO(instrumentsURL);
   console.log(instrumentsResponse);
 /*   if (instrumentsResponse) {

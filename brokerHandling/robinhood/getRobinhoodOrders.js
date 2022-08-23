@@ -11,6 +11,7 @@ function isIterable(obj) {
 }
 
 module.exports = async function getRobinhoodOrders(bodyData, req) {
+  console.log(bodyData);
   const _authToken = bodyData.data["token"];
   const _assetClasses = bodyData.data["assetClasses"];
 

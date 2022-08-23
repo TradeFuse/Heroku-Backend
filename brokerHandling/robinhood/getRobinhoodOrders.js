@@ -54,10 +54,10 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 
   // Get regular orders
   if (_assetClasses.includes("Stocks")) {
-    console.log(ordersURL)
+    //console.log(ordersURL)
 
     const ordersResponse = await getRobinhoodO(ordersURL);
-    console.log(ordersResponse)
+    //console.log(ordersResponse)
 /*     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);
       if (ordersResponse && isIterable(ordersResponse)) {

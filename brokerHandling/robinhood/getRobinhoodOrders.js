@@ -57,6 +57,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     //console.log(ordersURL)
 
     const ordersResponse = await getRobinhoodO(ordersURL);
+    allorders.push(...ordersResponse.results);
+
     //console.log(ordersResponse)
 /*     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);

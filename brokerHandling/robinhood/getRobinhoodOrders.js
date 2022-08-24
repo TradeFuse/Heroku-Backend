@@ -56,8 +56,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   if (_assetClasses.includes("Stocks")) {
     //console.log(ordersURL)
     const ordersResponse = await getRobinhoodO(ordersURL);
+    allorders.push(ordersResponse);
 
-    console.log(ordersResponse)
 /*     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);
       console.log("isNextExist", isNextExist)

@@ -33,7 +33,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 
   // -----------------
   const bearerString = `Bearer ` + _authToken;
-  console.log(bearerString)
+  console.log(bearerString);
   const getRobinhoodO = async (url) => {
     const response = await fetch(url, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -58,21 +58,25 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     const ordersResponse = await getRobinhoodO(ordersURL);
     allorders.push(ordersResponse);
 
-/*     while (isNextExist) {
+    while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);
-      console.log("isNextExist", isNextExist)
+      console.log("isNextExist", isNextExist);
 
       if (ordersResponse && isIterable(ordersResponse)) {
         allorders.push(...ordersResponse.results);
-        if (!ordersResponse.next) {
+        if (
+          !ordersResponse.next ||
+          ordersResponse.next === null ||
+          ordersResponse.next === ""
+        ) {
           isNextExist = false;
         } else {
           ordersURL = ordersResponse.next;
         }
       }
-    }  */
+    }
   }
-/*   // Get options orders
+  /*   // Get options orders
   if (_assetClasses.includes("Options")) {
     while (isNextExistOptions) {
       const optionsResponse = await getRobinhoodO(optionsURL);

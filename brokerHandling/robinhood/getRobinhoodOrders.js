@@ -60,9 +60,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 
     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);
-      console.log("isNextExist", isNextExist);
 
-      if (ordersResponse && isIterable(ordersResponse)) {
+      if (ordersResponse) {
         allorders.push(...ordersResponse.results);
         if (
           !ordersResponse.next ||

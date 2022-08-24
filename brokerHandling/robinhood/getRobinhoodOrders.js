@@ -55,13 +55,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get regular orders
   if (_assetClasses.includes("Stocks")) {
     //console.log(ordersURL)
-
-    const ordersResponse = await getRobinhoodO(ordersURL);
-    allorders.push(...ordersResponse.results);
-
     //console.log(ordersResponse)
-/*     while (isNextExist) {
+    while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);
+      console.log("ordersResponse", ordersResponse)
+      console.log("isNextExist", isNextExist)
+
       if (ordersResponse && isIterable(ordersResponse)) {
         allorders.push(...ordersResponse.results);
         if (!ordersResponse.next) {
@@ -70,7 +69,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
           ordersURL = ordersResponse.next;
         }
       }
-    } */
+    } 
   }
 /*   // Get options orders
   if (_assetClasses.includes("Options")) {

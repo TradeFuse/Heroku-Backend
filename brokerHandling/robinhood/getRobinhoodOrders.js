@@ -58,7 +58,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     //console.log(ordersResponse)
     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);
-      console.log("ordersResponse", ordersResponse)
       console.log("isNextExist", isNextExist)
 
       if (ordersResponse && isIterable(ordersResponse)) {

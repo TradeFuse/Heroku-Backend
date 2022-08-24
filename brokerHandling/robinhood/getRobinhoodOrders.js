@@ -72,7 +72,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       }
     } */
   }
-  // Get options orders
+/*   // Get options orders
   if (_assetClasses.includes("Options")) {
     while (isNextExistOptions) {
       const optionsResponse = await getRobinhoodO(optionsURL);
@@ -98,7 +98,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       }
     }
   }
-
+ */
   // Get bank transfers
   let i = 0;
   let instruments = [];

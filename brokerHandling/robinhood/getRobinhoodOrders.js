@@ -27,8 +27,15 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   };
   const headerOptions = "?" + queryString.stringify(options);
   let bankURL = "https://api.robinhood.com/ach/transfers/" + headerOptions;
+  let wireURL = "https://api.robinhood.com/wire/transfers" + headerOptions;
+  let cardURL =
+    "https://minerva.robinhood.com/history/transactions/" + headerOptions;
+  let withdrawalURL = "https://api.robinhood.com/instruments/";
+
   let ordersURL = "https://api.robinhood.com/orders/" + headerOptions;
   let optionsURL = "https://api.robinhood.com/options/orders/" + headerOptions;
+  let cryptoURL = "https://nummus.robinhood.com/orders/" + headerOptions;
+
   let instrumentsURL = "https://api.robinhood.com/instruments/";
 
   // -----------------
@@ -105,7 +112,30 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     }
   }
 
-  // Get bank transfers
+  // Get card transfers
+  const cardResponse = await getRobinhoodO(cardURL);
+  allorders.push(cardResponse);
+
+  /*   while (isNextExistDW) {
+    const bankResponse = await getRobinhoodO(bankURL);
+    if (bankResponse) {
+      allorders.push(...bankResponse.results);
+      if (
+        !bankResponse.next ||
+        bankResponse.next === null ||
+        bankResponse.next === ""
+      ) {
+        isNextExistDW = false;
+      } else {
+        bankURL = bankResponse.next;
+      }
+    }
+  } */
+
+  // Get card transfers
+  const cryptoResponse = await getRobinhoodO(cryptoURL);
+  allorders.push(cryptoResponse);
+
   let i = 0;
   let instruments = [];
 

@@ -41,7 +41,15 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // -----------------
   const bearerString = `Bearer ` + _authToken;
   console.log(bearerString);
-  const getRobinhoodO = async (url) => {
+  const getRobinhoodO = async (url, id) => {
+    let hostURL = "";
+    if (id === 0) {
+      hostURL = "api.robinhood.com";
+    } else if (id === 1) {
+      hostURL = "nummus.robinhood.com";
+    } else if (id === 2) {
+      hostURL = "minerva.robinhood.com";
+    }
     const response = await fetch(url, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       headers: {
@@ -62,7 +70,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get regular orders
   if (_assetClasses.includes("Stocks")) {
     while (isNextExist) {
-      const ordersResponse = await getRobinhoodO(ordersURL);
+      const ordersResponse = await getRobinhoodO(ordersURL, 0);
       if (ordersResponse) {
         allorders.push(...ordersResponse.results);
         if (
@@ -80,7 +88,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get options orders
   if (_assetClasses.includes("Options")) {
     while (isNextExistOptions) {
-      const optionsResponse = await getRobinhoodO(optionsURL);
+      const optionsResponse = await getRobinhoodO(optionsURL, 0);
       if (optionsResponse) {
         allorders.push(...optionsResponse.results);
         if (
@@ -95,9 +103,14 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       }
     }
   }
+
+  // Get crypto orders
+  const cryptoResponse = await getRobinhoodO(cryptoURL, 1);
+  allorders.push(cryptoResponse);
+
   // Get bank transfers
   while (isNextExistDW) {
-    const bankResponse = await getRobinhoodO(bankURL);
+    const bankResponse = await getRobinhoodO(bankURL, 0);
     if (bankResponse) {
       allorders.push(...bankResponse.results);
       if (
@@ -113,7 +126,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   }
 
   // Get card transfers
-  const cardResponse = await getRobinhoodO(cardURL);
+  const cardResponse = await getRobinhoodO(cardURL, 2);
   allorders.push(cardResponse);
 
   /*   while (isNextExistDW) {
@@ -131,10 +144,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       }
     }
   } */
-
-  // Get card transfers
-  const cryptoResponse = await getRobinhoodO(cryptoURL);
-  allorders.push(cryptoResponse);
 
   let i = 0;
   let instruments = [];

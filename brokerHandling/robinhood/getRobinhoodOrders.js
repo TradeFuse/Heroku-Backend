@@ -54,13 +54,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 
   // Get regular orders
   if (_assetClasses.includes("Stocks")) {
-    //console.log(ordersURL)
-    const ordersResponse = await getRobinhoodO(ordersURL);
-    allorders.push(ordersResponse);
-
     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL);
-
       if (ordersResponse) {
         allorders.push(...ordersResponse.results);
         if (
@@ -75,13 +70,17 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       }
     }
   }
-  /*   // Get options orders
+  // Get options orders
   if (_assetClasses.includes("Options")) {
     while (isNextExistOptions) {
       const optionsResponse = await getRobinhoodO(optionsURL);
-      if (optionsResponse && isIterable(optionsResponse)) {
+      if (optionsResponse) {
         allorders.push(...optionsResponse.results);
-        if (!optionsResponse.next) {
+        if (
+          !optionsResponse.next ||
+          optionsResponse.next === null ||
+          optionsResponse.next === ""
+        ) {
           isNextExistOptions = false;
         } else {
           optionsURL = optionsResponse.next;
@@ -92,16 +91,20 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get bank transfers
   while (isNextExistDW) {
     const bankResponse = await getRobinhoodO(bankURL);
-    if (bankResponse && isIterable(bankResponse)) {
+    if (bankResponse) {
       allorders.push(...bankResponse.results);
-      if (!bankResponse.next) {
+      if (
+        !bankResponse.next ||
+        bankResponse.next === null ||
+        bankResponse.next === ""
+      ) {
         isNextExistDW = false;
       } else {
         bankURL = bankResponse.next;
       }
     }
   }
- */
+
   // Get bank transfers
   let i = 0;
   let instruments = [];

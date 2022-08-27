@@ -27,6 +27,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   };
   const headerOptions = "?" + queryString.stringify(options);
   let bankURL = "https://api.robinhood.com/ach/transfers/" + headerOptions;
+  let receivedURL =
+    "https://api.robinhood.com/ach/received/transfers/" + headerOptions;
+
   let wireURL = "https://api.robinhood.com/wire/transfers" + headerOptions;
   let cardURL =
     "https://minerva.robinhood.com/history/transactions/" + headerOptions;
@@ -132,6 +135,10 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get ach
   const achResponse = await getRobinhoodO(withdrawalURL, 0);
   allorders.push(achResponse);
+
+  // Get ach received
+  const receivedResponse = await getRobinhoodO(receivedURL, 0);
+  allorders.push(receivedResponse);
   /*   while (isNextExistDW) {
     const bankResponse = await getRobinhoodO(bankURL);
     if (bankResponse) {

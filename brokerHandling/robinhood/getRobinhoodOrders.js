@@ -53,7 +53,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     const response = await fetch(url, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       headers: {
-        Host: "api.robinhood.com",
+        Host: hostURL,
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Encoding": "gzip, deflate",

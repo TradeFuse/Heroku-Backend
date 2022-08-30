@@ -136,8 +136,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   allorders.push(cardResponse);
 
   // Get card transfers
-  const cardTransferResponse = await getRobinhoodO(cardTransferURL, "minerva");
-  allorders.push(cardTransferResponse);
+/*   const cardTransferResponse = await getRobinhoodO(cardTransferURL, "minerva");
+  allorders.push(cardTransferResponse); */
 
   // Get ach
   const achResponse = await getRobinhoodO(withdrawalURL, "api");

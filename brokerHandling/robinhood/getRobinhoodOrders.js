@@ -150,11 +150,11 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get wire transfers
 /*   const wireResponse = await getRobinhoodO(wireURL, "api");
   allorders.push(wireResponse); */
-
+  let i = 0;
   while (isNextExistInstruments) {
     const instrumentResponse = await getRobinhoodO(instrumentsURL);
     if (instrumentResponse) {
-      allorders.push(...instrumentResponse.results);
+      instruments.push(...instrumentResponse.results);
       if (
         !instrumentResponse.next ||
         instrumentResponse.next === null ||
@@ -165,9 +165,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         instrumentsURL = instrumentResponse.next;
       }
     }
+    if (i === 10) {
+      break
+    }
+    i++
   } 
 
-  let i = 0;
   let instruments = [];
 
   return { allorders: allorders, instruments: instruments };

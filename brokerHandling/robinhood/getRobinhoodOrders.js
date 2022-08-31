@@ -167,7 +167,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         instrumentsURL = instrumentResponse.next;
       }
     }
-    if (i === 100) {
+    if (i === 20) {
+      instruments.push(instrumentResponse);
       break
     }
     i++

@@ -153,7 +153,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   allorders.push(wireResponse); */
   let i = 0;
   let instruments = [];
-
+/* 
   while (isNextExistInstruments) {
     const instrumentResponse = await getRobinhoodO(instrumentsURL, "api");
     if (instrumentResponse) {
@@ -173,7 +173,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       break;
     }
     i++;
-  }
+  } */
 
   return { allorders: allorders, instruments: instruments };
 };

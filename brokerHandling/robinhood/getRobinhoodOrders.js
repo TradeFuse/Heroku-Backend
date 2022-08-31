@@ -73,9 +73,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL, "api");
       if (ordersResponse) {
-        let ordersResults = ordersResponse.results;
-        ordersResults.map((obj) => ({ ...obj, rhType: "stock" }));
-        allorders.push(...ordersResults);
+        const ordersResults = ordersResponse.results;
+        const ordersMapped = ordersResults.map((obj) => ({
+          ...obj,
+          rhType: "stock",
+        }));
+        allorders.push(...ordersMapped);
         if (
           !ordersResponse.next ||
           ordersResponse.next === null ||
@@ -93,9 +96,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     while (isNextExistOptions) {
       const optionsResponse = await getRobinhoodO(optionsURL, "api");
       if (optionsResponse) {
-        let optionsResults = optionsResponse.results;
-        optionsResults.map((obj) => ({ ...obj, rhType: "option" }));
-        allorders.push(...optionsResults);
+        const optionsResults = optionsResponse.results;
+        const optionsMapped = optionsResults.map((obj) => ({
+          ...obj,
+          rhType: "option",
+        }));
+        allorders.push(...optionsMapped);
         if (
           !optionsResponse.next ||
           optionsResponse.next === null ||
@@ -114,9 +120,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     while (isNextExistcrypto) {
       const cryptoResponse = await getRobinhoodO(cryptoURL, "nummus");
       if (cryptoResponse) {
-        let cryptoResults = cryptoResponse.results;
-        cryptoResults.map((obj) => ({ ...obj, rhType: "crypto" }));
-        allorders.push(...cryptoResults);
+        const cryptoResults = cryptoResponse.results;
+        const cryptoMapped = cryptoResults.map((obj) => ({
+          ...obj,
+          rhType: "crypto",
+        }));
+        allorders.push(...cryptoMapped);
         if (
           !cryptoResponse.next ||
           cryptoResponse.next === null ||
@@ -124,7 +133,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         ) {
           isNextExistcrypto = false;
         } else {
-          bankURL = cryptoResponse.next;
+          cryptoURL = cryptoResponse.next;
         }
       }
     }
@@ -134,9 +143,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   while (isNextExistDW) {
     const bankResponse = await getRobinhoodO(bankURL, "api");
     if (bankResponse) {
-      let bankResults = bankResponse.results;
-      bankResults.map((obj) => ({ ...obj, rhType: "bank transfer" }));
-      allorders.push(...bankResults);
+      const bankResults = bankResponse.results;
+      const bankMapped = bankResults.map((obj) => ({
+        ...obj,
+        rhType: "bank transfer",
+      }));
+      allorders.push(...bankMapped);
       if (
         !bankResponse.next ||
         bankResponse.next === null ||
@@ -153,9 +165,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   while (isNextExistcard) {
     const cardResponse = await getRobinhoodO(cardURL, "minerva");
     if (isNextExistcard) {
-      let cardResults = cardResponse.results;
-      cardResults.map((obj) => ({ ...obj, rhType: "card transaction" }));
-      allorders.push(...cardResults);
+      const cardResults = cardResponse.results;
+      const cardMapped = cardResults.map((obj) => ({
+        ...obj,
+        rhType: "card transaction",
+      }));
+      allorders.push(...cardMapped);
       if (
         !cardResponse.next ||
         cardResponse.next === null ||
@@ -176,9 +191,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   while (isNextExistach) {
     const achResponse = await getRobinhoodO(withdrawalURL, "api");
     if (isNextExistach) {
-      let achResults = achResponse.results;
-      achResults.map((obj) => ({ ...obj, rhType: "ach" }));
-      allorders.push(...achResults);
+      const achResults = achResponse.results;
+      const achMapped = achResults.map((obj) => ({ ...obj, rhType: "ach" }));
+      allorders.push(...achMapped);
       if (
         !achResponse.next ||
         achResponse.next === null ||
@@ -195,9 +210,13 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   while (isNextExistachreceived) {
     const receivedResponse = await getRobinhoodO(receivedURL, "api");
     if (isNextExistachreceived) {
-      let receivedResults = receivedResponse.results;
-      receivedResults.map((obj) => ({ ...obj, rhType: "ach received" }));
-      allorders.push(...receivedResults);      if (
+      const receivedResults = receivedResponse.results;
+      const receivedMapped = receivedResults.map((obj) => ({
+        ...obj,
+        rhType: "ach received",
+      }));
+      allorders.push(...receivedMapped);
+      if (
         !receivedResponse.next ||
         receivedResponse.next === null ||
         receivedResponse.next === ""

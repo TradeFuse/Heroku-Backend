@@ -2,14 +2,6 @@ let queryString = require("query-string");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
-function isIterable(obj) {
-  // checks for null and undefined
-  if (obj == null) {
-    return false;
-  }
-  return typeof obj[Symbol.iterator] === "function";
-}
-
 module.exports = async function getRobinhoodOrders(bodyData, req) {
   console.log(bodyData);
   const _authToken = bodyData.data["token"];
@@ -19,7 +11,11 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   let isNextExist = true;
   let isNextExistOptions = true;
   let isNextExistDW = true;
+  let isNextExistcrypto = true;
   let isNextExistInstruments = true;
+  let isNextExistcard = true;
+  let isNextExistach = true;
+  let isNextExistachreceived = true;
 
   // INITAL HEADER OPTIONS
   let options = {
@@ -34,8 +30,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   let cardURL =
     "https://minerva.robinhood.com/history/transactions" + headerOptions;
 
-  let cardTransferURL =
-    "https://minerva.robinhood.com/history/deposits" + headerOptions;
   let withdrawalURL = "https://api.robinhood.com/ach/relationships/";
 
   let ordersURL = "https://api.robinhood.com/orders/" + headerOptions;
@@ -79,7 +73,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL, "api");
       if (ordersResponse) {
-        allorders.push(...ordersResponse.results);
+        let ordersResults = ordersResponse.results;
+        ordersResults.map((obj) => ({ ...obj, rhType: "stock" }));
+        allorders.push(...ordersResults);
         if (
           !ordersResponse.next ||
           ordersResponse.next === null ||
@@ -97,7 +93,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     while (isNextExistOptions) {
       const optionsResponse = await getRobinhoodO(optionsURL, "api");
       if (optionsResponse) {
-        allorders.push(...optionsResponse.results);
+        let optionsResults = optionsResponse.results;
+        optionsResults.map((obj) => ({ ...obj, rhType: "option" }));
+        allorders.push(...optionsResults);
         if (
           !optionsResponse.next ||
           optionsResponse.next === null ||
@@ -112,14 +110,33 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   }
 
   // Get crypto orders
-  const cryptoResponse = await getRobinhoodO(cryptoURL, "nummus");
-  allorders.push(cryptoResponse);
+  if (_assetClasses.includes("Crypto")) {
+    while (isNextExistcrypto) {
+      const cryptoResponse = await getRobinhoodO(cryptoURL, "nummus");
+      if (cryptoResponse) {
+        let cryptoResults = cryptoResponse.results;
+        cryptoResults.map((obj) => ({ ...obj, rhType: "crypto" }));
+        allorders.push(...cryptoResults);
+        if (
+          !cryptoResponse.next ||
+          cryptoResponse.next === null ||
+          cryptoResponse.next === ""
+        ) {
+          isNextExistcrypto = false;
+        } else {
+          bankURL = cryptoResponse.next;
+        }
+      }
+    }
+  }
 
   // Get bank transfers
   while (isNextExistDW) {
     const bankResponse = await getRobinhoodO(bankURL, "api");
     if (bankResponse) {
-      allorders.push(...bankResponse.results);
+      let bankResults = bankResponse.results;
+      bankResults.map((obj) => ({ ...obj, rhType: "bank transfer" }));
+      allorders.push(...bankResults);
       if (
         !bankResponse.next ||
         bankResponse.next === null ||
@@ -132,28 +149,71 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     }
   }
 
-  // Get card tranactions
-  const cardResponse = await getRobinhoodO(cardURL, "minerva");
-  allorders.push(cardResponse);
+  // Get card transactions
+  while (isNextExistcard) {
+    const cardResponse = await getRobinhoodO(cardURL, "minerva");
+    if (isNextExistcard) {
+      let cardResults = cardResponse.results;
+      cardResults.map((obj) => ({ ...obj, rhType: "card transaction" }));
+      allorders.push(...cardResults);
+      if (
+        !cardResponse.next ||
+        cardResponse.next === null ||
+        cardResponse.next === ""
+      ) {
+        isNextExistcard = false;
+      } else {
+        cardURL = cardResponse.next;
+      }
+    }
+  }
 
   // Get card transfers
   /*   const cardTransferResponse = await getRobinhoodO(cardTransferURL, "minerva");
   allorders.push(cardTransferResponse); */
 
   // Get ach
-  const achResponse = await getRobinhoodO(withdrawalURL, "api");
-  allorders.push(achResponse);
+  while (isNextExistach) {
+    const achResponse = await getRobinhoodO(withdrawalURL, "api");
+    if (isNextExistach) {
+      let achResults = achResponse.results;
+      achResults.map((obj) => ({ ...obj, rhType: "ach" }));
+      allorders.push(...achResults);
+      if (
+        !achResponse.next ||
+        achResponse.next === null ||
+        achResponse.next === ""
+      ) {
+        isNextExistach = false;
+      } else {
+        withdrawalURL = achResponse.next;
+      }
+    }
+  }
 
   // Get ach received
-  const receivedResponse = await getRobinhoodO(receivedURL, "api");
-  allorders.push(receivedResponse);
-
+  while (isNextExistachreceived) {
+    const receivedResponse = await getRobinhoodO(receivedURL, "api");
+    if (isNextExistachreceived) {
+      let receivedResults = receivedResponse.results;
+      receivedResults.map((obj) => ({ ...obj, rhType: "ach received" }));
+      allorders.push(...receivedResults);      if (
+        !receivedResponse.next ||
+        receivedResponse.next === null ||
+        receivedResponse.next === ""
+      ) {
+        isNextExistachreceived = false;
+      } else {
+        receivedURL = receivedResponse.next;
+      }
+    }
+  }
   // Get wire transfers
   /*   const wireResponse = await getRobinhoodO(wireURL, "api");
   allorders.push(wireResponse); */
   let i = 0;
   let instruments = [];
-/* 
+  /* 
   while (isNextExistInstruments) {
     const instrumentResponse = await getRobinhoodO(instrumentsURL, "api");
     if (instrumentResponse) {

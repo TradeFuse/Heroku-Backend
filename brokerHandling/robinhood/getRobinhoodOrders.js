@@ -151,21 +151,21 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 /*   const wireResponse = await getRobinhoodO(wireURL, "api");
   allorders.push(wireResponse); */
 
-  /*   while (isNextExistDW) {
-    const bankResponse = await getRobinhoodO(bankURL);
-    if (bankResponse) {
-      allorders.push(...bankResponse.results);
+  while (isNextExistInstruments) {
+    const instrumentResponse = await getRobinhoodO(instrumentsURL);
+    if (instrumentResponse) {
+      allorders.push(...instrumentResponse.results);
       if (
-        !bankResponse.next ||
-        bankResponse.next === null ||
-        bankResponse.next === ""
+        !instrumentResponse.next ||
+        instrumentResponse.next === null ||
+        instrumentResponse.next === ""
       ) {
-        isNextExistDW = false;
+        isNextExistInstruments = false;
       } else {
-        bankURL = bankResponse.next;
+        instrumentsURL = instrumentResponse.next;
       }
     }
-  } */
+  } 
 
   let i = 0;
   let instruments = [];

@@ -42,8 +42,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   let optionsURL = "https://api.robinhood.com/options/orders/" + headerOptions;
   let cryptoURL = "https://nummus.robinhood.com/orders/" + headerOptions;
 
-  let instrumentsURL = "https://api.robinhood.com/instruments/";
-
+  //let instrumentsURL = "https://api.robinhood.com/instruments/";
+  let instrumentsURL =
+    "https://api.robinhood.com/instruments/?cursor=cD1lNzM0YzI5OS0wZjE3LTRhZDAtODRmOS03ZmJiOTg3NmRlYzE%3D";
   // -----------------
   const bearerString = `Bearer ` + _authToken;
   console.log(bearerString);
@@ -136,7 +137,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   allorders.push(cardResponse);
 
   // Get card transfers
-/*   const cardTransferResponse = await getRobinhoodO(cardTransferURL, "minerva");
+  /*   const cardTransferResponse = await getRobinhoodO(cardTransferURL, "minerva");
   allorders.push(cardTransferResponse); */
 
   // Get ach
@@ -148,7 +149,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   allorders.push(receivedResponse);
 
   // Get wire transfers
-/*   const wireResponse = await getRobinhoodO(wireURL, "api");
+  /*   const wireResponse = await getRobinhoodO(wireURL, "api");
   allorders.push(wireResponse); */
   let i = 0;
   let instruments = [];
@@ -169,10 +170,10 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     }
     if (i === 20) {
       instruments.push(instrumentResponse);
-      break
+      break;
     }
-    i++
-  } 
+    i++;
+  }
 
   return { allorders: allorders, instruments: instruments };
 };

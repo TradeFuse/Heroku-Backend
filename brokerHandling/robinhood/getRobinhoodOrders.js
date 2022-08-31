@@ -148,8 +148,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   allorders.push(receivedResponse);
 
   // Get wire transfers
-  const wireResponse = await getRobinhoodO(wireURL, "api");
-  allorders.push(wireResponse);
+/*   const wireResponse = await getRobinhoodO(wireURL, "api");
+  allorders.push(wireResponse); */
 
   /*   while (isNextExistDW) {
     const bankResponse = await getRobinhoodO(bankURL);

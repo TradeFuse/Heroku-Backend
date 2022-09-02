@@ -22,7 +22,7 @@ module.exports = async function getcryptoinstrumentsRobinhood(bodyData, req) {
     return response.json(); // parses JSON response into native JavaScript objects
   };
 
-  const instrumentResponse = await getInstrumentRobinhood();
+  const instrumentResponse = await getCryptoInstrumentRobinhood();
   returnObj.instrument = instrumentResponse;
   return returnObj;
 };

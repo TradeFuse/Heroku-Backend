@@ -9,7 +9,7 @@ module.exports = async function getcryptoinstrumentsRobinhood(bodyData, req) {
     const response = await fetch(instrumentURL, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       headers: {
-        Host: "api.robinhood.com",
+        Host: "nummus.robinhood.com",
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Encoding": "gzip, deflate",

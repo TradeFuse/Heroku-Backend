@@ -25,7 +25,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   let bankURL = "https://api.robinhood.com/ach/transfers/" + headerOptions;
   let receivedURL =
     "https://api.robinhood.com/ach/received/transfers/" + headerOptions;
-
+  
   let wireURL = "https://api.robinhood.com/wire/transfers" + headerOptions;
   let cardURL =
     "https://minerva.robinhood.com/history/transactions" + headerOptions;

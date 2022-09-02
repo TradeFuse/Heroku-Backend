@@ -8,6 +8,7 @@ const getCustomer = require("./utils/getStripeCustomer");
 const updateCustomer = require("./utils/updateStripeCustomer");
 const initializeRobinhood = require("./brokerHandling/robinhood/initializeRobinhood");
 const getRobinhoodOrders = require("./brokerHandling/robinhood/getRobinhoodOrders");
+const getRobinhoodCryptoOrders = require("./brokerHandling/robinhood/getRobinhoodCryptoInstruments");
 const getRobinhoodInstruments = require("./brokerHandling/robinhood/getInstrument");
 const getAssetData = require("./utils/getAssetData");
 
@@ -76,11 +77,24 @@ app.post("/", async (req, res) => {
         res.json(responsegotRH);
         break;
       case "getRobinhoodInstruments":
-        const gotRobinhoodInstruments = await getRobinhoodInstruments(bodyData, req);
+        const gotRobinhoodInstruments = await getRobinhoodInstruments(
+          bodyData,
+          req
+        );
         const responsegotRHInstruments = {
           gotRobinhoodInstruments: gotRobinhoodInstruments,
         };
         res.json(responsegotRHInstruments);
+        break;
+      case "getRobinhoodCryptoInstruments":
+        const gotRobinhoodCryptoInstruments = await getRobinhoodCryptoOrders(
+          bodyData,
+          req
+        );
+        const responsegotRHCryptoInstruments = {
+          gotRobinhoodCryptoInstruments: gotRobinhoodCryptoInstruments,
+        };
+        res.json(responsegotRHCryptoInstruments);
         break;
       case "getAssetData":
         const gotAssetData = await getAssetData(bodyData, req);

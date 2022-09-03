@@ -253,6 +253,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     }
     i++;
   } */
-  const reversedOrders = allorders.reverse();
-  return { allorders: reversedOrders, instruments: instruments };
+  
+  return { allorders: allorders, instruments: instruments };
 };

@@ -162,7 +162,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   }
 
   // Get card transactions
-  while (isNextExistcard) {
+  // by default, exclude this
+/*   while (isNextExistcard) {
     const cardResponse = await getRobinhoodO(cardURL, "minerva");
     if (isNextExistcard) {
       const cardResults = cardResponse.results;
@@ -181,7 +182,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         cardURL = cardResponse.next;
       }
     }
-  }
+  } */
 
   // Get card transfers
   /*   const cardTransferResponse = await getRobinhoodO(cardTransferURL, "minerva");

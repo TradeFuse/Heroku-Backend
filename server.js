@@ -1,7 +1,7 @@
 "use strict";
-
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const discordBot = require("./modules/discordBot");
 const createCustomer = require("./utils/createStripeCustomer");
 const getCustomer = require("./utils/getStripeCustomer");
@@ -35,9 +35,9 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors(corsOptions));
+app.use(bodyParser.json({limit: '100mb'}));
+app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
 app.use(express.json());
-app.use(express.json({limit: '100mb'}));
-app.use(express.urlencoded({limit: '100mb'}));
 
 app.listen(PORT);
 

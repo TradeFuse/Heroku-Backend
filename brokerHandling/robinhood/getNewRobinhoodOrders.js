@@ -85,7 +85,6 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
             isNextExist = false;
           }
         });
-        console.log(ordersMapped);
 
         // push only new orders
         const newOrders = ordersMapped.filter(

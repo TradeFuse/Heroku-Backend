@@ -85,14 +85,14 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
             isNextExist = false;
           }
         });
-        console.log(ordersMapped)
+        console.log(ordersMapped);
 
         // push only new orders
-        const newOrders = ordersMapped.filter((order) =>
-          _ids.includes(order.id)
+        const newOrders = ordersMapped.filter(
+          (order) => !_ids.includes(order.id)
         );
         allorders.push(...newOrders);
-        console.log(newOrders)
+        console.log(newOrders);
         if (
           !ordersResponse.next ||
           ordersResponse.next === null ||
@@ -124,8 +124,8 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         });
 
         // push only new orders
-        const newOrders = optionsMapped.filter((order) =>
-          _ids.includes(order.id)
+        const newOrders = optionsMapped.filter(
+          (order) => !_ids.includes(order.id)
         );
         allorders.push(...newOrders);
 
@@ -161,8 +161,8 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         });
 
         // push only new orders
-        const newOrders = cryptoMapped.filter((order) =>
-          _ids.includes(order.id)
+        const newOrders = cryptoMapped.filter(
+          (order) => !_ids.includes(order.id)
         );
         allorders.push(...newOrders);
 
@@ -196,7 +196,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       });
 
       // push only new orders
-      const newOrders = bankMapped.filter((order) => _ids.includes(order.id));
+      const newOrders = bankMapped.filter((order) => !_ids.includes(order.id));
       allorders.push(...newOrders);
       if (
         !bankResponse.next ||
@@ -251,7 +251,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       });
 
       // push only new orders
-      const newOrders = achMapped.filter((order) => _ids.includes(order.id));
+      const newOrders = achMapped.filter((order) => !_ids.includes(order.id));
       allorders.push(...newOrders);
       if (
         !achResponse.next ||
@@ -283,8 +283,8 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       });
 
       // push only new orders
-      const newOrders = receivedMapped.filter((order) =>
-        _ids.includes(order.id)
+      const newOrders = receivedMapped.filter(
+        (order) => !_ids.includes(order.id)
       );
       allorders.push(...newOrders);
       if (

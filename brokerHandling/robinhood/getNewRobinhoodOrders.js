@@ -89,7 +89,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
 
         // push only new orders
         const newOrders = ordersMapped.filter(
-          (order) => !_ids.includes(order.id)
+          (order) => _ids.includes(order.id)
         );
         allorders.push(...newOrders);
 

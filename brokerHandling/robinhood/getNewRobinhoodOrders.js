@@ -70,7 +70,6 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
 
   // Get regular orders
   if (_assetClasses.includes("Stocks")) {
-    let isImported = false;
     while (isNextExist) {
       const ordersResponse = await getRobinhoodO(ordersURL, "api");
       if (ordersResponse) {
@@ -83,21 +82,20 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         // check if any order is already imported
         ordersMapped.forEach((order) => {
           if (_ids.includes(order.id)) {
-            isImported = true;
+            isNextExist = false;
           }
         });
 
         // push only new orders
-        const newOrders = ordersMapped.filter(
-          (order) => _ids.includes(order.id)
+        const newOrders = ordersMapped.filter((order) =>
+          _ids.includes(order.id)
         );
         allorders.push(...newOrders);
 
         if (
           !ordersResponse.next ||
           ordersResponse.next === null ||
-          ordersResponse.next === "" ||
-          isImported === true
+          ordersResponse.next === ""
         ) {
           isNextExist = false;
         } else {
@@ -108,7 +106,6 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
   }
   // Get options orders
   if (_assetClasses.includes("Options")) {
-    let isImported = false;
     while (isNextExistOptions) {
       const optionsResponse = await getRobinhoodO(optionsURL, "api");
       if (optionsResponse) {
@@ -121,21 +118,20 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         // check if any order is already imported
         optionsMapped.forEach((order) => {
           if (_ids.includes(order.id)) {
-            isImported = true;
+            isNextExistOptions = false;
           }
         });
 
         // push only new orders
-        const newOrders = optionsMapped.filter(
-          (order) => _ids.includes(order.id)
+        const newOrders = optionsMapped.filter((order) =>
+          _ids.includes(order.id)
         );
         allorders.push(...newOrders);
 
         if (
           !optionsResponse.next ||
           optionsResponse.next === null ||
-          optionsResponse.next === "" ||
-          isImported === true
+          optionsResponse.next === ""
         ) {
           isNextExistOptions = false;
         } else {
@@ -159,21 +155,20 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         // check if any order is already imported
         cryptoMapped.forEach((order) => {
           if (_ids.includes(order.id)) {
-            isImported = true;
+            isNextExistcrypto = false;
           }
         });
 
         // push only new orders
-        const newOrders = cryptoMapped.filter(
-          (order) => _ids.includes(order.id)
+        const newOrders = cryptoMapped.filter((order) =>
+          _ids.includes(order.id)
         );
         allorders.push(...newOrders);
 
         if (
           !cryptoResponse.next ||
           cryptoResponse.next === null ||
-          cryptoResponse.next === "" ||
-          isImported === true
+          cryptoResponse.next === ""
         ) {
           isNextExistcrypto = false;
         } else {
@@ -195,7 +190,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       // check if any order is already imported
       bankMapped.forEach((order) => {
         if (_ids.includes(order.id)) {
-          isImported = true;
+          isNextExistDW = false;
         }
       });
 
@@ -205,8 +200,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       if (
         !bankResponse.next ||
         bankResponse.next === null ||
-        bankResponse.next === "" ||
-        isImported === true
+        bankResponse.next === ""
       ) {
         isNextExistDW = false;
       } else {
@@ -251,7 +245,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       // check if any order is already imported
       achMapped.forEach((order) => {
         if (_ids.includes(order.id)) {
-          isImported = true;
+          isNextExistach = false;
         }
       });
 
@@ -261,8 +255,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       if (
         !achResponse.next ||
         achResponse.next === null ||
-        achResponse.next === "" ||
-        isImported === true
+        achResponse.next === ""
       ) {
         isNextExistach = false;
       } else {
@@ -284,20 +277,19 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       // check if any order is already imported
       receivedMapped.forEach((order) => {
         if (_ids.includes(order.id)) {
-          isImported = true;
+          isNextExistachreceived = false;
         }
       });
 
       // push only new orders
-      const newOrders = receivedMapped.filter(
-        (order) => _ids.includes(order.id)
+      const newOrders = receivedMapped.filter((order) =>
+        _ids.includes(order.id)
       );
       allorders.push(...newOrders);
       if (
         !receivedResponse.next ||
         receivedResponse.next === null ||
-        receivedResponse.next === "" ||
-        isImported === true
+        receivedResponse.next === ""
       ) {
         isNextExistachreceived = false;
       } else {

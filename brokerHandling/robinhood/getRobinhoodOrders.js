@@ -142,6 +142,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   // Get bank transfers
   while (isNextExistDW) {
     const bankResponse = await getRobinhoodO(bankURL, "api");
+    console.log("bankResponse", bankResponse)
     if (bankResponse) {
       const bankResults = bankResponse.results;
       const bankMapped = bankResults.map((obj) => ({

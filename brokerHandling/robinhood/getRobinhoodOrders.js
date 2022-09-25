@@ -41,7 +41,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     "https://api.robinhood.com/instruments/?cursor=cD1lNzM0YzI5OS0wZjE3LTRhZDAtODRmOS03ZmJiOTg3NmRlYzE%3D";
   // -----------------
   const bearerString = `Bearer ` + _authToken;
-  console.log(bearerString);
   const getRobinhoodO = async (url, id) => {
     let hostURL = "";
     if (id === "api") {
@@ -65,7 +64,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     }).catch((err) => {
       throw err;
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response && response.json(); // parses JSON response into native JavaScript objects
   };
 
   // Get regular orders
@@ -163,7 +162,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 
   // Get card transactions
   // by default, exclude this
-/*   while (isNextExistcard) {
+  /*   while (isNextExistcard) {
     const cardResponse = await getRobinhoodO(cardURL, "minerva");
     if (isNextExistcard) {
       const cardResults = cardResponse.results;
@@ -254,6 +253,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     }
     i++;
   } */
-  
+
   return { allorders: allorders };
 };

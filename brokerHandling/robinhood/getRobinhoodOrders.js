@@ -87,6 +87,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         } else {
           ordersURL = ordersResponse.next;
         }
+      } else {
+        isNextExist = false;
       }
     }
   }
@@ -110,6 +112,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         } else {
           optionsURL = optionsResponse.next;
         }
+      } else {
+        isNextExistOptions = false;
       }
     }
   }
@@ -134,6 +138,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         } else {
           cryptoURL = cryptoResponse.next;
         }
+      } else {
+        isNextExistcrypto = false;
       }
     }
   }
@@ -157,6 +163,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       } else {
         bankURL = bankResponse.next;
       }
+    } else {
+      isNextExistDW = false;
     }
   }
 
@@ -203,6 +211,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       } else {
         withdrawalURL = achResponse.next;
       }
+    } else {
+      isNextExistach = false;
     }
   }
 
@@ -225,6 +235,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       } else {
         receivedURL = receivedResponse.next;
       }
+    } else {
+      isNextExistachreceived = false;
     }
   }
   // Get wire transfers

@@ -62,11 +62,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         Authorization: bearerString,
       },
     }).catch((err) => {
-      throw err;
+      return undefined;
     });
-    if (response.status !== 200) {
-      throw new Error(`There was an error with status code ${response.status}`);
-    }
     return response.json();
   };
 

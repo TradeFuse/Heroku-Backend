@@ -65,12 +65,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     })
       .then((response) => {
         console.log(response);
-        return response;
+        return response.json();
       })
       .catch((err) => {
-        throw err;
+        return undefined;
       });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response; // parses JSON response into native JavaScript objects
   };
 
   // Get regular orders
@@ -93,6 +93,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         } else {
           ordersURL = ordersResponse.next;
         }
+      } else {
+        isNextExist = false;
       }
     }
   }
@@ -116,6 +118,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         } else {
           optionsURL = optionsResponse.next;
         }
+      } else {
+        isNextExistOptions = false;
       }
     }
   }
@@ -140,6 +144,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         } else {
           cryptoURL = cryptoResponse.next;
         }
+      } else {
+        isNextExistcrypto = false;
       }
     }
   }
@@ -163,6 +169,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       } else {
         bankURL = bankResponse.next;
       }
+    } else {
+      isNextExistDW = false;
     }
   }
 
@@ -209,6 +217,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       } else {
         withdrawalURL = achResponse.next;
       }
+    } else {
+      isNextExistach = false;
     }
   }
 
@@ -231,6 +241,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       } else {
         receivedURL = receivedResponse.next;
       }
+    } else {
+      isNextExistachreceived = false;
     }
   }
   // Get wire transfers

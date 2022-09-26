@@ -63,7 +63,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         Authorization: bearerString,
       },
     }).catch((err) => {
-      throw err;
+      return undefined;
     });
     return response.json(); // parses JSON response into native JavaScript objects
   };

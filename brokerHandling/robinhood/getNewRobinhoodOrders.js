@@ -62,9 +62,13 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         Origin: "https://robinhood.com",
         Authorization: bearerString,
       },
-    }).catch((err) => {
-      throw err;
-    });
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((err) => {
+        return undefined;
+      });
     return response.json(); // parses JSON response into native JavaScript objects
   };
 
@@ -91,7 +95,6 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
           (order) => !_ids.includes(order.id)
         );
         allorders.push(...newOrders);
-        console.log(newOrders);
         if (
           !ordersResponse.next ||
           ordersResponse.next === null ||
@@ -101,6 +104,8 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         } else {
           ordersURL = ordersResponse.next;
         }
+      } else {
+        isNextExist = false;
       }
     }
   }
@@ -137,6 +142,8 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         } else {
           optionsURL = optionsResponse.next;
         }
+      } else {
+        isNextExistOptions = false;
       }
     }
   }
@@ -174,6 +181,8 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         } else {
           cryptoURL = cryptoResponse.next;
         }
+      } else {
+        isNextExistcrypto = false;
       }
     }
   }
@@ -206,6 +215,8 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       } else {
         bankURL = bankResponse.next;
       }
+    } else {
+      isNextExistDW = false;
     }
   }
 
@@ -261,6 +272,8 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       } else {
         withdrawalURL = achResponse.next;
       }
+    } else {
+      isNextExistach = false;
     }
   }
 
@@ -295,6 +308,8 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       } else {
         receivedURL = receivedResponse.next;
       }
+    } else {
+      isNextExistachreceived = false;
     }
   }
   // Get wire transfers

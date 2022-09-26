@@ -71,7 +71,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       .catch((err) => {
         throw err;
       });
-    return await response();
+    return await response;
   };
 
   // Get regular orders

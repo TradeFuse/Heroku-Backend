@@ -50,7 +50,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     } else if (id === "minerva") {
       hostURL = "minerva.robinhood.com";
     }
-    const response = fetch(url, {
+    const response = await fetch(url, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       headers: {
         Host: hostURL,
@@ -61,17 +61,13 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         Origin: "https://robinhood.com",
         Authorization: bearerString,
       },
-    })
-      .then((res) => {
-        if (res.status !== 200) {
-          throw new Error(`There was an error with status code ${res.status}`);
-        }
-        return res.json();
-      })
-      .catch((err) => {
-        throw err;
-      });
-    return await response;
+    }).catch((err) => {
+      throw err;
+    });
+    if (response.status !== 200) {
+      throw new Error(`There was an error with status code ${response.status}`);
+    }
+    return response.json();
   };
 
   // Get regular orders

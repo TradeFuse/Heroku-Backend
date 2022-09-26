@@ -64,6 +64,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     }).catch((err) => {
       throw err;
     });
+    console.log("response", response)
     return response && response.json(); // parses JSON response into native JavaScript objects
   };
 

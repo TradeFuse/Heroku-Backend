@@ -84,7 +84,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         }));
 
         // check if any order is already imported
-        ordersMapped.forEach((order) => {
+        ordersMapped?.forEach((order) => {
           if (_ids.includes(order.id)) {
             isNextExist = false;
           }
@@ -94,7 +94,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         const newOrders = ordersMapped?.filter(
           (order) => !_ids.includes(order.id)
         );
-        allorders.push(...newOrders);
+        isIterable(newOrders) && allorders.push(...newOrders);
         if (
           !ordersResponse.next ||
           ordersResponse.next === null ||
@@ -121,7 +121,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         }));
 
         // check if any order is already imported
-        optionsMapped.forEach((order) => {
+        optionsMapped?.forEach((order) => {
           if (_ids.includes(order.id)) {
             isNextExistOptions = false;
           }
@@ -131,7 +131,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         const newOrders = optionsMapped?.filter(
           (order) => !_ids.includes(order.id)
         );
-        allorders.push(...newOrders);
+        isIterable(newOrders) && allorders.push(...newOrders);
 
         if (
           !optionsResponse.next ||
@@ -160,7 +160,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         }));
 
         // check if any order is already imported
-        cryptoMapped.forEach((order) => {
+        cryptoMapped?.forEach((order) => {
           if (_ids.includes(order.id)) {
             isNextExistcrypto = false;
           }
@@ -170,7 +170,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         const newOrders = cryptoMapped?.filter(
           (order) => !_ids.includes(order.id)
         );
-        allorders.push(...newOrders);
+        isIterable(newOrders) && allorders.push(...newOrders);
 
         if (
           !cryptoResponse.next ||
@@ -197,7 +197,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         rhType: "bank transfer",
       }));
       // check if any order is already imported
-      bankMapped.forEach((order) => {
+      bankMapped?.forEach((order) => {
         if (_ids.includes(order.id)) {
           isNextExistDW = false;
         }
@@ -205,7 +205,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
 
       // push only new orders
       const newOrders = bankMapped?.filter((order) => !_ids.includes(order.id));
-      allorders.push(...newOrders);
+      isIterable(newOrders) && allorders.push(...newOrders);
       if (
         !bankResponse.next ||
         bankResponse.next === null ||
@@ -254,7 +254,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       const achResults = achResponse.results;
       const achMapped = achResults?.map((obj) => ({ ...obj, rhType: "ach" }));
       // check if any order is already imported
-      achMapped.forEach((order) => {
+      achMapped?.forEach((order) => {
         if (_ids.includes(order.id)) {
           isNextExistach = false;
         }
@@ -262,7 +262,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
 
       // push only new orders
       const newOrders = achMapped?.filter((order) => !_ids.includes(order.id));
-      allorders.push(...newOrders);
+      isIterable(newOrders) && allorders.push(...newOrders);
       if (
         !achResponse.next ||
         achResponse.next === null ||
@@ -288,7 +288,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       }));
 
       // check if any order is already imported
-      receivedMapped.forEach((order) => {
+      receivedMapped?.forEach((order) => {
         if (_ids.includes(order.id)) {
           isNextExistachreceived = false;
         }
@@ -298,7 +298,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       const newOrders = receivedMapped?.filter(
         (order) => !_ids.includes(order.id)
       );
-      allorders.push(...newOrders);
+      isIterable(newOrders) && allorders.push(...newOrders);
       if (
         !receivedResponse.next ||
         receivedResponse.next === null ||

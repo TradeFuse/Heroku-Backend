@@ -1,8 +1,8 @@
 let queryString = require("query-string");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-
-module.exports = async function getRobinhoodOrders(bodyData, req) {
+  const isIterable = require("./utils/isIterable");
+  module.exports = async function getRobinhoodOrders(bodyData, req) {
   console.log(bodyData);
   const _authToken = bodyData.data["token"];
   const _assetClasses = bodyData.data["assetClasses"];
@@ -81,7 +81,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
           ...obj,
           rhType: "stock",
         }));
-        allorders.push(...ordersMapped);
+        isIterable(ordersMapped) && allorders.push(...ordersMapped);
         if (
           !ordersResponse.next ||
           ordersResponse.next === null ||
@@ -106,7 +106,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
           ...obj,
           rhType: "option",
         }));
-        allorders.push(...optionsMapped);
+        isIterable(optionsMapped) && allorders.push(...optionsMapped);
         if (
           !optionsResponse.next ||
           optionsResponse.next === null ||
@@ -132,7 +132,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
           ...obj,
           rhType: "crypto",
         }));
-        allorders.push(...cryptoMapped);
+        isIterable(cryptoMapped) && allorders.push(...cryptoMapped);
         if (
           !cryptoResponse.next ||
           cryptoResponse.next === null ||
@@ -157,7 +157,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         ...obj,
         rhType: "bank transfer",
       }));
-      allorders.push(...bankMapped);
+      isIterable(bankMapped) && allorders.push(...bankMapped);
       if (
         !bankResponse.next ||
         bankResponse.next === null ||
@@ -205,7 +205,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     if (isNextExistach) {
       const achResults = achResponse.results;
       const achMapped = achResults?.map((obj) => ({ ...obj, rhType: "ach" }));
-      allorders.push(...achMapped);
+      isIterable(achMapped) && allorders.push(...achMapped);
       if (
         !achResponse.next ||
         achResponse.next === null ||
@@ -229,7 +229,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         ...obj,
         rhType: "ach received",
       }));
-      allorders.push(...receivedMapped);
+      isIterable(receivedMapped) && allorders.push(...receivedMapped);
       if (
         !receivedResponse.next ||
         receivedResponse.next === null ||

@@ -19,7 +19,7 @@ module.exports = async function updateCustomer(bodyData) {
     });
   } catch {
     if (!updatedCustomer) {
-      throw `${updatedCustomer} is invalid`;
+      return `Invalid Customer`;
     }
   }
 

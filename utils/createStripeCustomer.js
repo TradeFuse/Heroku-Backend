@@ -18,7 +18,7 @@ module.exports = async function createCustomer(bodyData) {
     });
   } catch {
     if (!customer) {
-      throw (`Couldn't create customer.`)
+      return `Invalid Customer`;
     }
   }
   return customer;

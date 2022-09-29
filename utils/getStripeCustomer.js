@@ -6,7 +6,7 @@ module.exports = async function getCustomer(customerId) {
     customer = await stripe.customers.retrieve(customerId);
   } catch {
     if (!customer) {
-      throw (`${customerId} is invalid`)
+      return `Invalid Customer`;
     }
   }
   return customer

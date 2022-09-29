@@ -34,7 +34,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       },
       body: JSON.stringify(dataIn),
     }).catch((err) => {
-      throw err;
+      return undefined;
     });
     return response.json(); // parses JSON response into native JavaScript objects
   };

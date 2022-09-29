@@ -41,7 +41,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     "https://api.robinhood.com/instruments/?cursor=cD1lNzM0YzI5OS0wZjE3LTRhZDAtODRmOS03ZmJiOTg3NmRlYzE%3D";
   // -----------------
   const bearerString = `Bearer ` + _authToken;
-  console.log(bearerString);
   const getRobinhoodO = async (url, id) => {
     let hostURL = "";
     if (id === "api") {

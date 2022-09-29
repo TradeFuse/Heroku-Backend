@@ -17,7 +17,7 @@ module.exports = async function getcryptoinstrumentsRobinhood(bodyData, req) {
         Origin: "https://robinhood.com",
       },
     }).catch((err) => {
-      throw err;
+      return undefined;
     });
     return response.json(); // parses JSON response into native JavaScript objects
   };

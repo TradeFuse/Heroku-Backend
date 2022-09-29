@@ -78,7 +78,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       const ordersResponse = await getRobinhoodO(ordersURL, "api");
       if (ordersResponse) {
         const ordersResults = ordersResponse.results;
-        const ordersMapped = ordersResults.map((obj) => ({
+        const ordersMapped = ordersResults?.map((obj) => ({
           ...obj,
           rhType: "stock",
         }));
@@ -91,7 +91,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         });
 
         // push only new orders
-        const newOrders = ordersMapped.filter(
+        const newOrders = ordersMapped?.filter(
           (order) => !_ids.includes(order.id)
         );
         allorders.push(...newOrders);
@@ -115,7 +115,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       const optionsResponse = await getRobinhoodO(optionsURL, "api");
       if (optionsResponse) {
         const optionsResults = optionsResponse.results;
-        const optionsMapped = optionsResults.map((obj) => ({
+        const optionsMapped = optionsResults?.map((obj) => ({
           ...obj,
           rhType: "option",
         }));
@@ -128,7 +128,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         });
 
         // push only new orders
-        const newOrders = optionsMapped.filter(
+        const newOrders = optionsMapped?.filter(
           (order) => !_ids.includes(order.id)
         );
         allorders.push(...newOrders);
@@ -154,7 +154,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       const cryptoResponse = await getRobinhoodO(cryptoURL, "nummus");
       if (cryptoResponse) {
         const cryptoResults = cryptoResponse.results;
-        const cryptoMapped = cryptoResults.map((obj) => ({
+        const cryptoMapped = cryptoResults?.map((obj) => ({
           ...obj,
           rhType: "crypto",
         }));
@@ -167,7 +167,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
         });
 
         // push only new orders
-        const newOrders = cryptoMapped.filter(
+        const newOrders = cryptoMapped?.filter(
           (order) => !_ids.includes(order.id)
         );
         allorders.push(...newOrders);
@@ -192,7 +192,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
     const bankResponse = await getRobinhoodO(bankURL, "api");
     if (bankResponse) {
       const bankResults = bankResponse.results;
-      const bankMapped = bankResults.map((obj) => ({
+      const bankMapped = bankResults?.map((obj) => ({
         ...obj,
         rhType: "bank transfer",
       }));
@@ -204,7 +204,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       });
 
       // push only new orders
-      const newOrders = bankMapped.filter((order) => !_ids.includes(order.id));
+      const newOrders = bankMapped?.filter((order) => !_ids.includes(order.id));
       allorders.push(...newOrders);
       if (
         !bankResponse.next ||
@@ -252,7 +252,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
     const achResponse = await getRobinhoodO(withdrawalURL, "api");
     if (isNextExistach) {
       const achResults = achResponse.results;
-      const achMapped = achResults.map((obj) => ({ ...obj, rhType: "ach" }));
+      const achMapped = achResults?.map((obj) => ({ ...obj, rhType: "ach" }));
       // check if any order is already imported
       achMapped.forEach((order) => {
         if (_ids.includes(order.id)) {
@@ -261,7 +261,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       });
 
       // push only new orders
-      const newOrders = achMapped.filter((order) => !_ids.includes(order.id));
+      const newOrders = achMapped?.filter((order) => !_ids.includes(order.id));
       allorders.push(...newOrders);
       if (
         !achResponse.next ||
@@ -282,7 +282,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
     const receivedResponse = await getRobinhoodO(receivedURL, "api");
     if (isNextExistachreceived) {
       const receivedResults = receivedResponse.results;
-      const receivedMapped = receivedResults.map((obj) => ({
+      const receivedMapped = receivedResults?.map((obj) => ({
         ...obj,
         rhType: "ach received",
       }));
@@ -295,7 +295,7 @@ module.exports = async function getNewRobinhoodOrders(bodyData, req) {
       });
 
       // push only new orders
-      const newOrders = receivedMapped.filter(
+      const newOrders = receivedMapped?.filter(
         (order) => !_ids.includes(order.id)
       );
       allorders.push(...newOrders);

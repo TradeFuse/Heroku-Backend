@@ -1,7 +1,7 @@
 let queryString = require("query-string");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-  const isIterable = require("../../utils/isIterable");
+  const isIterable = require("../../utils/handleIterator");
   module.exports = async function getRobinhoodOrders(bodyData, req) {
   console.log(bodyData);
   const _authToken = bodyData.data["token"];

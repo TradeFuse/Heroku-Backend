@@ -13,6 +13,7 @@ module.exports = async function updateCustomer(bodyData) {
         "Last Session": bodyData.data["Last Session"],
         Trades: bodyData.data["Trades"],
         "Shared Trades": bodyData.data["Shared Trades"],
+        Sessions: bodyData.data["Sessions"],
         Tier: bodyData.data["Tier"],
         "Storage Used": bodyData.data["Storage Used"],
       },

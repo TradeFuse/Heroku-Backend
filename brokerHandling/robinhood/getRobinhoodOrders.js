@@ -77,6 +77,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   };
   const loopFunction = (loopMap) => {
     console.log(loopMap);
+    console.log(loopMap.asset)
     if (loopMap.asset === "") {
       // bank transfer, ach transfers, ach receieved, wire, transfers, crypto transfers. etc
       while (loopMap.isNextExistVar) {

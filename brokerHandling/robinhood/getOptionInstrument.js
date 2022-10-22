@@ -7,7 +7,7 @@ module.exports = async function getoptioninstrumentsRobinhood(bodyData, req) {
 
   const getOptionInstrumentRobinhood = async () => {
     const response = await fetch(
-      "https://api.robinhood.com/options/instruments/{0}/".format(instrumentid),
+      `https://api.robinhood.com/options/instruments/${instrumentid}/`,
       {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         headers: {

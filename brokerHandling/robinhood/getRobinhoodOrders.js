@@ -75,11 +75,11 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       });
     return response; // parses JSON response into native JavaScript objects
   };
-  const loopFunction = async (loopMap) => {
+  const loopFunction = (loopMap) => {
     if (loopMap.asset === "") {
       // bank transfer, ach transfers, ach receieved, wire, transfers, crypto transfers. etc
       while (loopMap.isNextExistVar) {
-        const bankResponse = await getRobinhoodO(loopMap.url, loopMap.apiType);
+        const bankResponse = getRobinhoodO(loopMap.url, loopMap.apiType);
         if (bankResponse) {
           const bankResults = bankResponse.results;
           const bankMapped = bankResults?.map((obj) => ({
@@ -104,10 +104,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       // Stock, Options, and Crypto orders
       if (_assetClasses.includes(loopMap.asset)) {
         while (loopMap.isNextExistVar) {
-          const ordersResponse = await getRobinhoodO(
-            loopMap.url,
-            loopMap.apiType
-          );
+          const ordersResponse = getRobinhoodO(loopMap.url, loopMap.apiType);
           if (ordersResponse) {
             const ordersResults = ordersResponse.results;
             const ordersMapped = ordersResults?.map((obj) => ({
@@ -185,7 +182,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   const functionArray = loopMapArr.map((loopMap) => loopFunction(loopMap));
   console.log(functionArray);
   const returnOrders = async () => {
-    Promise.all(functionArray);
+    functionArray.forEach((func) => {
+      func();
+    });
   };
   await returnOrders();
 

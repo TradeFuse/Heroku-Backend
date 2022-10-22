@@ -182,14 +182,20 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       apiType: "api",
     },
   ];
-  const functionArray = loopMapArr.map((loopMap) => loopFunction(loopMap));
+  const functionArray = loopMapArr.map(
+    async (loopMap) => await loopFunction(loopMap)
+  );
   console.log(functionArray);
-  const returnOrders = () => {
-    functionArray.forEach((func) => {
-      func();
-    });
+  const returnOrders = async () => {
+    for (let i = 0; i < functionArray.length; i++) {
+      // get the current function getting looped
+      const func = functionArray[i];
+
+      // call the function
+      await func();
+    }
   };
-  returnOrders();
+  await returnOrders();
 
   // Get wire transfers
   /*   const wireResponse = await getRobinhoodO(wireURL, "api");

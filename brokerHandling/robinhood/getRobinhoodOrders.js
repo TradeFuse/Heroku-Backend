@@ -185,7 +185,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   const functionArray = loopMapArr.map((loopMap) => loopFunction(loopMap));
   console.log(functionArray);
   const returnOrders = () => {
-    Promise.all(functionArray);
+    functionArray.forEach((func) => {
+      func();
+    });
   };
   returnOrders();
 

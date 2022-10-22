@@ -76,6 +76,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     return response; // parses JSON response into native JavaScript objects
   };
   const loopFunction = (loopMap) => {
+    console.log(loopMap);
     if (loopMap.asset === "") {
       // bank transfer, ach transfers, ach receieved, wire, transfers, crypto transfers. etc
       while (loopMap.isNextExistVar) {

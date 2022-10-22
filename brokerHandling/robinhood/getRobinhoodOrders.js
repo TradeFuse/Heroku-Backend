@@ -10,6 +10,8 @@ const fetch = (...args) =>
   let allorders = [];
   let isNextExist = true;
   let isNextExistOptions = true;
+  let isNextExistOptionsEvents = true;
+
   let isNextExistDW = true;
   let isNextExistcrypto = true;
   let isNextExistInstruments = true;
@@ -126,26 +128,26 @@ const fetch = (...args) =>
 
     // Get options events
     if (_assetClasses.includes("Options")) {
-      while (isNextExistOptions) {
+      while (isNextExistOptionsEvents) {
         const optionseventsResponse = await getRobinhoodO(optionseventsURL, "api");
         if (optionseventsResponse) {
           const optionseventsResults = optionseventsResponse.results;
-          const optionsMapped = optionseventsResults?.map((obj) => ({
+          const optionseventsMapped = optionseventsResults?.map((obj) => ({
             ...obj,
             rhType: "optionevent",
           }));
-          isIterable(optionsMapped) && allorders.push(...optionsMapped);
+          isIterable(optionseventsMapped) && allorders.push(...optionseventsMapped);
           if (
             !optionseventsResponse.next ||
             optionseventsResponse.next === null ||
             optionseventsResponse.next === ""
           ) {
-            isNextExistOptions = false;
+            isNextExistOptionsEvents = false;
           } else {
-            optionsURL = optionseventsResponse.next;
+            optionseventsURL = optionseventsResponse.next;
           }
         } else {
-          isNextExistOptions = false;
+          isNextExistOptionsEvents = false;
         }
       }
     }

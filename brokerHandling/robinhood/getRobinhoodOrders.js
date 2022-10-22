@@ -34,6 +34,8 @@ const fetch = (...args) =>
 
   let ordersURL = "https://api.robinhood.com/orders/" + headerOptions;
   let optionsURL = "https://api.robinhood.com/options/orders/" + headerOptions;
+  let optionseventsURL = "https://api.robinhood.com/options/events/" + headerOptions;
+
   let cryptoURL = "https://nummus.robinhood.com/orders/" + headerOptions;
 
   //let instrumentsURL = "https://api.robinhood.com/instruments/";
@@ -121,6 +123,32 @@ const fetch = (...args) =>
       }
     }
   }
+
+    // Get options events
+    if (_assetClasses.includes("Options")) {
+      while (isNextExistOptions) {
+        const optionseventsResponse = await getRobinhoodO(optionseventsURL, "api");
+        if (optionseventsResponse) {
+          const optionseventsResults = optionseventsResponse.results;
+          const optionsMapped = optionseventsResults?.map((obj) => ({
+            ...obj,
+            rhType: "optionevent",
+          }));
+          isIterable(optionsMapped) && allorders.push(...optionsMapped);
+          if (
+            !optionseventsResponse.next ||
+            optionseventsResponse.next === null ||
+            optionseventsResponse.next === ""
+          ) {
+            isNextExistOptions = false;
+          } else {
+            optionsURL = optionseventsResponse.next;
+          }
+        } else {
+          isNextExistOptions = false;
+        }
+      }
+    }
 
   // Get crypto orders
   if (_assetClasses.includes("Crypto")) {

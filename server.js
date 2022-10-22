@@ -9,7 +9,7 @@ const updateCustomer = require("./utils/updateStripeCustomer");
 const initializeRobinhood = require("./brokerHandling/robinhood/initializeRobinhood");
 const getRobinhoodOrders = require("./brokerHandling/robinhood/getRobinhoodOrders");
 const getNewRobinhoodOrders = require("./brokerHandling/robinhood/getNewRobinhoodOrders");
-
+const getOptionInstrumentRobinhood = require("./brokerHandling/robinhood/getOptionInstrument");
 const getRobinhoodCryptoOrders = require("./brokerHandling/robinhood/getRobinhoodCryptoInstruments");
 const getRobinhoodInstruments = require("./brokerHandling/robinhood/getInstrument");
 const getAssetData = require("./utils/getAssetData");
@@ -35,8 +35,8 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors(corsOptions));
-app.use(bodyParser.json({limit: '100mb'}));
-app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use(express.json());
 
 app.listen(PORT);
@@ -97,6 +97,14 @@ app.post("/", async (req, res) => {
           gotRobinhoodInstruments: gotRobinhoodInstruments,
         };
         res.json(responsegotRHInstruments);
+        break;
+      case "getRobinhoodOptionsInstruments":
+        const gotRobinhoodOptionInstruments =
+          await getOptionInstrumentRobinhood(bodyData, req);
+        const responsegotRHOptionInstruments = {
+          gotRobinhoodOptionInstruments: gotRobinhoodOptionInstruments,
+        };
+        res.json(responsegotRHOptionInstruments);
         break;
       case "getRobinhoodCryptoInstruments":
         const gotRobinhoodCryptoInstruments = await getRobinhoodCryptoOrders(

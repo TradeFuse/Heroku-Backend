@@ -183,7 +183,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     },
   ];
   const returnOrders = () => {
-    return Promise.all(loopMapArr.map((loopMap) => loopFunction(loopMap)));
+    return Promise.all(
+      loopMapArr.map(async (loopMap) => await loopFunction(loopMap))
+    );
   };
   const orders = returnOrders();
 

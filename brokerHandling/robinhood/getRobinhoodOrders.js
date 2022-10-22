@@ -187,7 +187,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   const returnOrders = () => {
     return Promise.all(functionArray);
   };
-  console.log(orders)
+  console.log(orders);
   const orders = returnOrders();
 
   // Get wire transfers

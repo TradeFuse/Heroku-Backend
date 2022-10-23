@@ -111,11 +111,14 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     } else {
       // Stock, Options, and Crypto orders
       if (_assetClasses.includes(loopMap.asset)) {
+        console.log(loopMap)
         while (loopMap.isNextExistVar) {
           const ordersResponse = await getRobinhoodO(
             loopMap.url,
             loopMap.apiType
           );
+          console.log(ordersResponse)
+
           if (ordersResponse) {
             const ordersResults = ordersResponse.results;
             const ordersMapped = ordersResults?.map((obj) => ({

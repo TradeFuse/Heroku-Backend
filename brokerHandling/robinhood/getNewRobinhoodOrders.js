@@ -4,7 +4,6 @@ const fetch = (...args) =>
 const isIterable = require("../../utils/handleIterator");
 
 module.exports = async function getNewRobinhoodOrders(bodyData, req) {
-  console.log(bodyData);
   const _authToken = bodyData.data["token"];
   const _assetClasses = bodyData.data["assetClasses"];
   const _ids = bodyData.data["ids"];

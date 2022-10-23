@@ -1,9 +1,8 @@
 let queryString = require("query-string");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-  const isIterable = require("../../utils/handleIterator");
-  module.exports = async function getRobinhoodOrders(bodyData, req) {
-  console.log(bodyData);
+const isIterable = require("../../utils/handleIterator");
+module.exports = async function getRobinhoodOrders(bodyData, req) {
   const _authToken = bodyData.data["token"];
   const _assetClasses = bodyData.data["assetClasses"];
 
@@ -29,6 +28,14 @@ const fetch = (...args) =>
     "https://api.robinhood.com/ach/received/transfers/" + headerOptions;
 
   let wireURL = "https://api.robinhood.com/wire/transfers" + headerOptions;
+  let transfersURL =
+    "https://bonfire.robinhood.com/paymenthub/transfers/" + headerOptions;
+  let transfers2URL =
+    "https://cashier.robinhood.com/ach/transfers/" + headerOptions;
+  let transfers3URL =
+    "https://cashier.robinhood.com/received_ach/transfers/" + headerOptions;
+  let cryptotransfersURL =
+    "https://bonfire.robinhood.com/crypto/transfers/history/" + headerOptions;
   let cardURL =
     "https://minerva.robinhood.com/history/transactions" + headerOptions;
 
@@ -36,7 +43,8 @@ const fetch = (...args) =>
 
   let ordersURL = "https://api.robinhood.com/orders/" + headerOptions;
   let optionsURL = "https://api.robinhood.com/options/orders/" + headerOptions;
-  let optionseventsURL = "https://api.robinhood.com/options/events/" + headerOptions;
+  let optionseventsURL =
+    "https://api.robinhood.com/options/events/" + headerOptions;
 
   let cryptoURL = "https://nummus.robinhood.com/orders/" + headerOptions;
 
@@ -126,31 +134,35 @@ const fetch = (...args) =>
     }
   }
 
-    // Get options events
-    if (_assetClasses.includes("Options")) {
-      while (isNextExistOptionsEvents) {
-        const optionseventsResponse = await getRobinhoodO(optionseventsURL, "api");
-        if (optionseventsResponse) {
-          const optionseventsResults = optionseventsResponse.results;
-          const optionseventsMapped = optionseventsResults?.map((obj) => ({
-            ...obj,
-            rhType: "optionevent",
-          }));
-          isIterable(optionseventsMapped) && allorders.push(...optionseventsMapped);
-          if (
-            !optionseventsResponse.next ||
-            optionseventsResponse.next === null ||
-            optionseventsResponse.next === ""
-          ) {
-            isNextExistOptionsEvents = false;
-          } else {
-            optionseventsURL = optionseventsResponse.next;
-          }
-        } else {
+  // Get options events
+  if (_assetClasses.includes("Options")) {
+    while (isNextExistOptionsEvents) {
+      const optionseventsResponse = await getRobinhoodO(
+        optionseventsURL,
+        "api"
+      );
+      if (optionseventsResponse) {
+        const optionseventsResults = optionseventsResponse.results;
+        const optionseventsMapped = optionseventsResults?.map((obj) => ({
+          ...obj,
+          rhType: "optionevent",
+        }));
+        isIterable(optionseventsMapped) &&
+          allorders.push(...optionseventsMapped);
+        if (
+          !optionseventsResponse.next ||
+          optionseventsResponse.next === null ||
+          optionseventsResponse.next === ""
+        ) {
           isNextExistOptionsEvents = false;
+        } else {
+          optionseventsURL = optionseventsResponse.next;
         }
+      } else {
+        isNextExistOptionsEvents = false;
       }
     }
+  }
 
   // Get crypto orders
   if (_assetClasses.includes("Crypto")) {

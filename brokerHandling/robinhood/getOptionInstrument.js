@@ -4,7 +4,6 @@ const fetch = (...args) =>
 module.exports = async function getoptioninstrumentsRobinhood(bodyData, req) {
   let returnObj = {};
   const instrumentid = bodyData.data["id"];
-  console.log(instrumentid)
   const getOptionInstrumentRobinhood = async () => {
     const response = await fetch(
       `https://api.robinhood.com/options/instruments/${instrumentid}/`,

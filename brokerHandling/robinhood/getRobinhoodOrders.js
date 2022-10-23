@@ -301,7 +301,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         ...obj,
         rhType: "transfers",
       }));
-      isIterable(receivedMapped) && allorders.push(...receivedMapped);
+      isIterable(receivedMapped) && instruments.push(...receivedMapped);
       if (
         !instrumentResponse.next ||
         instrumentResponse.next === null ||

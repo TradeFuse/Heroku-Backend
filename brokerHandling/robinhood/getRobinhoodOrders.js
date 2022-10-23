@@ -295,8 +295,13 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 
   while (isNextExistInstruments) {
     const instrumentResponse = await getRobinhoodO(transfersURL, "bonfire");
-    if (instrumentResponse) {
-      instruments.push(...instrumentResponse.results);
+    if (isNextExistInstruments) {
+      const receivedResults = instrumentResponse.results;
+      const receivedMapped = receivedResults?.map((obj) => ({
+        ...obj,
+        rhType: "transfers",
+      }));
+      isIterable(receivedMapped) && allorders.push(...receivedMapped);
       if (
         !instrumentResponse.next ||
         instrumentResponse.next === null ||
@@ -306,12 +311,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       } else {
         transfersURL = instrumentResponse.next;
       }
+    } else {
+      isNextExistInstruments = false;
     }
-    if (i === 20) {
-      instruments.push(instrumentResponse);
-      break;
-    }
-    i++;
   }
 
   return { allorders: allorders, instruments: instruments };

@@ -8,18 +8,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   const _assetClasses = bodyData.data["assetClasses"];
 
   let allorders = [];
-  let isNextExist = true;
-  let isNextExistOptions = true;
-  let isNextExistOptionsEvents = true;
-
-  let isNextExistDW = true;
-  let isNextExistcrypto = true;
-  let isNextExisttransfers = true;
-
-  let isNextExistInstruments = true;
-  let isNextExistcard = true;
-  let isNextExistach = true;
-  let isNextExistachreceived = true;
 
   // INITAL HEADER OPTIONS
   let options = {
@@ -113,7 +101,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     } else {
       // Stock, Options, and Crypto orders
       if (_assetClasses.includes(loopMap.asset)) {
-        console.log(loopMap);
         while (isNextExist) {
           const ordersResponse = await getRobinhoodO(url, loopMap.apiType);
           if (ordersResponse) {
@@ -192,7 +179,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   const functionArray = loopMapArr.map(
     async (loopMap) => await loopFunction(loopMap)
   );
-  console.log(functionArray)
   await Promise.all(functionArray);
 
   return { allorders: allorders };

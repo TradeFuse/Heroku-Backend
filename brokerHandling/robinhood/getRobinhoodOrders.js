@@ -75,13 +75,13 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       });
     return response; // parses JSON response into native JavaScript objects
   };
-  const loopFunction = (loopMap) => {
+  const loopFunction = async (loopMap) => {
     console.log(loopMap);
-    console.log(loopMap.asset)
+    console.log(loopMap.asset);
     if (loopMap.asset === "") {
       // bank transfer, ach transfers, ach receieved, wire, transfers, crypto transfers. etc
       while (loopMap.isNextExistVar) {
-        const bankResponse = getRobinhoodO(loopMap.url, loopMap.apiType);
+        const bankResponse = await getRobinhoodO(loopMap.url, loopMap.apiType);
         if (bankResponse) {
           const bankResults = bankResponse.results;
           const bankMapped = bankResults?.map((obj) => ({
@@ -106,7 +106,10 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       // Stock, Options, and Crypto orders
       if (_assetClasses.includes(loopMap.asset)) {
         while (loopMap.isNextExistVar) {
-          const ordersResponse = getRobinhoodO(loopMap.url, loopMap.apiType);
+          const ordersResponse = await getRobinhoodO(
+            loopMap.url,
+            loopMap.apiType
+          );
           if (ordersResponse) {
             const ordersResults = ordersResponse.results;
             const ordersMapped = ordersResults?.map((obj) => ({
@@ -183,12 +186,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   ];
   const functionArray = loopMapArr.map((loopMap) => loopFunction(loopMap));
   console.log(functionArray);
-  const returnOrders = async () => {
-    functionArray.forEach((func) => {
-      func();
+  const returnOrders = () => {
+    Promise.all(functionArray).then((values) => {
+      console.log(values);
     });
   };
-  await returnOrders();
+  returnOrders();
 
   // Get wire transfers
   /*   const wireResponse = await getRobinhoodO(wireURL, "api");

@@ -165,12 +165,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     },
     {
       asset: "",
-      url: receivedURL,
-      type: "ach received",
-      apiType: "api",
-    },
-    {
-      asset: "",
       url: transfersURL,
       type: "transfers",
       apiType: "bonfire",

@@ -84,10 +84,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
     return response; // parses JSON response into native JavaScript objects
   };
   const loopFunction = async (loopMap) => {
+    let url = loopMap.url;
+    let isNextExist = true;
     if (loopMap.asset === "") {
       // bank transfer, ach transfers, ach receieved, wire, transfers, crypto transfers. etc
-      while (loopMap.isNextExistVar) {
-        const bankResponse = await getRobinhoodO(loopMap.url, loopMap.apiType);
+      while (isNextExist) {
+        const bankResponse = await getRobinhoodO(url, loopMap.apiType);
         if (bankResponse) {
           const bankResults = bankResponse.results;
           const bankMapped = bankResults?.map((obj) => ({
@@ -100,24 +102,21 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
             bankResponse.next === null ||
             bankResponse.next === ""
           ) {
-            loopMap.isNextExistVar = false;
+            isNextExist = false;
           } else {
-            loopMap.url = ordersResponse.next;
+            url = ordersResponse.next;
           }
         } else {
-          loopMap.isNextExistVar = false;
+          isNextExist = false;
         }
       }
     } else {
       // Stock, Options, and Crypto orders
       if (_assetClasses.includes(loopMap.asset)) {
-        console.log(loopMap)
-        while (loopMap.isNextExistVar) {
-          const ordersResponse = await getRobinhoodO(
-            loopMap.url,
-            loopMap.apiType
-          );
-          console.log(ordersResponse)
+        console.log(loopMap);
+        while (isNextExist) {
+          const ordersResponse = await getRobinhoodO(url, loopMap.apiType);
+          console.log(ordersResponse);
 
           if (ordersResponse) {
             const ordersResults = ordersResponse.results;
@@ -131,12 +130,12 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
               ordersResponse.next === null ||
               ordersResponse.next === ""
             ) {
-              loopMap.isNextExistVar = false;
+              isNextExist = false;
             } else {
-              loopMap.url = ordersResponse.next;
+              url = ordersResponse.next;
             }
           } else {
-            loopMap.isNextExistVar = false;
+            isNextExist = false;
           }
         }
       }
@@ -147,56 +146,48 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       asset: "Stocks",
       url: ordersURL,
       type: "stock",
-      isNextExistVar: isNextExist,
       apiType: "api",
     },
     {
       asset: "Options",
       url: optionsURL,
       type: "option",
-      isNextExistVar: isNextExistOptions,
       apiType: "api",
     },
     {
       asset: "Options",
       url: optionseventsURL,
       type: "optionevent",
-      isNextExistVar: isNextExistOptionsEvents,
       apiType: "api",
     },
     {
       asset: "Crypto",
       url: cryptoURL,
       type: "crypto",
-      isNextExistVar: isNextExistcrypto,
       apiType: "nummus",
     },
     {
       asset: "",
       url: bankURL,
       type: "bank transfer",
-      isNextExistVar: isNextExistDW,
       apiType: "api",
     },
     {
       asset: "",
       url: withdrawalURL,
       type: "ach",
-      isNextExistVar: isNextExistach,
       apiType: "api",
     },
     {
       asset: "",
       url: receivedURL,
       type: "ach received",
-      isNextExistVar: isNextExistachreceived,
       apiType: "api",
     },
     {
       asset: "",
       url: transfersURL,
       type: "transfers",
-      isNextExistVar: isNextExisttransfers,
       apiType: "bonfire",
     },
   ];

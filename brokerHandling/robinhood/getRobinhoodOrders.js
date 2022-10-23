@@ -290,9 +290,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   allorders.push(wireResponse); */
   let i = 0;
   let instruments = [];
-  /* 
+
   while (isNextExistInstruments) {
-    const instrumentResponse = await getRobinhoodO(instrumentsURL, "api");
+    const instrumentResponse = await getRobinhoodO(transfersURL, "api");
     if (instrumentResponse) {
       instruments.push(...instrumentResponse.results);
       if (
@@ -302,7 +302,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       ) {
         isNextExistInstruments = false;
       } else {
-        instrumentsURL = instrumentResponse.next;
+        transfersURL = instrumentResponse.next;
       }
     }
     if (i === 20) {
@@ -310,7 +310,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       break;
     }
     i++;
-  } */
+  }
 
-  return { allorders: allorders };
+  return { allorders: allorders, instruments: instruments };
 };

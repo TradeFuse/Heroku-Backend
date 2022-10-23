@@ -104,7 +104,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
           ) {
             isNextExist = false;
           } else {
-            url = ordersResponse.next;
+            url = bankResponse.next;
           }
         } else {
           isNextExist = false;

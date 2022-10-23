@@ -116,8 +116,6 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
         console.log(loopMap);
         while (isNextExist) {
           const ordersResponse = await getRobinhoodO(url, loopMap.apiType);
-          console.log(ordersResponse);
-
           if (ordersResponse) {
             const ordersResults = ordersResponse.results;
             const ordersMapped = ordersResults?.map((obj) => ({
@@ -194,6 +192,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   const functionArray = loopMapArr.map(
     async (loopMap) => await loopFunction(loopMap)
   );
+  console.log(functionArray)
   await Promise.all(functionArray);
 
   return { allorders: allorders };

@@ -61,6 +61,8 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
       hostURL = "nummus.robinhood.com";
     } else if (id === "minerva") {
       hostURL = "minerva.robinhood.com";
+    } else if (id === "bonfire") {
+      hostURL = "bonfire.robinhood.com";
     }
     const response = await fetch(url, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -292,7 +294,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   let instruments = [];
 
   while (isNextExistInstruments) {
-    const instrumentResponse = await getRobinhoodO(transfersURL, "api");
+    const instrumentResponse = await getRobinhoodO(transfersURL, "bonfire");
     if (instrumentResponse) {
       instruments.push(...instrumentResponse.results);
       if (

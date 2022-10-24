@@ -12,6 +12,7 @@ const getNewRobinhoodOrders = require("./brokerHandling/robinhood/getNewRobinhoo
 const getOptionInstrumentRobinhood = require("./brokerHandling/robinhood/getOptionInstrument");
 const getRobinhoodCryptoOrders = require("./brokerHandling/robinhood/getRobinhoodCryptoInstruments");
 const getRobinhoodInstruments = require("./brokerHandling/robinhood/getInstrument");
+const getOptionPositionRobinhood = require("./brokerHandling/robinhood/getOptionPosition");
 const getAssetData = require("./utils/getAssetData");
 
 // Constants
@@ -105,6 +106,16 @@ app.post("/", async (req, res) => {
           gotRobinhoodOptionInstruments: gotRobinhoodOptionInstruments,
         };
         res.json(responsegotRHOptionInstruments);
+        break;
+      case "getRobinhoodOptionsPosition":
+        const gotRobinhoodOptionPosition = await getOptionPositionRobinhood(
+          bodyData,
+          req
+        );
+        const responsegotRHOptionPosition = {
+          gotRobinhoodOptionPosition: gotRobinhoodOptionPosition,
+        };
+        res.json(responsegotRHOptionPosition);
         break;
       case "getRobinhoodCryptoInstruments":
         const gotRobinhoodCryptoInstruments = await getRobinhoodCryptoOrders(

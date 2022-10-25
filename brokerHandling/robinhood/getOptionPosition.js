@@ -7,10 +7,10 @@ module.exports = async function getOptionPositionRobinhood(bodyData, req) {
   const _authToken = bodyData.data["token"];
   const account = bodyData.data["account"];
   const bearerString = `Bearer ` + _authToken;
-
+  console.log(bodyData)
   const getOptionPositionRobinhood = async () => {
     const response = await fetch(
-      `https://api.robinhood.com/options/positions/${account}/${positionid}/`,
+      `https://api.robinhood.com/options/positions/${account}/${positionid}`,
       {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         headers: {

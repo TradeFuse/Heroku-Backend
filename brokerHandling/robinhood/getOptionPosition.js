@@ -5,7 +5,6 @@ module.exports = async function getOptionPositionRobinhood(bodyData, req) {
   let returnObj = {};
   const _authToken = bodyData.data["token"];
   const bearerString = `Bearer ` + _authToken;
-  console.log(bodyData);
   const getOptionPositionRobinhood = async () => {
     const response = await fetch(
       `https://api.robinhood.com/options/positions/`,

@@ -3,6 +3,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 module.exports = async function createCustomer(bodyData) {
   let customer = "";
   try {
+    // create customer
     customer = await stripe.customers.create({
       name: "",
       email: "",
@@ -15,6 +16,12 @@ module.exports = async function createCustomer(bodyData) {
         Sessions: 1,
         "Storage Used": `2.94 KB`, // default data usage
       },
+    });
+
+    // subscribe them to stripe free
+    await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{ price: "price_1L2hzIJEnF6qjMZiYVeo5pXg" }],
     });
   } catch {
     if (!customer) {

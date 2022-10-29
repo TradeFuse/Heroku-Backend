@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const discordBot = require("./modules/discordBot");
-const createCustomer = require("./utils/createStripeCustomer");
+const createCustomer = require("./utils/stripe/createStripeCustomer");
 const getCustomer = require("./utils/getStripeCustomer");
 const updateCustomer = require("./utils/updateStripeCustomer");
 const initializeRobinhood = require("./brokerHandling/robinhood/initializeRobinhood");
@@ -14,7 +14,7 @@ const getRobinhoodCryptoOrders = require("./brokerHandling/robinhood/getRobinhoo
 const getRobinhoodInstruments = require("./brokerHandling/robinhood/getInstrument");
 const getOptionPositionRobinhood = require("./brokerHandling/robinhood/getOptionPosition");
 const getAssetData = require("./utils/getAssetData");
-
+const createSession = require("./utils/stripe/createStripeSessions")
 // Constants
 const PORT = process.env.PORT || 3000;
 //const HOST = "0.0.0.0";
@@ -67,6 +67,10 @@ app.post("/", async (req, res) => {
       case "updateStripeCustomer":
         const updatedCustomer = await updateCustomer(bodyData);
         res.json(updatedCustomer);
+        break;
+      case "createStripeSession":
+        const createdSession = await createSession(bodyData);
+        res.json(createdSession);
         break;
       case "initializeRobinhood":
         const initializedRobinhood = await initializeRobinhood(bodyData, req);

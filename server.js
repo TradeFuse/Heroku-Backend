@@ -15,6 +15,8 @@ const getRobinhoodInstruments = require("./brokerHandling/robinhood/getInstrumen
 const getOptionPositionRobinhood = require("./brokerHandling/robinhood/getOptionPosition");
 const getAssetData = require("./utils/getAssetData");
 const createSession = require("./utils/stripe/createStripeSession");
+const createPortalSession = require("./utils/stripe/createPortalSession");
+
 // Constants
 const PORT = process.env.PORT || 3000;
 //const HOST = "0.0.0.0";
@@ -74,6 +76,10 @@ app.post("/", async (req, res) => {
       case "createStripeSession":
         const createdSession = await createSession(bodyData);
         res.json(createdSession);
+        break;
+      case "createStripePortalSession":
+        const createdPortalSession = await createPortalSession(bodyData);
+        res.json(createdPortalSession);
         break;
       case "initializeRobinhood":
         const initializedRobinhood = await initializeRobinhood(bodyData, req);
@@ -181,7 +187,7 @@ app.post("/webhook", async (req, res) => {
 
   switch (eventType) {
     case "checkout.session.completed":
-      console.log("checkoiut completed")
+      console.log("checkoiut completed");
       // Payment is successful and the subscription is created.
       // You should provision the subscription and save the customer ID to your database.
       break;

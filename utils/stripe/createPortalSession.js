@@ -9,6 +9,7 @@ module.exports = async function createPortalSession(bodyData) {
       customer: customerId,
       return_url: returnUrl,
     });
+    console.log(session)
   } catch {
     if (!session) {
       return `Invalid session`;

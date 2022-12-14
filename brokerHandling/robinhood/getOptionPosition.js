@@ -3,6 +3,7 @@ const fetch = (...args) =>
 
 module.exports = async function getOptionPositionRobinhood(bodyData, req) {
   let returnObj = {};
+  console.log(bodyData);
   const positionid = bodyData.data["id"];
   const _authToken = bodyData.data["token"];
   const bearerString = `Bearer ` + _authToken;

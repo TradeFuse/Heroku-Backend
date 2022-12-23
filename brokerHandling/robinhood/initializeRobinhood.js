@@ -34,6 +34,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
       },
       body: JSON.stringify(dataIn),
     }).catch((err) => {
+      console.log(err);
       return undefined;
     });
     return response.json(); // parses JSON response into native JavaScript objects
@@ -47,6 +48,5 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();
   }
-  console.log(returnObj);
   return returnObj;
 };

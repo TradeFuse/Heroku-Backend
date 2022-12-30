@@ -10,9 +10,9 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
   let allorders = [];
 
   // INITAL HEADER OPTIONS
-  let options = {
+/*   let options = {
     "updated_at[gte]": "2017-08-25",
-  };
+  }; */
   const headerOptions = "?" + queryString.stringify(options);
   let bankURL = "https://api.robinhood.com/ach/transfers/" + headerOptions;
   let receivedURL =

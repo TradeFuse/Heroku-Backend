@@ -11,7 +11,7 @@ module.exports = async function getRobinhoodOrders(bodyData, req) {
 
   // INITAL HEADER OPTIONS
   let options = {
-    "updated_at[gte]": "2022-12-27",
+    "updated_at[gte]": "2017-08-25",
   };
   const headerOptions = "?" + queryString.stringify(options);
   let bankURL = "https://api.robinhood.com/ach/transfers/" + headerOptions;

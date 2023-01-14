@@ -29,11 +29,7 @@ module.exports = async function getRiskFreeRate(bodyData, req) {
   const xmlText = await response.text();
   const dom = new JSDOM(xmlText);
   const bc4Month = dom.window.document.querySelectorAll("BC_4MONTH");
-  console.log(bc4Month);
-
   const latestBC4Month = bc4Month[bc4Month.length - 1].textContent;
-  console.log(latestBC4Month);
-
   returnObj.rate = latestBC4Month;
   return returnObj;
 };

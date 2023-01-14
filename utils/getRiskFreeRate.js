@@ -3,7 +3,7 @@ const { JSDOM } = jsdom;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
-module.exports = async function getRiskFreeRate(bodyData, req) {
+module.exports = async function getRiskFreeRate() {
   let returnObj = {};
   const treasuryURL =
     "https://home.treasury.gov/sites/default/files/interest-rates/yield.xml";
@@ -21,7 +21,8 @@ module.exports = async function getRiskFreeRate(bodyData, req) {
         "Access-Control-Allow-Headers": "*",
       },
     }).catch((err) => {
-      return undefined;
+      returnObj.rate = 2.0;
+      return returnObj;
     });
     return response; // parses JSON response into native JavaScript objects
   };

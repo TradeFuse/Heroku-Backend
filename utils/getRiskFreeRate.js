@@ -31,7 +31,7 @@ module.exports = async function getRiskFreeRate(bodyData, req) {
   console.log(xml);
 
   const parser = new DOMParser();
-  const doc = parser.parseFromString(xml, "application/xml");
+  const doc = parser.parseFromString(xml, "text/xml");
   const bc4MonthValue = doc.getElementsByTagName("BC_4MONTH")[0].textContent;
   returnObj.rate = bc4MonthValue;
   return returnObj;

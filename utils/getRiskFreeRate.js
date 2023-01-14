@@ -23,8 +23,15 @@ module.exports = async function getRiskFreeRate(bodyData, req) {
     });
     return response; // parses JSON response into native JavaScript objects
   };
+  console.log(response);
+  const response = await getRate();
 
-  const rateResponse = await getRate();
-  returnObj.rate = rateResponse;
+  const xml = await response.text();
+  console.log(xml);
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(xml, "application/xml");
+  const bc4MonthValue = doc.getElementsByTagName("BC_4MONTH")[0].textContent;
+  returnObj.rate = bc4MonthValue;
   return returnObj;
 };

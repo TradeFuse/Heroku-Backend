@@ -16,7 +16,7 @@ const getOptionPositionRobinhood = require("./brokerHandling/robinhood/getOption
 const getAssetData = require("./utils/getAssetData");
 const createSession = require("./utils/stripe/createStripeSession");
 const createPortalSession = require("./utils/stripe/createPortalSession");
-
+const getRiskFreeRate = require("./utils/getRiskFreeRate");
 // Constants
 const PORT = process.env.PORT || 3000;
 //const HOST = "0.0.0.0";
@@ -146,6 +146,10 @@ app.post("/", async (req, res) => {
           asset: gotAssetData,
         };
         res.json(responseAssetData);
+        break;
+      case "getRiskFreeRate":
+        const gotRiskFreeRate = await getRiskFreeRate();
+        res.json(gotRiskFreeRate);
         break;
       default:
         break;

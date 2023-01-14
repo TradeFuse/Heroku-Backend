@@ -1,4 +1,4 @@
-const DOMParser = require("xmldom").DOMParser;
+const jsdom = require("jsdom");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
@@ -30,9 +30,9 @@ module.exports = async function getRiskFreeRate(bodyData, req) {
   const xml = await response.text();
   console.log(xml);
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(xml, "text/xml");
-  const bc4MonthValue = doc.getElementsByTagName("BC_4MONTH")[0].textContent;
+  const dom = new jsdom.JSDOM(xml);
+  const bc4MonthValue =
+    dom.window.document.getElementsByTagName("BC_4MONTH")[0].textContent;
   returnObj.rate = bc4MonthValue;
   return returnObj;
 };

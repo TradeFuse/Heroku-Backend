@@ -23,8 +23,8 @@ module.exports = async function getRiskFreeRate(bodyData, req) {
     });
     return response; // parses JSON response into native JavaScript objects
   };
-  console.log(response);
   const response = await getRate();
+  console.log(response);
 
   const xml = await response.text();
   console.log(xml);

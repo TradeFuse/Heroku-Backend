@@ -1,3 +1,4 @@
+"use strict";
 const jsdom = require("jsdom");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));

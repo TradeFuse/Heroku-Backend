@@ -1,3 +1,4 @@
+const DOMParser = require("xmldom").DOMParser;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 

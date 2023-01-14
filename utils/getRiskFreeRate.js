@@ -21,7 +21,7 @@ module.exports = async function getRiskFreeRate(bodyData, req) {
     }).catch((err) => {
       return undefined;
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response; // parses JSON response into native JavaScript objects
   };
 
   const rateResponse = await getRate();

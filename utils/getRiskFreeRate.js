@@ -26,15 +26,10 @@ module.exports = async function getRiskFreeRate(bodyData, req) {
     return response; // parses JSON response into native JavaScript objects
   };
   const response = await getRate();
-
-  const xml = await response.text();
-  console.log(xml);
-  const dom = new JSDOM(xml);
-  const bc4MonthValue =
-    dom.window.document.getElementsByTagName("BC_4MONTH")[0].textContent;
-  console.log(dom);
-  console.log(bc4MonthValue);
-
-  returnObj.rate = bc4MonthValue;
+  const xmlText = await response.text();
+  const dom = new JSDOM(xmlText);
+  const bc4Month = dom.window.document.querySelectorAll("BC_4MONTH");
+  const latestBC4Month = bc4Month[bc4Month.length - 1].textContent;
+  returnObj.rate = latestBC4Month;
   return returnObj;
 };

@@ -47,6 +47,7 @@ app.listen(PORT);
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+const gotRiskFreeRate = await getRiskFreeRate();
 
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
@@ -148,7 +149,6 @@ app.post("/", async (req, res) => {
         res.json(responseAssetData);
         break;
       case "getRiskFreeRate":
-        const gotRiskFreeRate = await getRiskFreeRate();
         res.json(gotRiskFreeRate);
         break;
       default:

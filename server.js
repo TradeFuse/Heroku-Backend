@@ -59,7 +59,7 @@ app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use(express.json());
 
-cron.schedule("00 17 * * * *", async () => {
+cron.schedule("*/15 * * * * *", async () => {
   await getRiskFreeRateEveryHour();
 });
 getRiskFreeRate().then((res) => {

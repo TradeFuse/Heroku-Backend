@@ -62,6 +62,7 @@ app.use(express.json());
 cron.schedule("00 17 * * * *", async () => {
   await getRiskFreeRateEveryHour();
 });
+getRiskFreeRateEveryHour();
 
 app.listen(PORT);
 

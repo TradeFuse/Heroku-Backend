@@ -21,18 +21,19 @@ const cron = require("node-cron");
 const AsyncLock = require("async-lock");
 let lock = new AsyncLock();
 
-let riskFreeRate;
+let riskFreeRate = { rate: 2.0 };
 
 const getRiskFreeRateEveryHour = async () => {
   await lock.acquire("lockKey", async () => {
     try {
       const gotRiskFreeRate = await getRiskFreeRate();
-      riskFreeRate = gotRiskFreeRate;
+      riskFreeRate = { rate: gotRiskFreeRate };
+      console.log(riskFreeRate);
     } catch (error) {
       console.log(error);
     }
   });
-}
+};
 
 cron.schedule("0 * * * *", async () => {
   await getRiskFreeRateEveryHour();
@@ -169,6 +170,8 @@ app.post("/", async (req, res) => {
         res.json(responseAssetData);
         break;
       case "getRiskFreeRate":
+        console.log(riskFreeRate);
+
         res.json(riskFreeRate);
         break;
       default:

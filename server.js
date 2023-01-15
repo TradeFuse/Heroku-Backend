@@ -35,10 +35,6 @@ const getRiskFreeRateEveryHour = async () => {
   });
 };
 
-cron.schedule("00 59 * * * *", async () => {
-  await getRiskFreeRateEveryHour();
-});
-
 // Constants
 const PORT = process.env.PORT || 3000;
 //const HOST = "0.0.0.0";
@@ -236,3 +232,8 @@ app.post("/webhook", async (req, res) => {
 });
 
 discordBot();
+
+cron.schedule("00 06 * * * *", async () => {
+  console.log("yo");
+  await getRiskFreeRateEveryHour();
+});

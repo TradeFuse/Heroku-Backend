@@ -27,8 +27,7 @@ const getRiskFreeRateEveryHour = async () => {
   await lock.acquire("lockKey", async () => {
     try {
       const gotRiskFreeRate = await getRiskFreeRate();
-      riskFreeRate = { rate: gotRiskFreeRate };
-      console.log(riskFreeRate);
+      riskFreeRate = gotRiskFreeRate;
     } catch (error) {
       console.log(error);
     }
@@ -60,8 +59,7 @@ app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use(express.json());
 
-cron.schedule("00 12 * * * *", async () => {
-  console.log("yo");
+cron.schedule("00 17 * * * *", async () => {
   await getRiskFreeRateEveryHour();
 });
 

@@ -60,6 +60,11 @@ app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use(express.json());
 
+cron.schedule("00 12 * * * *", async () => {
+  console.log("yo");
+  await getRiskFreeRateEveryHour();
+});
+
 app.listen(PORT);
 
 app.get("/", (req, res) => {
@@ -232,8 +237,3 @@ app.post("/webhook", async (req, res) => {
 });
 
 discordBot();
-
-cron.schedule("00 06 * * * *", async () => {
-  console.log("yo");
-  await getRiskFreeRateEveryHour();
-});

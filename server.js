@@ -35,7 +35,7 @@ const getRiskFreeRateEveryHour = async () => {
   });
 };
 
-cron.schedule("0 * * * *", async () => {
+cron.schedule("00 59 * * * *", async () => {
   await getRiskFreeRateEveryHour();
 });
 

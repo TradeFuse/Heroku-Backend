@@ -17,8 +17,22 @@ const getAssetData = require("./utils/getAssetData");
 const createSession = require("./utils/stripe/createStripeSession");
 const createPortalSession = require("./utils/stripe/createPortalSession");
 const getRiskFreeRate = require("./utils/getRiskFreeRate");
+const cron = require("node-cron");
+const AsyncLock = require("async-lock");
+let lock = new AsyncLock();
 
 let riskFreeRate = { rate: 2.0 };
+
+const getRiskFreeRateEveryHour = async () => {
+  await lock.acquire("lockKey", async () => {
+    try {
+      const gotRiskFreeRate = await getRiskFreeRate();
+      riskFreeRate = gotRiskFreeRate;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+};
 
 // Constants
 const PORT = process.env.PORT || 3000;
@@ -45,6 +59,9 @@ app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use(express.json());
 
+cron.schedule("00 17 * * * *", async () => {
+  await getRiskFreeRateEveryHour();
+});
 getRiskFreeRate().then((res) => {
   riskFreeRate = res;
 });

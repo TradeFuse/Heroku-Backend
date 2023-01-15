@@ -23,7 +23,7 @@ let lock = new AsyncLock();
 
 let riskFreeRate;
 
-const getRiskFreeRate = async () => {
+const getRiskFreeRateEveryHour = async () => {
   await lock.acquire("lockKey", async () => {
     try {
       const gotRiskFreeRate = await getRiskFreeRate();
@@ -35,7 +35,7 @@ const getRiskFreeRate = async () => {
 }
 
 cron.schedule("0 * * * *", async () => {
-  await getRiskFreeRate();
+  await getRiskFreeRateEveryHour();
 });
 
 // Constants

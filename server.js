@@ -18,21 +18,20 @@ const createSession = require("./utils/stripe/createStripeSession");
 const createPortalSession = require("./utils/stripe/createPortalSession");
 const getRiskFreeRate = require("./utils/getRiskFreeRate");
 const cron = require("node-cron");
-const Semaphore = require("semaphorejs");
-let semaphore = new Semaphore(1);
+const AsyncLock = require("async-lock");
+let lock = new AsyncLock();
 
 let riskFreeRate;
 
-async function getRiskFreeRate() {
-  await semaphore.acquire();
-  try {
-    const gotRiskFreeRate = await getRiskFreeRate();
-    riskFreeRate = gotRiskFreeRate;
-  } catch (error) {
-    console.log(error);
-  } finally {
-    semaphore.release();
-  }
+const getRiskFreeRate = async () => {
+  await lock.acquire("lockKey", async () => {
+    try {
+      const gotRiskFreeRate = await getRiskFreeRate();
+      riskFreeRate = gotRiskFreeRate;
+    } catch (error) {
+      console.log(error);
+    }
+  });
 }
 
 cron.schedule("0 * * * *", async () => {

@@ -8,6 +8,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "async-lock": "^1.4.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "discord-prefix": "^3.0.0",

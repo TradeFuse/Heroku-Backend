@@ -20,7 +20,7 @@ module.exports = async function getAssetData(bodyData) {
       process.env.ATOM_FINANCE_KEY,
     options
   ).catch((err) => {
-    throw err;
+    console.log(err);
   });
   return response.json(); // parses JSON response into native JavaScript objects
 };

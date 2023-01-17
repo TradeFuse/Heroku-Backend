@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const discordBot = require("./modules/discordBot");
 const createCustomer = require("./utils/stripe/createStripeCustomer");
 const getCustomer = require("./utils/stripe/getStripeCustomer");
+const deleteCustomer = require("./utils/stripe/deleteStripeCustomer");
 const updateCustomer = require("./utils/stripe/updateStripeCustomer");
 const initializeRobinhood = require("./brokerHandling/robinhood/initializeRobinhood");
 const getRobinhoodOrders = require("./brokerHandling/robinhood/getRobinhoodOrders");
@@ -92,6 +93,11 @@ app.post("/", async (req, res) => {
         const customerId = bodyData.data.customerId;
         const retrievedCustomer = await getCustomer(customerId);
         res.json(retrievedCustomer);
+        break;
+      case "deleteStripeCustomer":
+        const customerIdd = bodyData.data.customerId;
+        const deletedCustomer = await deleteCustomer(customerIdd);
+        res.json(deletedCustomer);
         break;
       case "updateStripeCustomer":
         const updatedCustomer = await updateCustomer(bodyData);

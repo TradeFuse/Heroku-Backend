@@ -19,6 +19,7 @@ const createSession = require("./utils/stripe/createStripeSession");
 const createPortalSession = require("./utils/stripe/createPortalSession");
 const getRiskFreeRate = require("./utils/getRiskFreeRate");
 const cron = require("node-cron");
+const cancelAllSubscriptions = require("./utils/stripe/cancelAllSubscriptions");
 const AsyncLock = require("async-lock");
 let lock = new AsyncLock();
 
@@ -93,6 +94,11 @@ app.post("/", async (req, res) => {
         const customerId = bodyData.data.customerId;
         const retrievedCustomer = await getCustomer(customerId);
         res.json(retrievedCustomer);
+        break;
+      case "cancelAllSubscriptions":
+        const subArray = bodyData.data.subArray;
+        const cancelsubs = await cancelAllSubscriptions(subArray);
+        res.json(cancelsubs);
         break;
       case "deleteStripeCustomer":
         const customerIdd = bodyData.data.customerId;

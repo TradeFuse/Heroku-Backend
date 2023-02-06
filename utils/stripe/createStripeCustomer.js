@@ -19,10 +19,10 @@ module.exports = async function createCustomer(bodyData) {
     });
 
     // subscribe them to stripe free
-    await stripe.subscriptions.create({
+/*     await stripe.subscriptions.create({
       customer: customer.id,
       items: [{ price: "price_1L2hzIJEnF6qjMZiYVeo5pXg" }],
-    });
+    }); */
   } catch {
     if (!customer) {
       return `Invalid Customer`;

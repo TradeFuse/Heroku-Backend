@@ -23,6 +23,23 @@ module.exports = async function discordBot() {
     channel.send(`${member} has left the party.`);
   });
 
+  discordClient.on("message", (message) => {
+    if (message.content === "!setstatus") {
+      const role = message.guild.roles.cache.find(
+        (role) => role.name === "example"
+      );
+      role.members.forEach((member) => {
+        member.setPresence({
+          status: "online",
+          activity: {
+            name: "example activity",
+            type: "PLAYING",
+          },
+        });
+      });
+    }
+  });
+
   discordClient.on("messageDeleteBulk", function (message) {
     const channel = message.guild.channels;
     const usernamebuff = message.author;

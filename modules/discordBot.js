@@ -23,7 +23,7 @@ module.exports = async function discordBot() {
     channel.send(`${member} has left the party.`);
   });
 
-  discordClient.on("message", (message) => {
+/*   discordClient.on("message", (message) => {
     if (message.content === "!setstatus") {
       const role = message.guild.roles.cache.find(
         (role) => role.name === "example"
@@ -38,7 +38,7 @@ module.exports = async function discordBot() {
         });
       });
     }
-  });
+  }); */
 
   discordClient.on("messageDeleteBulk", function (message) {
     const channel = message.guild.channels;

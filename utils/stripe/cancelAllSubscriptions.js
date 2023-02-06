@@ -2,7 +2,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async function cancelAllSubscriptions(subArray) {
   let deletecustomer = "";
-  console.log(subArray)
   try {
     const subData = subArray;
     for (let i = 0, j = subData.length; i < j; i++) {

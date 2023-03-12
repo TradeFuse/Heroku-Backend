@@ -18,6 +18,7 @@ const getAssetData = require("./utils/getAssetData");
 const createSession = require("./utils/stripe/createStripeSession");
 const createPortalSession = require("./utils/stripe/createPortalSession");
 const getRiskFreeRate = require("./utils/getRiskFreeRate");
+const handleOpenAIRequest = require("./utils/handleOpenAIRequests")
 const cron = require("node-cron");
 const cancelAllSubscriptions = require("./utils/stripe/cancelAllSubscriptions");
 const AsyncLock = require("async-lock");
@@ -116,6 +117,10 @@ app.post("/", async (req, res) => {
       case "createStripePortalSession":
         const createdPortalSession = await createPortalSession(bodyData);
         res.json(createdPortalSession);
+        break;
+      case "handleOpenAImessage":
+        const handleOpenAIRequester = await handleOpenAIRequest(bodyData);
+        res.json(handleOpenAIRequester);
         break;
       case "initializeRobinhood":
         const initializedRobinhood = await initializeRobinhood(bodyData, req);

@@ -92,6 +92,64 @@ app.post("/createStripeCustomer", async (req, res) => {
   }
 });
 
+// get Stripe customer
+app.post("/getStripeCustomer", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const customerId = bodyData.data.customerId;
+    const retrievedCustomer = await getCustomer(customerId);
+    res.json(retrievedCustomer);
+  }
+});
+
+// Cancell all stripe subscriptions
+app.post("/cancelAllSubscriptions", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const subArray = bodyData.data.subArray;
+    const cancelsubs = await cancelAllSubscriptions(subArray);
+    res.json(cancelsubs);
+  }
+});
+
+// Delete Stripe Customer
+app.post("/deleteStripeCustomer", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const customerIdd = bodyData.data.customerId;
+    const deletedCustomer = await deleteCustomer(customerIdd);
+    res.json(deletedCustomer);
+  }
+});
+
+// Delete Stripe Customer
+app.post("/updateStripeCustomer", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const updatedCustomer = await updateCustomer(bodyData);
+    res.json(updatedCustomer);
+  }
+});
 
 app.post("/", async (req, res) => {
   const bodyData = req.body;
@@ -102,29 +160,6 @@ app.post("/", async (req, res) => {
     res.status(204).send("");
   } else {
     switch (bodyData.action) {
-/*       case "createStripeCustomer":
-        const createdCustomer = await createCustomer(bodyData);
-        res.json(createdCustomer);
-        break; */
-      case "getStripeCustomer":
-        const customerId = bodyData.data.customerId;
-        const retrievedCustomer = await getCustomer(customerId);
-        res.json(retrievedCustomer);
-        break;
-      case "cancelAllSubscriptions":
-        const subArray = bodyData.data.subArray;
-        const cancelsubs = await cancelAllSubscriptions(subArray);
-        res.json(cancelsubs);
-        break;
-      case "deleteStripeCustomer":
-        const customerIdd = bodyData.data.customerId;
-        const deletedCustomer = await deleteCustomer(customerIdd);
-        res.json(deletedCustomer);
-        break;
-      case "updateStripeCustomer":
-        const updatedCustomer = await updateCustomer(bodyData);
-        res.json(updatedCustomer);
-        break;
       case "createStripeSession":
         const createdSession = await createSession(bodyData);
         res.json(createdSession);

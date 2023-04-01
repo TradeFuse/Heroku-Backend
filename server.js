@@ -78,128 +78,181 @@ app.get("/", (req, res) => {
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 
-async function handleRequest(path, handlerFunction, req, res) {
+// create Stripe customer
+app.post("/createStripeCustomer", async (req, res) => {
+  const bodyData = req.body;
   if (req.method == "OPTIONS") {
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.set("Access-Control-Allow-Methods", "POST");
     res.status(204).send("");
-  } else if (req.path == path && req.method == "POST") {
-    const bodyData = req.body;
-    await handlerFunction(bodyData);
-    res.status(200).send("");
   } else {
-    res.status(404).send("");
-  }
-}
-
-// create Stripe customer
-app.post("/createStripeCustomer", async (req, res) => {
-  await handleRequest("/createStripeCustomer", async (bodyData) => {
     const createdCustomer = await createCustomer(bodyData);
     res.json(createdCustomer);
-  }, req, res);
+  }
 });
-
 
 // get Stripe customer
 app.post("/getStripeCustomer", async (req, res) => {
-  await handleRequest("/getStripeCustomer", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const customerId = bodyData.data.customerId;
     const retrievedCustomer = await getCustomer(customerId);
     res.json(retrievedCustomer);
-  }, req, res);
+  }
 });
 
 // Cancell all stripe subscriptions
 app.post("/cancelAllSubscriptions", async (req, res) => {
-  await handleRequest("/cancelAllSubscriptions", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const subArray = bodyData.data.subArray;
     const cancelsubs = await cancelAllSubscriptions(subArray);
     res.json(cancelsubs);
-  }, req, res);
+  }
 });
 
 // Delete Stripe Customer
 app.post("/deleteStripeCustomer", async (req, res) => {
-  await handleRequest("/deleteStripeCustomer", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const customerIdd = bodyData.data.customerId;
     const deletedCustomer = await deleteCustomer(customerIdd);
     res.json(deletedCustomer);
-  }, req, res);
+  }
 });
 
-// Update Stripe Customer
+// Delete Stripe Customer
 app.post("/updateStripeCustomer", async (req, res) => {
-  await handleRequest("/updateStripeCustomer", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const updatedCustomer = await updateCustomer(bodyData);
     res.json(updatedCustomer);
-  }, req, res);
+  }
 });
 
 // Create Stripe Session
 app.post("/createStripeSession", async (req, res) => {
-  await handleRequest("/createStripeSession", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const createdSession = await createSession(bodyData);
     res.json(createdSession);
-  }, req, res);
+  }
 });
-
 
 // Create Stripe portal Session
 app.post("/createStripePortalSession", async (req, res) => {
-  await handleRequest("/createStripePortalSession", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const createdPortalSession = await createPortalSession(bodyData);
     res.json(createdPortalSession);
-  }, req, res);
+  }
 });
 
 // Handle Open AI message
 app.post("/handleOpenAImessage", async (req, res) => {
-  await handleRequest("/handleOpenAImessage", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const handleOpenAIRequester = await handleOpenAIRequest(bodyData);
     res.json(handleOpenAIRequester);
-  }, req, res);
+  }
 });
-
 
 // Initialize Robinhood
 app.post("/initializeRobinhood", async (req, res) => {
-  await handleRequest("/initializeRobinhood", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const initializedRobinhood = await initializeRobinhood(bodyData, req);
     const responseInitRH = {
       initializedRobinhood: initializedRobinhood,
     };
     res.json(responseInitRH);
-  }, req, res);
+  }
 });
-
 
 // Get Robinhood Orders
 app.post("/getRobinhoodOrders", async (req, res) => {
-  await handleRequest("/getRobinhoodOrders", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const gotRobinhood = await getRobinhoodOrders(bodyData, req);
     const responsegotRH = {
       gotRobinhood: gotRobinhood,
     };
     res.json(responsegotRH);
-  }, req, res);
+  }
 });
 
 // Get New Robinhood Orders
 app.post("/getNewRobinhoodOrders", async (req, res) => {
-  await handleRequest("/getNewRobinhoodOrders", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const gotNewRobinhood = await getNewRobinhoodOrders(bodyData, req);
     const responsegotNewRH = {
       gotNewRobinhood: gotNewRobinhood,
     };
     res.json(responsegotNewRH);
-  }, req, res);
+  }
 });
 
 // Get Robinhood Instruments
 app.post("/getRobinhoodInstruments", async (req, res) => {
-  await handleRequest("/getRobinhoodInstruments", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const gotRobinhoodInstruments = await getRobinhoodInstruments(
       bodyData,
       req
@@ -208,12 +261,18 @@ app.post("/getRobinhoodInstruments", async (req, res) => {
       gotRobinhoodInstruments: gotRobinhoodInstruments,
     };
     res.json(responsegotRHInstruments);
-  }, req, res);
+  }
 });
 
 // Get Robinhood Options Instruments
 app.post("/getRobinhoodOptionsInstruments", async (req, res) => {
-  await handleRequest("/getRobinhoodOptionsInstruments", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const gotRobinhoodOptionInstruments = await getOptionInstrumentRobinhood(
       bodyData,
       req
@@ -222,12 +281,18 @@ app.post("/getRobinhoodOptionsInstruments", async (req, res) => {
       gotRobinhoodOptionInstruments: gotRobinhoodOptionInstruments,
     };
     res.json(responsegotRHOptionInstruments);
-  }, req, res);
+  }
 });
 
 // Get Robinhood Options Instruments
 app.post("/getRobinhoodOptionsPosition", async (req, res) => {
-  await handleRequest("/getRobinhoodOptionsPosition", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const gotRobinhoodOptionPosition = await getOptionPositionRobinhood(
       bodyData,
       req
@@ -236,13 +301,18 @@ app.post("/getRobinhoodOptionsPosition", async (req, res) => {
       gotRobinhoodOptionPosition: gotRobinhoodOptionPosition,
     };
     res.json(responsegotRHOptionPosition);
-  }, req, res);
+  }
 });
-
 
 // Get Robinhood Crypto Instruments
 app.post("/getRobinhoodCryptoInstruments", async (req, res) => {
-  await handleRequest("/getRobinhoodCryptoInstruments", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const gotRobinhoodCryptoInstruments = await getRobinhoodCryptoOrders(
       bodyData,
       req
@@ -251,29 +321,40 @@ app.post("/getRobinhoodCryptoInstruments", async (req, res) => {
       gotRobinhoodCryptoInstruments: gotRobinhoodCryptoInstruments,
     };
     res.json(responsegotRHCryptoInstruments);
-  }, req, res);
+  }
 });
 
 // Get Risk Free Rate
 app.post("/getRiskFreeRate", async (req, res) => {
-  await handleRequest("/getRiskFreeRate", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     console.log(riskFreeRate);
     res.json(riskFreeRate);
-  }, req, res);
+  }
 });
 
 // Get Asset Data
 app.post("/getAssetData", async (req, res) => {
-  await handleRequest("/getAssetData", async (bodyData) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
     const gotAssetData = await getAssetData(bodyData, req);
     const responseAssetData = {
       asset: gotAssetData,
     };
     res.json(responseAssetData);
-  }, req, res);
+  }
 });
 
-// stripe webhook
 app.post("/webhook", async (req, res) => {
   let data;
   let eventType;

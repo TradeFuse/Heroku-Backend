@@ -101,18 +101,6 @@ app.post("/createStripeCustomer", async (req, res) => {
   }, req, res);
 });
 
-app.post("/createStripeCustomer", async (req, res) => {
-  const bodyData = req.body;
-  if (req.method == "OPTIONS") {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.set("Access-Control-Allow-Methods", "POST");
-    res.status(204).send("");
-  } else {
-    const createdCustomer = await createCustomer(bodyData);
-    res.json(createdCustomer);
-  }
-});
 
 // get Stripe customer
 app.post("/getStripeCustomer", async (req, res) => {

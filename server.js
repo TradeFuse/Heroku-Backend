@@ -78,7 +78,29 @@ app.get("/", (req, res) => {
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 
+async function handleRequest(path, handlerFunction, req, res) {
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else if (req.path == path && req.method == "POST") {
+    const bodyData = req.body;
+    await handlerFunction(bodyData);
+    res.status(200).send("");
+  } else {
+    res.status(404).send("");
+  }
+}
+
 // create Stripe customer
+app.post("/createStripeCustomer", async (req, res) => {
+  await handleRequest("/createStripeCustomer", async (bodyData) => {
+    const createdCustomer = await createCustomer(bodyData);
+    res.json(createdCustomer);
+  }, req, res);
+});
+
 app.post("/createStripeCustomer", async (req, res) => {
   const bodyData = req.body;
   if (req.method == "OPTIONS") {

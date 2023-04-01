@@ -18,7 +18,7 @@ const getAssetData = require("./utils/getAssetData");
 const createSession = require("./utils/stripe/createStripeSession");
 const createPortalSession = require("./utils/stripe/createPortalSession");
 const getRiskFreeRate = require("./utils/getRiskFreeRate");
-const handleOpenAIRequest = require("./utils/handleOpenAIRequests")
+const handleOpenAIRequest = require("./utils/handleOpenAIRequests");
 const cron = require("node-cron");
 const cancelAllSubscriptions = require("./utils/stripe/cancelAllSubscriptions");
 const AsyncLock = require("async-lock");
@@ -78,6 +78,21 @@ app.get("/", (req, res) => {
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 
+// create Stripe customer
+app.post("/createStripeCustomer", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const createdCustomer = await createCustomer(bodyData);
+    res.json(createdCustomer);
+  }
+});
+
+
 app.post("/", async (req, res) => {
   const bodyData = req.body;
   if (req.method == "OPTIONS") {
@@ -87,10 +102,10 @@ app.post("/", async (req, res) => {
     res.status(204).send("");
   } else {
     switch (bodyData.action) {
-      case "createStripeCustomer":
+/*       case "createStripeCustomer":
         const createdCustomer = await createCustomer(bodyData);
         res.json(createdCustomer);
-        break;
+        break; */
       case "getStripeCustomer":
         const customerId = bodyData.data.customerId;
         const retrievedCustomer = await getCustomer(customerId);

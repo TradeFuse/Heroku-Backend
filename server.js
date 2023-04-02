@@ -355,6 +355,15 @@ app.post("/getAssetData", async (req, res) => {
   }
 });
 
+// Get Risk Free Rate
+app.post("/mt4Orders", async (req, res) => {
+  const bodyData = req.body;
+  console.log("Inserting New Tick");
+
+  var tick = req.body;
+  console.log(">" + JSON.stringify(tick, null, 4));
+});
+
 app.post("/webhook", async (req, res) => {
   let data;
   let eventType;

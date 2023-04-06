@@ -23,6 +23,7 @@ module.exports = async function createSession(bodyData) {
       success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancel_url,
       customer: customerId,
+      allow_promotion_codes: true,
     });
   } catch {
     if (!session) {

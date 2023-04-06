@@ -23,22 +23,21 @@ module.exports = async function discordBot() {
     channel.send(`${member} has left the party.`);
   });
 
-/*   discordClient.on("message", (message) => {
-    if (message.content === "!setstatus") {
-      const role = message.guild.roles.cache.find(
-        (role) => role.name === "example"
+  discordClient.on("presenceUpdate", (oldPresence, newPresence) => {
+    if (oldPresence.activities !== newPresence.activities) {
+      const role = newPresence.guild.roles.cache.find(
+        (role) => role.name === "Core Team"
       );
-      role.members.forEach((member) => {
-        member.setPresence({
-          status: "online",
-          activity: {
-            name: "example activity",
-            type: "PLAYING",
-          },
+
+      if (role) {
+        role.members.forEach((member) => {
+          member.setActivity("", { type: "PLAYING" });
         });
-      });
+      } else {
+        console.error("Role not found!");
+      }
     }
-  }); */
+  });
 
   discordClient.on("messageDeleteBulk", function (message) {
     const channel = message.guild.channels;

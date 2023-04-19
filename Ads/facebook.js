@@ -13,12 +13,13 @@ module.exports = async function updateFacebookAdd(bodyData) {
   const api = bizSdk.FacebookAdsApi.init(access_token);
   const data = bodyData[0];
   const userData_0 = new UserData()
-    .setEmails([data.user_data.em])
+    .setEmails([data.em[0]])
     .setPhones([])
     .setDatesOfBirth([])
     .setCities([])
     .setStates([])
-    .setCountries([]);
+    .setCountries([])
+    .setExternalIds([data.external_id[0]]);
   const customData_0 = new CustomData().setValue(1).setCurrency("USD");
   const serverEvent_0 = new ServerEvent()
     .setEventName(data.event_name)

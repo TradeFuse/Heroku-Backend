@@ -8,12 +8,12 @@ module.exports = async function createCustomer(bodyData) {
       name: "",
       email: "",
       metadata: {
-        Logins: 1,
+        Logins: 0,
         "Last Login": bodyData.data["Last Login"],
         "Last Session": bodyData.data["Last Session"],
         Trades: 0,
         "Shared Trades": 0,
-        Sessions: 1,
+        Sessions: 0,
         "Storage Used": `2.94 KB`, // default data usage
       },
     });

@@ -11,7 +11,7 @@ const pixel_id = process.env.FACEBOOK_PIXELID;
 
 module.exports = async function updateFacebookAdd(bodyData) {
   const api = bizSdk.FacebookAdsApi.init(access_token);
-  const data = bodyData;
+  const data = bodyData.data[0];
   console.log(data);
   const userData_0 = new UserData()
     .setEmails([data.em[0]])

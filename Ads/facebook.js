@@ -7,7 +7,7 @@ const CustomData = bizSdk.CustomData;
 const Content = bizSdk.Content;
 
 module.exports = async function updateFacebookAdd(bodyData) {
-  const access_token = process.env.FACEBOOK_ACCESS_TOKEN;
+/*   const access_token = process.env.FACEBOOK_ACCESS_TOKEN;
   const pixel_id = process.env.FACEBOOK_PIXELID;
   const api = bizSdk.FacebookAdsApi.init(access_token);
   const data = bodyData.data[0];
@@ -34,6 +34,6 @@ module.exports = async function updateFacebookAdd(bodyData) {
   const eventRequest = new EventRequest(access_token, pixel_id).setEvents(
     eventsData
   );
-  eventRequest.execute();
+  eventRequest.execute(); */
   return null;
 };

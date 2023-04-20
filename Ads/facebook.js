@@ -11,10 +11,12 @@ module.exports = async function updateFacebookAdd(bodyData) {
   const pixel_id = process.env.FACEBOOK_PIXELID;
   const api = bizSdk.FacebookAdsApi.init(access_token);
   const data = bodyData.data[0];
-  console.log(data);
+  console.log(bodyData);
   const userData_0 = new UserData()
     .setEmails(data.em)
     .setPhones([])
+    .setClientIpAddress(request.connection.remoteAddress)
+    .setClientUserAgent(request.headers["user-agent"])
     .setDatesOfBirth([])
     .setCities([])
     .setStates([])

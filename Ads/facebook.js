@@ -6,21 +6,20 @@ const UserData = bizSdk.UserData;
 const CustomData = bizSdk.CustomData;
 const Content = bizSdk.Content;
 
-const access_token = process.env.FACEBOOK_ACCESS_TOKEN;
-const pixel_id = process.env.FACEBOOK_PIXELID;
-
 module.exports = async function updateFacebookAdd(bodyData) {
+  const access_token = process.env.FACEBOOK_ACCESS_TOKEN;
+  const pixel_id = process.env.FACEBOOK_PIXELID;
   const api = bizSdk.FacebookAdsApi.init(access_token);
   const data = bodyData.data[0];
   console.log(data);
   const userData_0 = new UserData()
-    .setEmails([data.em[0]])
+    .setEmails(data.em)
     .setPhones([])
     .setDatesOfBirth([])
     .setCities([])
     .setStates([])
     .setCountries([])
-    .setExternalIds([data.external_id[0]]);
+    .setExternalIds(data.external_id);
   const customData_0 = new CustomData().setValue(1).setCurrency("USD");
   const serverEvent_0 = new ServerEvent()
     .setEventName(data.event_name)

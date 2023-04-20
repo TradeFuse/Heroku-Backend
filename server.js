@@ -368,7 +368,7 @@ app.post("/mt4Orders", async (req, res) => {
 });
 
 // Receive Facebook Ads Info
-app.post("/facebookAdHandler", async (req, res) => {
+/* app.post("/facebookAdHandler", async (req, res) => {
   const bodyData = req.body;
   if (req.method == "OPTIONS") {
     res.set("Access-Control-Allow-Origin", "*");
@@ -379,7 +379,7 @@ app.post("/facebookAdHandler", async (req, res) => {
     await updateFacebookAdd(bodyData, req);
   }
 });
-
+ */
 // This is Stripe webhook stuff
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 

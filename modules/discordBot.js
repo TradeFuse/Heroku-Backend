@@ -16,13 +16,13 @@ module.exports = async function discordBot() {
     console.log("Discord bot ready.");
   });
 
-  discordClient.on("guildMemberRemove", function (member) {
+/*   discordClient.on("guildMemberRemove", function (member) {
     const channel = member.guild.channels.cache.find(
       (ch) => ch.name === "logbook"
     );
     channel.send(`${member} has left the party.`);
   });
-
+ */
   discordClient.on("presenceUpdate", (oldPresence, newPresence) => {
     if (oldPresence.activities !== newPresence.activities) {
       const role = newPresence.guild.roles.cache.find(

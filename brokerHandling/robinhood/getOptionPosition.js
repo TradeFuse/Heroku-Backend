@@ -7,7 +7,7 @@ module.exports = async function getOptionPositionRobinhood(bodyData, req) {
   const _authToken = bodyData.data["token"];
   const bearerString = `Bearer ` + _authToken;
 
-  const getOptionPositionRobinhood = async () => {
+  const getOptionPositionsRobinhood = async () => {
     const response = await fetch(
       `https://api.robinhood.com/options/positions/${positionid}/`,
       {
@@ -28,7 +28,7 @@ module.exports = async function getOptionPositionRobinhood(bodyData, req) {
     return response.json(); // parses JSON response into native JavaScript objects
   };
 
-  const optionpositionResponse = await getOptionPositionRobinhood();
+  const optionpositionResponse = await getOptionPositionsRobinhood();
   returnObj.position = optionpositionResponse;
   return returnObj;
 };

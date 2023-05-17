@@ -15,6 +15,9 @@ module.exports = async function updateCustomer(bodyData) {
         "Shared Trades": bodyData.data["Shared Trades"],
         Sessions: bodyData.data["Sessions"],
         "Storage Used": bodyData.data["Storage Used"],
+        Channel: bodyData.data["Channel"],
+        IPv4Address: bodyData.data["IPv4Address"],
+        UserAgent: bodyData.data["UserAgent"],
       },
     });
   } catch {

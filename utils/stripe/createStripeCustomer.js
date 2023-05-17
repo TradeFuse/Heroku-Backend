@@ -15,11 +15,14 @@ module.exports = async function createCustomer(bodyData) {
         "Shared Trades": 0,
         Sessions: 0,
         "Storage Used": `2.94 KB`, // default data usage
+        Channel: bodyData.data["Channel"],
+        IPv4Address: bodyData.data["IPv4Address"],
+        UserAgent: bodyData.data["UserAgent"],
       },
     });
 
     // subscribe them to stripe free
-/*     await stripe.subscriptions.create({
+    /*     await stripe.subscriptions.create({
       customer: customer.id,
       items: [{ price: "price_1L2hzIJEnF6qjMZiYVeo5pXg" }],
     }); */

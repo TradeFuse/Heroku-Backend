@@ -22,6 +22,7 @@ const handleOpenAIRequest = require("./utils/handleOpenAIRequests");
 const cron = require("node-cron");
 const cancelAllSubscriptions = require("./utils/stripe/cancelAllSubscriptions");
 const updateFacebookAdd = require("./Ads/facebook");
+const createMetaTraderAccount = require("./brokerHandling/metatrader/createMetaTraderAccount");
 const AsyncLock = require("async-lock");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -358,7 +359,24 @@ app.post("/getAssetData", async (req, res) => {
   }
 });
 
-// Get Risk Free Rate
+// METATRADER STUFF
+// Get New Robinhood Orders
+app.post("/createMetaTraderAccount", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const gotNewAccount = await createMetaTraderAccount(bodyData, req);
+    const responsegotNewMT = {
+      gotNewAccount: gotNewAccount,
+    };
+    res.json(responsegotNewMT);
+  }
+});
+
 app.post("/mt4Orders", async (req, res) => {
   const bodyData = req.body;
   console.log("Inserting New Tick");

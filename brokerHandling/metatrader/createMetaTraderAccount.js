@@ -1,11 +1,11 @@
-const MetaApi = require('metaapi.cloud-sdk');
+/* const MetaApi = require('metaapi.cloud-sdk');
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const token = "...";
-const api = new MetaApi(token);
+const api = new MetaApi(token); */
 module.exports = async function createMetaTraderAccount(bodyData, req) {
   let returnObj = {};
-  const positionid = bodyData.data["id"];
+/*   const positionid = bodyData.data["id"];
   const _authToken = bodyData.data["token"];
   const bearerString = `Bearer ` + _authToken;
   try {
@@ -39,6 +39,6 @@ module.exports = async function createMetaTraderAccount(bodyData, req) {
         console.log(err);
       }
     }
-  }
+  } */
   return returnObj;
 };

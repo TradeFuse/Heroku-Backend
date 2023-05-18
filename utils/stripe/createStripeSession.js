@@ -24,6 +24,15 @@ module.exports = async function createSession(bodyData) {
       cancel_url: cancel_url,
       customer: customerId,
       allow_promotion_codes: true,
+/*       subscription_data: {
+        trial_settings: {
+          end_behavior: {
+            missing_payment_method: 'cancel',
+          },
+        },
+        trial_period_days: 14,
+      },
+      payment_method_collection: 'if_required', */
     });
   } catch {
     if (!session) {

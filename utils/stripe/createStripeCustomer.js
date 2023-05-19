@@ -22,7 +22,7 @@ module.exports = async function createCustomer(bodyData) {
       },
     });
 
-/*     // subscribe them to stripe free
+    // subscribe them to stripe master
     await stripe.subscriptions.create({
       customer: customer.id,
       items: [{ price: "price_1MZ8xrJEnF6qjMZiXarqGBw4" }],
@@ -35,7 +35,7 @@ module.exports = async function createCustomer(bodyData) {
           missing_payment_method: 'cancel',
         },
       },
-    }); */
+    });
   } catch {
     if (!customer) {
       return `Invalid Customer`;

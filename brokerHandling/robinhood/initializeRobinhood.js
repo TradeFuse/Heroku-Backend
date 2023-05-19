@@ -1,10 +1,23 @@
+const NodeRSA = require("node-rsa");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
+const key = new NodeRSA();
+const key2 = new NodeRSA();
+
+const privatePem = `-----BEGIN RSA PRIVATE KEY-----${process.env.REACT_APP_PRIVATE_KEY}-----END RSA PRIVATE KEY-----`;
+key.importKey(privatePem, "pkcs1-pem");
+key2.importKey(
+  `-----BEGIN PUBLIC KEY-----${process.env.REACT_APP_PUB_KEY}-----END PUBLIC KEY-----`,
+  "pkcs8-public-pem"
+);
 module.exports = async function initializeRobinhood(bodyData, req) {
   let returnObj = {};
   const email = bodyData.data["email"];
-  const password = bodyData.data["password"];
+  const passwordPre = bodyData.data["password"];
+  const decryptedString = key.decrypt(passwordPre, "utf8");
+  const password = JSON.parse(decryptedString);
+
   const mfaCode = bodyData.data["mfaCode"];
   const _clientId = "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS";
   const _deviceToken = "ea9fa5c6-01e0-46c9-8430-5b422c99bd16";
@@ -47,5 +60,6 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();
   }
+  returnObj.access_token = key2.encrypt(returnObj.access_token, "base64");
   return returnObj;
 };

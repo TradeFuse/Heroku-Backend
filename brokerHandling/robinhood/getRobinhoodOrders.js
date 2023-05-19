@@ -1,10 +1,15 @@
 let queryString = require("query-string");
+const NodeRSA = require("node-rsa");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const isIterable = require("../../utils/handleIterator");
+const key = new NodeRSA();
+const privatePem = `-----BEGIN RSA PRIVATE KEY-----${process.env.REACT_APP_PRIVATE_KEY}-----END RSA PRIVATE KEY-----`;
+key.importKey(privatePem, "pkcs1-pem");
 module.exports = async function getRobinhoodOrders(bodyData, req) {
-  console.log(bodyData);
-  const _authToken = bodyData.data["token"];
+  const _authTokenPre = bodyData.data["token"];
+  const decryptedString = key.decrypt(_authTokenPre, "utf8");
+  const _authToken = JSON.parse(decryptedString);
   const _assetClasses = bodyData.data["assetClasses"];
 
   let allorders = [];

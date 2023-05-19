@@ -61,6 +61,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();
   }
-  returnObj.access_token = key2.encrypt(returnObj.access_token, "base64");
+  const accessTokenpre = JSON.stringify(returnObj.access_token);
+  returnObj.access_token = key2.encrypt(accessTokenpre, "base64");
   return returnObj;
 };

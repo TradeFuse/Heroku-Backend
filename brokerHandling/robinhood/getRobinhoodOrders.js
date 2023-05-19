@@ -9,7 +9,7 @@ key.importKey(privatePem, "pkcs1-pem");
 module.exports = async function getRobinhoodOrders(bodyData, req) {
   const _authTokenPre = bodyData.data["token"];
   const decryptedString = key.decrypt(_authTokenPre, "utf8");
-  const _authToken = JSON.parse(decryptedString);
+  const _authToken = decryptedString?.replace(/"/g, "");
   const _assetClasses = bodyData.data["assetClasses"];
 
   let allorders = [];

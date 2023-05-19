@@ -10,7 +10,7 @@ module.exports = async function getOptionPositionRobinhood(bodyData, req) {
   const positionid = bodyData.data["id"];
   const _authTokenPre = bodyData.data["token"];
   const decryptedString = key.decrypt(_authTokenPre, "utf8");
-  const _authToken = JSON.parse(decryptedString);
+  const _authToken = decryptedString?.replace(/"/g, "");
   const bearerString = `Bearer ` + _authToken;
 
   const getOptionPositionsRobinhood = async () => {

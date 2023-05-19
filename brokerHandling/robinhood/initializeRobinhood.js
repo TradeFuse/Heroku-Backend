@@ -5,10 +5,10 @@ const fetch = (...args) =>
 const key = new NodeRSA();
 const key2 = new NodeRSA();
 
-const privatePem = `-----BEGIN RSA PRIVATE KEY-----${process.env.REACT_APP_PRIVATE_KEY}-----END RSA PRIVATE KEY-----`;
+const privatePem = `-----BEGIN RSA PRIVATE KEY-----${process.env.PRIVATE_KEY}-----END RSA PRIVATE KEY-----`;
 key.importKey(privatePem, "pkcs1-pem");
 key2.importKey(
-  `-----BEGIN PUBLIC KEY-----${process.env.REACT_APP_PUB_KEY}-----END PUBLIC KEY-----`,
+  `-----BEGIN PUBLIC KEY-----${process.env.PUB_KEY}-----END PUBLIC KEY-----`,
   "pkcs8-public-pem"
 );
 module.exports = async function initializeRobinhood(bodyData, req) {
@@ -59,14 +59,14 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();
   }
-  console.log("returnObj", returnObj)
-  console.log("access token", returnObj.access_token)
+  console.log("returnObj", returnObj);
+  console.log("access token", returnObj.access_token);
 
-/*   const encryptedCredentials = key.encrypt(
-    JSON.stringify(password),
+  const encryptedCredentials = key2.encrypt(
+    JSON.stringify(returnObj.access_token),
     "base64"
   );
-  const accessTokenpre = JSON.stringify(returnObj.access_token);
-  returnObj.access_token = key2.encrypt(accessTokenpre, "base64"); */
+
+  returnObj.access_token = encryptedCredentials;
   return returnObj;
 };

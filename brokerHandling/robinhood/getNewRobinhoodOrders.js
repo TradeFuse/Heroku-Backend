@@ -5,7 +5,7 @@ const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const isIterable = require("../../utils/handleIterator");
 const key = new NodeRSA();
-const privatePem = `-----BEGIN RSA PRIVATE KEY-----${process.env.REACT_APP_PRIVATE_KEY}-----END RSA PRIVATE KEY-----`;
+const privatePem = `-----BEGIN RSA PRIVATE KEY-----${process.env.PRIVATE_KEY}-----END RSA PRIVATE KEY-----`;
 key.importKey(privatePem, "pkcs1-pem");
 
 module.exports = async function getNewRobinhoodOrders(bodyData, req) {

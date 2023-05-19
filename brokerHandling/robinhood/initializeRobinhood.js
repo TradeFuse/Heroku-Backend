@@ -62,7 +62,7 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   console.log("returnObj", returnObj);
   console.log("access token", returnObj.access_token);
 
-  const encryptedCredentials = key2.encrypt(
+  const encryptedCredentials = returnObj?.access_token && key2.encrypt(
     JSON.stringify(returnObj.access_token),
     "base64"
   );

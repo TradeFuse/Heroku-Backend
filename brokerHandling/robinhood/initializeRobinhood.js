@@ -17,8 +17,6 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   const passwordPre = bodyData.data["password"];
   const decryptedString = key.decrypt(passwordPre, "utf8");
   const password = decryptedString?.replace(/"/g, "");
-
-  console.log(password);
   const mfaCode = bodyData.data["mfaCode"];
   const _clientId = "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS";
   const _deviceToken = "ea9fa5c6-01e0-46c9-8430-5b422c99bd16";
@@ -61,7 +59,14 @@ module.exports = async function initializeRobinhood(bodyData, req) {
   if (firstResponse && firstResponse.mfa_required) {
     returnObj = await set_mfa_code();
   }
+  console.log("returnObj", returnObj)
+  console.log("access token", returnObj.access_token)
+
+/*   const encryptedCredentials = key.encrypt(
+    JSON.stringify(password),
+    "base64"
+  );
   const accessTokenpre = JSON.stringify(returnObj.access_token);
-  returnObj.access_token = key2.encrypt(accessTokenpre, "base64");
+  returnObj.access_token = key2.encrypt(accessTokenpre, "base64"); */
   return returnObj;
 };

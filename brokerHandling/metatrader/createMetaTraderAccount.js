@@ -1,8 +1,8 @@
-let dfgdfgdfg;
+let MetaApi;
 import("metaapi.cloud-sdk")
   .then((module) => {
-    dfgdfgdfg = module;
-    console.log(dfgdfgdfg);
+    MetaApi = module;
+    console.log(MetaApi);
   })
   .catch((error) => {
     // Handle the error if the import fails

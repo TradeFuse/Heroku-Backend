@@ -1,13 +1,6 @@
-let MetaApi;
-import("metaapi.cloud-sdk")
-  .then((module) => {
-    MetaApi = module.default;
-    console.log(MetaApi);
-  })
-  .catch((error) => {
-    // Handle the error if the import fails
-    console.error("Failed to import dfgdfgdfg:", error);
-  });
+const MetaApi = import("metaapi.cloud-sdk").then(({ default: MetaApi }) =>
+  MetaApi(...args)
+);
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const token = "...";

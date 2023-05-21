@@ -18,4 +18,4 @@ USER node
 #COPY . .
 
 # EXPOSE 8080
-CMD [ "node", "server.cjs" ]
+CMD [ "node", "server.js" ]

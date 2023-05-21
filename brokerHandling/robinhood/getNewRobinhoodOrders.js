@@ -3,7 +3,7 @@ const NodeRSA = require("node-rsa");
 
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const isIterable = require("../../utils/handleIterator.cjs");
+const isIterable = require("../../utils/handleIterator.js");
 const key = new NodeRSA();
 const privatePem = `-----BEGIN RSA PRIVATE KEY-----${process.env.PRIVATE_KEY}-----END RSA PRIVATE KEY-----`;
 key.importKey(privatePem, "pkcs1-pem");

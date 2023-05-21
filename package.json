@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "Node.js on Docker",
   "author": "First Last <first.last@example.com>",
-  "main": "server.cjs",
-  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.cjs"
+    "start": "node server.js"
   },
   "dependencies": {
     "async-lock": "^1.4.0",
@@ -18,7 +17,6 @@
     "express": "^4.18.1",
     "facebook-nodejs-business-sdk": "16.0.2",
     "jsdom": "^21.0.0",
-    "metaapi.cloud-sdk": "^22.0.0",
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
     "node-cron": "^3.0.2",

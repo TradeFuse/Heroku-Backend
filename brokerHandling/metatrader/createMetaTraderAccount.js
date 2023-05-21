@@ -1,20 +1,10 @@
-let MetaApi;
-import("metaapi.cloud-sdk")
-  .then((module) => {
-    MetaApi = module.default.default;
-    console.log(MetaApi);
-    console.log(module);
+import MetaApi from "metaapi.cloud-sdk";
 
-  })
-  .catch((error) => {
-    // Handle the error if the import fails
-    console.error("Failed to import MetaApi:", error);
-  });
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const token = "...";
 const api = new MetaApi(token);
-console.log(api)
+console.log(api);
 export const createMetaTraderAccount = async (bodyData, req) => {
   let returnObj = {};
   const positionid = bodyData.data["id"];
@@ -54,3 +44,4 @@ export const createMetaTraderAccount = async (bodyData, req) => {
   } */
   return returnObj;
 };
+export default createMetaTraderAccount;

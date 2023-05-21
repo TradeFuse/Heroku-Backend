@@ -1,5 +1,13 @@
 "use strict";
-import createMetaTraderAccount from "./brokerHandling/metatrader/createMetaTraderAccount";
+let createMetaTraderAccount;
+import("./brokerHandling/metatrader/createMetaTraderAccount")
+  .then((module) => {
+    createMetaTraderAccount = module.default;
+  })
+  .catch((error) => {
+    // Handle the error if the import fails
+    console.error("Failed to import createMetaTraderAccount:", error);
+  });
 
 const express = require("express");
 const cors = require("cors");

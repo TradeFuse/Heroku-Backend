@@ -1,4 +1,5 @@
-import { MetaApi } from "metaapi.cloud-sdk";
+import pkg from "metaapi.cloud-sdk";
+const { MetaApi } = pkg;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const token = "...";

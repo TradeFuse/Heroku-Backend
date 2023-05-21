@@ -1,7 +1,7 @@
 let MetaApi;
 import("metaapi.cloud-sdk")
   .then((module) => {
-    MetaApi = module.default.default.MetaApi;
+    MetaApi = module.default;
     console.log(MetaApi);
   })
   .catch((error) => {

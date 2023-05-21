@@ -1,6 +1,6 @@
 "use strict";
 let createMetaTraderAccount;
-import("./brokerHandling/metatrader/createMetaTraderAccount.js")
+import("./brokerHandling/metatrader/createMetaTraderAccount.cjs")
   .then((module) => {
     createMetaTraderAccount = module;
     console.log(createMetaTraderAccount)

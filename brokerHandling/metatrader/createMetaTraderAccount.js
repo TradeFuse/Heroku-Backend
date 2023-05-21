@@ -1,4 +1,4 @@
-const MetaApi = require("metaapi.cloud-sdk");
+const MetaApi = require("metaapi.cloud-sdk").default;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const token = "...";

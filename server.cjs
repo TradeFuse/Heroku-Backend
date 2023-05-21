@@ -1,4 +1,6 @@
 "use strict";
+import createMetaTraderAccount from "./brokerHandling/metatrader/createMetaTraderAccount";
+
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -22,7 +24,6 @@ const handleOpenAIRequest = require("./utils/handleOpenAIRequests.cjs");
 const cron = require("node-cron");
 const cancelAllSubscriptions = require("./utils/stripe/cancelAllSubscriptions.cjs");
 const updateFacebookAdd = require("./Ads/facebook.cjs");
-const createMetaTraderAccount = require("./brokerHandling/metatrader/createMetaTraderAccount");
 const AsyncLock = require("async-lock");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 

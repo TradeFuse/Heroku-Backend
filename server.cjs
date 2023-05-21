@@ -2,7 +2,8 @@
 let createMetaTraderAccount;
 import("./brokerHandling/metatrader/createMetaTraderAccount.js")
   .then((module) => {
-    createMetaTraderAccount = module.default;
+    createMetaTraderAccount = module;
+    console.log(createMetaTraderAccount)
   })
   .catch((error) => {
     // Handle the error if the import fails

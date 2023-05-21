@@ -1,14 +1,4 @@
 "use strict";
-let createMetaTraderAccount;
-import("./brokerHandling/metatrader/createMetaTraderAccount.js")
-  .then((module) => {
-    createMetaTraderAccount = module;
-  })
-  .catch((error) => {
-    // Handle the error if the import fails
-    console.error("Failed to import createMetaTraderAccount:", error);
-  });
-
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -365,24 +355,6 @@ app.post("/getAssetData", async (req, res) => {
       asset: gotAssetData,
     };
     res.json(responseAssetData);
-  }
-});
-
-// METATRADER STUFF
-// Get New Robinhood Orders
-app.post("/createMetaTraderAccount", async (req, res) => {
-  const bodyData = req.body;
-  if (req.method == "OPTIONS") {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.set("Access-Control-Allow-Methods", "POST");
-    res.status(204).send("");
-  } else {
-    const gotNewAccount = await createMetaTraderAccount(bodyData, req);
-    const responsegotNewMT = {
-      gotNewAccount: gotNewAccount,
-    };
-    res.json(responsegotNewMT);
   }
 });
 

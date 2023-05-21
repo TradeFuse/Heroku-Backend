@@ -1,9 +1,9 @@
-const { MetaApi } = require("metaapi.cloud-sdk");
+/* import MetaApi from 'metaapi.cloud-sdk';
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const token = "...";
 const api = new MetaApi(token);
-module.exports = async function createMetaTraderAccount(bodyData, req) {
+ */module.exports = async function createMetaTraderAccount(bodyData, req) {
   let returnObj = {};
   const positionid = bodyData.data["id"];
   const _authToken = bodyData.data["token"];

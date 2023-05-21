@@ -1,9 +1,18 @@
-import pkg from "metaapi.cloud-sdk";
-const MetaApi = pkg.default;
+let dfgdfgdfg;
+import("metaapi.cloud-sdk")
+  .then((module) => {
+    dfgdfgdfg = module;
+    console.log(dfgdfgdfg);
+  })
+  .catch((error) => {
+    // Handle the error if the import fails
+    console.error("Failed to import dfgdfgdfg:", error);
+  });
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const token = "...";
 const api = new MetaApi(token);
+
 export const createMetaTraderAccount = async (bodyData, req) => {
   let returnObj = {};
   const positionid = bodyData.data["id"];

@@ -1,6 +1,6 @@
 "use strict";
 let createMetaTraderAccount;
-import("../brokerHandling/metatrader/createMetaTraderAccount.js")
+import("./brokerHandling/metatrader/createMetaTraderAccount.js")
   .then((module) => {
     createMetaTraderAccount = module.default;
   })

@@ -25,7 +25,7 @@ const updateFacebookAdd = require("./Ads/facebook.js");
 const AsyncLock = require("async-lock");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Queue = require("bull");
-const WebSocket = require('ws');
+const WebSocket = require("ws");
 
 // Task Queue
 const openAIRequestQueue = new Queue("openAIRequestQueue");
@@ -61,8 +61,8 @@ const PORT = process.env.PORT || 3000;
 
 // App
 const app = express();
-const server = require('http').createServer(app);
-const wss = new WebSocket.Server({ server });
+
+const wss = new WebSocket.Server({ port: 8080 });
 
 const corsOptions = {
   origin: "*",
@@ -1187,27 +1187,31 @@ app.post(
   }
 );
 
-wss.on('connection', ws => {
-  ws.on('message', message => {
+wss.on("connection", (ws) => {
+  ws.on("message", (message) => {
     const { jobId } = JSON.parse(message);
 
-    openAIRequestQueue.getJob(jobId).then(job => {
+    openAIRequestQueue.getJob(jobId).then((job) => {
       if (job === null) {
-        ws.send(JSON.stringify({ jobId, status: 'not-found' }));
+        ws.send(JSON.stringify({ jobId, status: "not-found" }));
       } else {
-        job.finished().then(result => {
-          ws.send(JSON.stringify({ jobId, status: 'completed', result }));
-        }).catch(error => {
-          ws.send(JSON.stringify({ jobId, status: 'failed', error: error.message }));
-        });
+        job
+          .finished()
+          .then((result) => {
+            ws.send(JSON.stringify({ jobId, status: "completed", result }));
+          })
+          .catch((error) => {
+            ws.send(
+              JSON.stringify({ jobId, status: "failed", error: error.message })
+            );
+          });
       }
     });
   });
 });
 
-
 discordBot();
 
 server.listen(PORT, function listening() {
-  console.log('Listening on %d', server.address().port);
+  console.log("Listening on %d", server.address().port);
 });

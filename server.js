@@ -1211,7 +1211,3 @@ wss.on("connection", (ws) => {
 });
 
 discordBot();
-
-server.listen(PORT, function listening() {
-  console.log("Listening on %d", server.address().port);
-});

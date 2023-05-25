@@ -24,21 +24,6 @@ const cancelAllSubscriptions = require("./utils/stripe/cancelAllSubscriptions.js
 const updateFacebookAdd = require("./Ads/facebook.js");
 const AsyncLock = require("async-lock");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const Queue = require("bull");
-const WebSocket = require("ws");
-
-// Task Queue
-const openAIRequestQueue = new Queue("openAIRequestQueue");
-
-openAIRequestQueue.process(async (job, done) => {
-  const { bodyData } = job.data;
-  try {
-    const result = await handleOpenAIRequest(bodyData);
-    done(null, result);
-  } catch (err) {
-    done(err);
-  }
-});
 
 let lock = new AsyncLock();
 
@@ -61,9 +46,6 @@ const PORT = process.env.PORT || 3000;
 
 // App
 const app = express();
-
-const wss = new WebSocket.Server({ port: 8080 });
-
 const corsOptions = {
   origin: "*",
   credentials: true, //access-control-allow-credentials:true
@@ -209,8 +191,8 @@ app.post("/handleOpenAImessage", async (req, res) => {
     res.set("Access-Control-Allow-Methods", "POST");
     res.status(204).send("");
   } else {
-    openAIRequestQueue.add({ bodyData });
-    res.json({ status: "Request received, processing" });
+    const handleOpenAIRequester = await handleOpenAIRequest(bodyData);
+    res.json(handleOpenAIRequester);
   }
 });
 
@@ -1186,28 +1168,5 @@ app.post(
     response.send();
   }
 );
-
-wss.on("connection", (ws) => {
-  ws.on("message", (message) => {
-    const { jobId } = JSON.parse(message);
-
-    openAIRequestQueue.getJob(jobId).then((job) => {
-      if (job === null) {
-        ws.send(JSON.stringify({ jobId, status: "not-found" }));
-      } else {
-        job
-          .finished()
-          .then((result) => {
-            ws.send(JSON.stringify({ jobId, status: "completed", result }));
-          })
-          .catch((error) => {
-            ws.send(
-              JSON.stringify({ jobId, status: "failed", error: error.message })
-            );
-          });
-      }
-    });
-  });
-});
 
 discordBot();

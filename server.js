@@ -81,6 +81,20 @@ app.get("/", (req, res) => {
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 
+// Handle Open AI message
+app.post("/handleOpenAImessage", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const handleOpenAIRequester = await handleOpenAIRequest(bodyData);
+    res.json(handleOpenAIRequester);
+  }
+});
+
 // create Stripe customer
 app.post("/createStripeCustomer", async (req, res) => {
   const bodyData = req.body;
@@ -179,20 +193,6 @@ app.post("/createStripePortalSession", async (req, res) => {
   } else {
     const createdPortalSession = await createPortalSession(bodyData);
     res.json(createdPortalSession);
-  }
-});
-
-// Handle Open AI message
-app.post("/handleOpenAImessage", async (req, res) => {
-  const bodyData = req.body;
-  if (req.method == "OPTIONS") {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.set("Access-Control-Allow-Methods", "POST");
-    res.status(204).send("");
-  } else {
-    const handleOpenAIRequester = await handleOpenAIRequest(bodyData);
-    res.json(handleOpenAIRequester);
   }
 });
 

@@ -25,7 +25,7 @@ module.exports = async function createCustomer(bodyData) {
     // subscribe them to stripe master
     await stripe.subscriptions.create({
       customer: customer.id,
-      items: [{ price: "price_1NSxVpJEnF6qjMZirkgU2D0b" }],
+      items: [{ price: "price_1NQzfdJEnF6qjMZiV9Dn0wbW" }],
       trial_period_days: 7,
       payment_settings: {
         save_default_payment_method: 'on_subscription',

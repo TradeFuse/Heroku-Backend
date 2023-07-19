@@ -55,7 +55,7 @@ module.exports = async function discordBot() {
   });
 
   discordClient.on("guildUnavailable", (guild) => {
-    const channel = guild.channels.cache.find((ch) => ch.name === "logbook");
+    const channel = guild.channels.cache.find((ch) => ch.name === "whiteboard");
     channel.send(
       `Woah, looks like the ${guild} server is down. Check again later for continuation of awesomeness.`
     );

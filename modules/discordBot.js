@@ -77,7 +77,7 @@ module.exports = async function discordBot() {
 
     if (channel === "983038189092630578") {
       const channelNew = message.guild.channels.cache.find(
-        (ch) => ch.name === "submitted-feedback-and-bugs"
+        (ch) => ch.name === "❗❗│submitted-feedback-and-bugs"
       );
 
       if (!message.content.startsWith(guildPrefix)) {

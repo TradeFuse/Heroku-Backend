@@ -19,6 +19,7 @@ module.exports = async function createCustomer(bodyData) {
         IPv4Address: bodyData.data["IPv4Address"],
         UserAgent: bodyData.data["UserAgent"],
         Campaign: bodyData.data["Campaign"],
+        auth0id: bodyData.data["auth0id"],
       },
     });
 
@@ -28,11 +29,11 @@ module.exports = async function createCustomer(bodyData) {
       items: [{ price: "price_1NQzfdJEnF6qjMZiV9Dn0wbW" }],
       trial_period_days: 7,
       payment_settings: {
-        save_default_payment_method: 'on_subscription',
+        save_default_payment_method: "on_subscription",
       },
       trial_settings: {
         end_behavior: {
-          missing_payment_method: 'cancel',
+          missing_payment_method: "cancel",
         },
       },
     });

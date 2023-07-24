@@ -19,6 +19,7 @@ module.exports = async function updateCustomer(bodyData) {
         IPv4Address: bodyData.data["IPv4Address"],
         UserAgent: bodyData.data["UserAgent"],
         Campaign: bodyData.data["Campaign"],
+        auth0id: bodyData.data["auth0id"],
       },
     });
   } catch {

@@ -21,7 +21,6 @@ const getRiskFreeRate = require("./utils/getRiskFreeRate.js");
 const handleOpenAIRequest = require("./utils/handleOpenAIRequests.js");
 const cron = require("node-cron");
 const cancelAllSubscriptions = require("./utils/stripe/cancelAllSubscriptions.js");
-const getCustomersWithExpiredTrials = require("./utils/stripe/getCustomersWithExpiredTrials")
 const updateFacebookAdd = require("./Ads/facebook.js");
 const AsyncLock = require("async-lock");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -31,7 +30,6 @@ const fetch = (...args) =>
 let lock = new AsyncLock();
 
 let riskFreeRate = { rate: 2.0 };
-let customersWithExpiredTrials = [];
 
 const getRiskFreeRateEveryHour = async () => {
   await lock.acquire("lockKey", async () => {
@@ -76,10 +74,6 @@ getRiskFreeRate().then((res) => {
   riskFreeRate = res;
 });
 
-getCustomersWithExpiredTrials().then((res) => {
-  customersWithExpiredTrials = res;
-});
-console.log(customersWithExpiredTrials)
 app.listen(PORT);
 
 app.get("/", (req, res) => {

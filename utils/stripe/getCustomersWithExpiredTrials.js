@@ -7,7 +7,7 @@ module.exports = async function getCustomersWithExpiredTrials(customerId) {
   try {
     // Get all customers
     const customers = await stripe.customers.list();
-
+    console.log(customers)
     // Loop through each customer
     for (const customer of customers.data) {
       // Retrieve their subscription(s)
@@ -15,6 +15,8 @@ module.exports = async function getCustomersWithExpiredTrials(customerId) {
 
       // Check if any subscription has the target product price ID and trial has expired
       for (const subscription of subscriptions) {
+        console.log(subscription)
+
         if (
           subscription.items.data.some(
             (item) =>

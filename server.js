@@ -16,6 +16,7 @@ const getRobinhoodInstruments = require("./brokerHandling/robinhood/getInstrumen
 const getOptionPositionRobinhood = require("./brokerHandling/robinhood/getOptionPosition.js");
 const getAssetData = require("./utils/getAssetData.js");
 const createSession = require("./utils/stripe/createStripeSession.js");
+const createNewSession = require("./utils/stripe/newCreateStripeSession.js");
 const createPortalSession = require("./utils/stripe/createPortalSession.js");
 const getRiskFreeRate = require("./utils/getRiskFreeRate.js");
 const handleOpenAIRequest = require("./utils/handleOpenAIRequests.js");
@@ -167,6 +168,20 @@ app.post("/updateStripeCustomer", async (req, res) => {
   } else {
     const updatedCustomer = await updateCustomer(bodyData);
     res.json(updatedCustomer);
+  }
+});
+
+// Require Credit Card Create Stripe Session
+app.post("/newcreateStripeSession", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const createdSession = await createNewSession(bodyData);
+    res.json(createdSession);
   }
 });
 

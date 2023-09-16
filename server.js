@@ -387,7 +387,7 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 app.post(
   "/stripe_webhooks",
   express.raw({ type: "application/json" }),
-  (request, response) => {
+  async (request, response) => {
     const sig = request.headers["stripe-signature"];
 
     let event;
@@ -716,6 +716,24 @@ app.post(
       case "invoice.payment_failed":
         const invoicePaymentFailed = event.data.object;
         // Then define and call a function to handle the event invoice.payment_failed
+        if (invoicePaymentFailed.billing_reason === "subscription_cycle") {
+          // Check if it was a trial by comparing the dates
+          const currentPeriodStart = invoicePaymentFailed.period_start;
+          const currentPeriodEnd = invoicePaymentFailed.period_end;
+          const subscription = await stripe.subscriptions.retrieve(
+            invoicePaymentFailed.subscription
+          );
+          if (
+            subscription.trial_end === currentPeriodStart &&
+            subscription.trial_start === currentPeriodEnd
+          ) {
+            const yourCustomFunction = (customer) => {
+              console.log(customer);
+            };
+            // If it was a trial and it failed, you can call your custom function here
+            yourCustomFunction(invoicePaymentFailed.customer);
+          }
+        }
         break;
       case "invoice.payment_succeeded":
         const invoicePaymentSucceeded = event.data.object;

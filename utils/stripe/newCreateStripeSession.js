@@ -31,7 +31,7 @@ module.exports = async function createNewSession(bodyData) {
         "Last Session": metadata["Last Session"],
         Trades: 0,
         "Shared Trades": 0,
-        Sessions: 0,
+        Sessions: 1,
         "Storage Used": `2.94 KB`, // default data usage
         Channel: metadata["Channel"],
         IPv4Address: metadata["IPv4Address"],
@@ -47,7 +47,8 @@ module.exports = async function createNewSession(bodyData) {
         },
         trial_period_days: 5,
       },
-      payment_method_collection: "always",
+      //payment_method_collection: "always",
+      payment_method_collection: "if_required",
     });
   } catch (err) {
     if (!session) {

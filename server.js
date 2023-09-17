@@ -397,7 +397,7 @@ app.post("/mt4Orders", async (req, res) => {
 });
  */
 // This is Stripe webhook stuff
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET2;
 
 app.post(
   "/stripe_webhooks",

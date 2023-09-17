@@ -8,6 +8,7 @@ module.exports = async function createNewSession(bodyData) {
   const customerName = bodyData.data["customerName"];
   const metadata = bodyData.data["metadata"];
   let session = "";
+  console.log(bodyData.data);
   try {
     session = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -57,7 +58,9 @@ module.exports = async function createNewSession(bodyData) {
       },
       payment_method_collection: "if_required",
     });
-  } catch {
+    console.log(session);
+  } catch (err) {
+    console.log(err);
     if (!session) {
       return `Invalid session`;
     }

@@ -552,7 +552,7 @@ app.post(
         const S3InputData = {
           userId: Auth0User,
         };
-        let intialDataPoint = "";
+/*         let intialDataPoint = "";
         let userData = "";
         let errorCatch = false;
         await Promise.all([getUserData(S3InputData)])
@@ -570,9 +570,9 @@ app.post(
             data: intialDataPoint,
             userId: Auth0User,
           };
-          stripeId && Auth0User && (await putAWSObject(S3Data)); // SET AWS DATA */
+          stripeId && Auth0User && (await putAWSObject(S3Data)); 
         }
-
+ */
         // Then define and call a function to handle the event checkout.session.completed
         break;
       case "checkout.session.expired":

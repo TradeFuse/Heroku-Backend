@@ -587,6 +587,7 @@ app.post(
               auth0id: checkoutSessionCompleted?.metadata["auth0id"],
             },
           };
+          console.log("server", bodyDataIn);
           await updateCustomer(bodyDataIn);
           const S3Data = {
             data: intialDataPoint,

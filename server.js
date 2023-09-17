@@ -67,7 +67,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use((req, res, next) => {
-  if (req.originalUrl === "/webhook") {
+  if (req.originalUrl === "/stripe-webhooks") {
     next();
   } else {
     express.json()(req, res, next);

@@ -406,7 +406,7 @@ app.post(
     const sig = request.headers["stripe-signature"];
 
     let event;
-
+    console.log(event);
     try {
       event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
     } catch (err) {

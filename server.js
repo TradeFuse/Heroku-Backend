@@ -567,7 +567,7 @@ app.post(
         // ------------- Functions to run on initial sign up -------------
         if (!userData["data"] && errorCatch !== true) {
           intialDataPoint = initialSettingsStateNew(stripeId);
-          const bodyDataIn = {
+/*           const bodyDataIn = {
             data: {
               name: checkoutSessionCompleted?.customer_details.name,
               email: checkoutSessionCompleted?.customer_email,
@@ -590,7 +590,7 @@ app.post(
               },
             },
           };
-          await updateCustomer(bodyDataIn);
+          await updateCustomer(bodyDataIn); */
           const S3Data = {
             data: intialDataPoint,
             userId: Auth0User,

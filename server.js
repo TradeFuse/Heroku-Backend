@@ -403,17 +403,16 @@ app.post("/webhook", async (request, response) => {
   const sig = request.headers["stripe-signature"];
 
   let event;
-  console.log(request);
 
   try {
-    console.log(request);
 
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-    console.log(event);
+    event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
+  console.log(event);
+
   // Handle the event
   switch (event.type) {
     case "account.updated":

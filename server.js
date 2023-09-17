@@ -561,7 +561,7 @@ app.post(
           })
           .catch((err) => {
             errorCatch = true;
-            throw err;
+            console.log(err);
           });
         // ------------- Functions to run on initial sign up -------------
         if (!userData["data"] && errorCatch !== true) {
@@ -570,7 +570,7 @@ app.post(
             data: intialDataPoint,
             userId: Auth0User,
           };
-          stripeId && Auth0User && (await putUserData(S3Data)); 
+          stripeId && Auth0User && (await putUserData(S3Data));
         }
 
         // Then define and call a function to handle the event checkout.session.completed

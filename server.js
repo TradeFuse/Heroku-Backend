@@ -66,7 +66,13 @@ app.use((req, res, next) => {
 app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
-app.use(express.json());
+app.use((req, res, next) => {
+  if (req.originalUrl === "/webhook") {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 
 cron.schedule("00 17 * * * *", async () => {
   await getRiskFreeRateEveryHour();
@@ -401,7 +407,7 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET2;
 
 app.post(
   "/webhook",
-  express.raw({ type: "*/*" }),
+  express.raw({ type: "application/json" }),
   async (request, response) => {
     const sig = request.headers["stripe-signature"];
 

@@ -406,7 +406,7 @@ app.post("/mt4Orders", async (req, res) => {
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET2;
 
 app.post(
-  "/webhook",
+  "/stripe-webhooks",
   express.raw({ type: "application/json" }),
   async (request, response) => {
     const sig = request.headers["stripe-signature"];

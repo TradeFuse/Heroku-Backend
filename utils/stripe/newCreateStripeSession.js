@@ -47,8 +47,8 @@ module.exports = async function createNewSession(bodyData) {
         },
         trial_period_days: 5,
       },
-      //payment_method_collection: "always",
-      payment_method_collection: "if_required",
+      payment_method_collection: "always",
+      //payment_method_collection: "if_required",
     });
   } catch (err) {
     if (!session) {

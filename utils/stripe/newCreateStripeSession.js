@@ -26,18 +26,18 @@ module.exports = async function createNewSession(bodyData) {
       allow_promotion_codes: true,
       customer_email: customerEmail,
       metadata: {
-        Logins: "1",
-        "Last Login": String(metadata["Last Login"]),
-        "Last Session": String(metadata["Last Session"]),
-        Trades: "0",
-        "Shared Trades": "0",
+        Logins: 1,
+        "Last Login": metadata["Last Login"],
+        "Last Session": metadata["Last Session"],
+        Trades: 0,
+        "Shared Trades": 0,
         Sessions: "1",
         "Storage Used": `2.94 KB`, // default data usage
-        Channel: String(metadata["Channel"]),
-        IPv4Address: String(metadata["IPv4Address"]),
-        UserAgent: String(metadata["UserAgent"]),
-        Campaign: String(metadata["Campaign"]),
-        auth0id: String(metadata["auth0id"]),
+        Channel: metadata["Channel"],
+        IPv4Address: metadata["IPv4Address"],
+        UserAgent: metadata["UserAgent"],
+        Campaign: metadata["Campaign"],
+        auth0id: metadata["auth0id"],
       },
       subscription_data: {
         trial_settings: {

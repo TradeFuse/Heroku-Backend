@@ -409,10 +409,9 @@ app.post(
   "/stripe-webhooks",
   express.raw({ type: "application/json" }),
   async (request, response) => {
-    const sig = request.headers["stripe-signature"];
+    //const sig = request.headers["stripe-signature"];
 
     let event = request.body;
-    console.log(request.body);
     try {
       //event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
       //console.log(event);
@@ -544,8 +543,7 @@ app.post(
         break;
       case "checkout.session.completed":
         const checkoutSessionCompleted = event.data.object;
-        console.log("checkout.session.completed");
-        console.log(checkoutSessionCompleted);
+        console.log("checkout.session.completed object", checkoutSessionCompleted);
 
         // Then define and call a function to handle the event checkout.session.completed
         break;

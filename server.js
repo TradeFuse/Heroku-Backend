@@ -552,6 +552,9 @@ app.post(
         const S3InputData = {
           userId: Auth0User,
         };
+        let intialDataPoint = "";
+        let userData = "";
+        let errorCatch = false;
         await Promise.all([getUserData(S3InputData)])
           .then((res) => {
             userData = res[0];

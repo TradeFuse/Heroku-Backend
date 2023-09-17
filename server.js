@@ -561,7 +561,7 @@ app.post(
           })
           .catch((err) => {
             errorCatch = true;
-            console.log(err);
+            throw err;
           });
         // ------------- Functions to run on initial sign up -------------
         if (!userData["data"] && errorCatch !== true) {

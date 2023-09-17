@@ -411,14 +411,14 @@ app.post(
   async (request, response) => {
     const sig = request.headers["stripe-signature"];
 
-    let event;
+    let event = request.body;
     console.log(request.body);
     try {
-      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-      console.log(event);
+      //event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+      //console.log(event);
     } catch (err) {
-      response.status(400).send(`Webhook Error: ${err.message}`);
-      return;
+      //response.status(400).send(`Webhook Error: ${err.message}`);
+      //return;
     }
     // Handle the event
     switch (event.type) {

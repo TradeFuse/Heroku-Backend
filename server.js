@@ -420,7 +420,7 @@ app.post(
         return response.sendStatus(400);
       }
     }
-
+    console.log(event);
     // Handle the event
     switch (event.type) {
       case "checkout.session.completed":

@@ -568,7 +568,7 @@ app.post(
           intialDataPoint = initialSettingsStateNew(stripeId);
           const S3Data = {
             data: intialDataPoint,
-            userId: Auth0User.sub,
+            userId: Auth0User,
           };
           stripeId && Auth0User && (await putAWSObject(S3Data)); // SET AWS DATA */
         }

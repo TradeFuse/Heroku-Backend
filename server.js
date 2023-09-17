@@ -66,7 +66,13 @@ app.use((req, res, next) => {
 app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
-app.use(express.json());
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
 
 cron.schedule("00 17 * * * *", async () => {
   await getRiskFreeRateEveryHour();
@@ -405,8 +411,11 @@ app.post("/webhook", async (request, response) => {
   let event;
 
   try {
-
-    event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(
+      request.rawBody,
+      sig,
+      endpointSecret
+    );
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;
@@ -1204,7 +1213,6 @@ app.post("/webhook", async (request, response) => {
   // Return a 200 response to acknowledge receipt of the event
   response.send();
 });
-app.listen(4242, () => console.log('Running on port 4242'));
-
+app.listen(4242, () => console.log("Running on port 4242"));
 
 discordBot();

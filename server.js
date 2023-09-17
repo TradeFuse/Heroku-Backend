@@ -548,7 +548,6 @@ app.post(
         // create user object on intial sign up
         const checkoutSessionCompleted = event.data.object;
         const stripeId = checkoutSessionCompleted.customer;
-        console.log(checkoutSessionCompleted?.metadata);
         const Auth0User = checkoutSessionCompleted?.metadata?.auth0id;
         const S3InputData = {
           userId: Auth0User,
@@ -567,7 +566,7 @@ app.post(
         // ------------- Functions to run on initial sign up -------------
         if (!userData["data"] && errorCatch !== true) {
           intialDataPoint = initialSettingsStateNew(stripeId);
-/*           const bodyDataIn = {
+          const bodyDataIn = {
             data: {
               name: checkoutSessionCompleted?.customer_details.name,
               email: checkoutSessionCompleted?.customer_email,
@@ -590,7 +589,8 @@ app.post(
               },
             },
           };
-          await updateCustomer(bodyDataIn); */
+          console.log("server", bodyDataIn);
+          await updateCustomer(bodyDataIn);
           const S3Data = {
             data: intialDataPoint,
             userId: Auth0User,

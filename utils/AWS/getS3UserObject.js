@@ -1,5 +1,6 @@
 var jsonpack = require("jsonpack/main");
-
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 module.exports = async function getUserData(data) {
   const request = await fetch(
     "https://opkt3gy2of.execute-api.us-west-1.amazonaws.com/prod/get-entries",

@@ -1,6 +1,6 @@
-
 var jsonpack = require("jsonpack/main");
-
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 /* const putUserData = async (data) => {
   console.log(data);
   fetch(
@@ -19,7 +19,7 @@ var jsonpack = require("jsonpack/main");
 };
  */
 // UNCOMMENT IN PRODUCTION
-module.exports = async function putUserData(data){
+module.exports = async function putUserData(data) {
   // increment session count everytime the user changes something
   /*   const getDataSettingsFunction = data.data;
   const customerId =
@@ -35,23 +35,25 @@ module.exports = async function putUserData(data){
   var compressedData = jsonpack.pack(data.data);
 
   function escapeSpecialCharacters(str) {
-    if (!str || typeof str !== 'string') {
-        return str;
+    if (!str || typeof str !== "string") {
+      return str;
     }
 
     var map = {
-        '\b': '\\\\b',
-        '\f': '\\\\f',
-        '\n': '\\\\n',
-        '\r': '\\\\r',
-        '\t': '\\\\t',
-        '\v': '\\\\v',
-/*         '\'': '\\\\\'', // do not use prettier otherwise these will go away, '\'': '\\\\\''
+      "\b": "\\\\b",
+      "\f": "\\\\f",
+      "\n": "\\\\n",
+      "\r": "\\\\r",
+      "\t": "\\\\t",
+      "\v": "\\\\v",
+      /*         '\'': '\\\\\'', // do not use prettier otherwise these will go away, '\'': '\\\\\''
         '\"': '\\\\"',  // do not use prettier otherwise these will go away, '\"': '\\\\"' */
-        '\\': '\\\\'
+      "\\": "\\\\",
     };
 
-    return str.replace(/[\b\f\n\r\t\v\\]/g, function(m) { return map[m]; });
+    return str.replace(/[\b\f\n\r\t\v\\]/g, function (m) {
+      return map[m];
+    });
   }
   const escapeLiterals = escapeSpecialCharacters(compressedData);
   let newData = {

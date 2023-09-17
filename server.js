@@ -538,6 +538,9 @@ app.post(
         break;
       case "checkout.session.completed":
         const checkoutSessionCompleted = event.data.object;
+        console.log("checkout.session.completed");
+        console.log(checkoutSessionCompleted);
+
         // Then define and call a function to handle the event checkout.session.completed
         break;
       case "checkout.session.expired":

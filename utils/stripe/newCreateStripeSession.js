@@ -25,7 +25,7 @@ module.exports = async function createNewSession(bodyData) {
       cancel_url: cancel_url,
       allow_promotion_codes: true,
       customer_email: customerEmail,
-/*       metadata: {
+      metadata: {
         Logins: "1",
         "Last Login": String(metadata["Last Login"]),
         "Last Session": String(metadata["Last Session"]),
@@ -38,7 +38,7 @@ module.exports = async function createNewSession(bodyData) {
         UserAgent: String(metadata["UserAgent"]),
         Campaign: String(metadata["Campaign"]),
         auth0id: String(metadata["auth0id"]),
-      }, */
+      },
       subscription_data: {
         trial_settings: {
           end_behavior: {

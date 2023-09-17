@@ -17,6 +17,7 @@ const getOptionPositionRobinhood = require("./brokerHandling/robinhood/getOption
 const getAssetData = require("./utils/getAssetData.js");
 const createSession = require("./utils/stripe/createStripeSession.js");
 const createNewSession = require("./utils/stripe/newCreateStripeSession.js");
+const createDirectSession = require("./utils/stripe/directSubscriptionSession");
 const createPortalSession = require("./utils/stripe/createPortalSession.js");
 const getRiskFreeRate = require("./utils/getRiskFreeRate.js");
 const handleOpenAIRequest = require("./utils/handleOpenAIRequests.js");
@@ -180,7 +181,7 @@ app.post("/updateStripeCustomer", async (req, res) => {
   }
 });
 
-// Require Credit Card Create Stripe Session
+// Require Credit Card Create Stripe Session but w/ trial
 app.post("/newcreateStripeSession", async (req, res) => {
   const bodyData = req.body;
   if (req.method == "OPTIONS") {
@@ -190,6 +191,20 @@ app.post("/newcreateStripeSession", async (req, res) => {
     res.status(204).send("");
   } else {
     const createdSession = await createNewSession(bodyData);
+    res.json(createdSession);
+  }
+});
+
+// Require Credit Card Create Stripe Session no trial
+app.post("/createDirectStripeSession", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const createdSession = await createDirectSession(bodyData);
     res.json(createdSession);
   }
 });
@@ -549,9 +564,6 @@ app.post(
         const checkoutSessionCompleted = event.data.object;
         const stripeId = checkoutSessionCompleted.customer;
         const metadata = checkoutSessionCompleted?.metadata;
-        console.log(checkoutSessionCompleted);
-        console.log(metadata);
-
         const Auth0User = metadata?.auth0id;
         const S3InputData = {
           userId: Auth0User,
@@ -576,14 +588,11 @@ app.post(
               email: checkoutSessionCompleted?.customer_email,
               Logins: metadata["Logins"],
               "Last Login": metadata["Last Login"],
-              "Last Session":
-                metadata["Last Session"],
+              "Last Session": metadata["Last Session"],
               Trades: metadata["Trades"],
-              "Shared Trades":
-                metadata["Shared Trades"],
+              "Shared Trades": metadata["Shared Trades"],
               Sessions: metadata["Sessions"],
-              "Storage Used":
-                metadata["Storage Used"],
+              "Storage Used": metadata["Storage Used"],
               Channel: metadata["Channel"],
               IPv4Address: metadata["IPv4Address"],
               UserAgent: metadata["UserAgent"],
@@ -591,7 +600,6 @@ app.post(
               auth0id: metadata["auth0id"],
             },
           };
-          console.log("server", bodyDataIn);
           await updateCustomer(bodyDataIn);
           const S3Data = {
             data: intialDataPoint,

@@ -8,7 +8,6 @@ module.exports = async function createNewSession(bodyData) {
   const customerName = bodyData.data["customerName"];
   const metadata = bodyData.data["metadata"];
   let session = "";
-  console.log(bodyData.data);
   try {
     session = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -26,14 +25,6 @@ module.exports = async function createNewSession(bodyData) {
       cancel_url: cancel_url,
       allow_promotion_codes: true,
       customer_email: customerEmail,
-      customer_details: {
-        address: null,
-        email: customerEmail,
-        name: customerName,
-        phone: null,
-        tax_exempt: "none",
-        tax_ids: null,
-      },
       metadata: {
         Logins: 0,
         "Last Login": metadata["Last Login"],
@@ -58,9 +49,7 @@ module.exports = async function createNewSession(bodyData) {
       },
       payment_method_collection: "if_required",
     });
-    console.log(session);
   } catch (err) {
-    console.log(err);
     if (!session) {
       return `Invalid session`;
     }

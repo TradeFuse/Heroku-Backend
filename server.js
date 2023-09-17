@@ -23,6 +23,9 @@ const handleOpenAIRequest = require("./utils/handleOpenAIRequests.js");
 const cron = require("node-cron");
 const cancelAllSubscriptions = require("./utils/stripe/cancelAllSubscriptions.js");
 const updateFacebookAdd = require("./Ads/facebook.js");
+const initialSettingsStateNew = require("./utils/AWS/initData");
+const putAWSObject = require("./utils/AWS/putS3UserObject");
+const getUserData = require("./utils/AWS/getS3UserObject");
 const AsyncLock = require("async-lock");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const fetch = (...args) =>
@@ -542,8 +545,30 @@ app.post(
         // Then define and call a function to handle the event checkout.session.async_payment_succeeded
         break;
       case "checkout.session.completed":
+        // create user object on intial sign up
         const checkoutSessionCompleted = event.data.object;
-        console.log("checkout.session.completed object", checkoutSessionCompleted);
+        const stripeId = checkoutSessionCompleted.customer;
+        const Auth0User = checkoutSessionCompleted?.metadata?.auth0id;
+        const S3InputData = {
+          userId: Auth0User,
+        };
+        await Promise.all([getUserData(S3InputData)])
+          .then((res) => {
+            userData = res[0];
+          })
+          .catch((err) => {
+            errorCatch = true;
+            throw err;
+          });
+        // ------------- Functions to run on initial sign up -------------
+        if (!userData["data"] && errorCatch !== true) {
+          intialDataPoint = initialSettingsStateNew(stripeId);
+          const S3Data = {
+            data: intialDataPoint,
+            userId: Auth0User.sub,
+          };
+          stripeId && Auth0User && (await putAWSObject(S3Data)); // SET AWS DATA */
+        }
 
         // Then define and call a function to handle the event checkout.session.completed
         break;

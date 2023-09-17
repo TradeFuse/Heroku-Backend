@@ -8,20 +8,6 @@ module.exports = async function createNewSession(bodyData) {
   const customerName = bodyData.data["customerName"];
   const metadata = bodyData.data["metadata"];
   let session = "";
-  console.log("try obj", {
-    Logins: 1,
-    "Last Login": metadata["Last Login"],
-    "Last Session": metadata["Last Session"],
-    Trades: 0,
-    "Shared Trades": 0,
-    Sessions: 1,
-    "Storage Used": `2.94 KB`, // default data usage
-    Channel: metadata["Channel"],
-    IPv4Address: metadata["IPv4Address"],
-    UserAgent: metadata["UserAgent"],
-    Campaign: metadata["Campaign"],
-    auth0id: metadata["auth0id"],
-  });
   try {
     session = await stripe.checkout.sessions.create({
       mode: "subscription",

@@ -548,7 +548,11 @@ app.post(
         // create user object on intial sign up
         const checkoutSessionCompleted = event.data.object;
         const stripeId = checkoutSessionCompleted.customer;
-        const Auth0User = checkoutSessionCompleted?.metadata?.auth0id;
+        const metadata = checkoutSessionCompleted?.metadata;
+        console.log(checkoutSessionCompleted);
+        console.log(metadata);
+
+        const Auth0User = metadata?.auth0id;
         const S3InputData = {
           userId: Auth0User,
         };
@@ -570,21 +574,21 @@ app.post(
             data: {
               name: checkoutSessionCompleted?.customer_details.name,
               email: checkoutSessionCompleted?.customer_email,
-              Logins: checkoutSessionCompleted?.metadata["Logins"],
-              "Last Login": checkoutSessionCompleted?.metadata["Last Login"],
+              Logins: metadata["Logins"],
+              "Last Login": metadata["Last Login"],
               "Last Session":
-                checkoutSessionCompleted?.metadata["Last Session"],
-              Trades: checkoutSessionCompleted?.metadata["Trades"],
+                metadata["Last Session"],
+              Trades: metadata["Trades"],
               "Shared Trades":
-                checkoutSessionCompleted?.metadata["Shared Trades"],
-              Sessions: checkoutSessionCompleted?.metadata["Sessions"],
+                metadata["Shared Trades"],
+              Sessions: metadata["Sessions"],
               "Storage Used":
-                checkoutSessionCompleted?.metadata["Storage Used"],
-              Channel: checkoutSessionCompleted?.metadata["Channel"],
-              IPv4Address: checkoutSessionCompleted?.metadata["IPv4Address"],
-              UserAgent: checkoutSessionCompleted?.metadata["UserAgent"],
-              Campaign: checkoutSessionCompleted?.metadata["Campaign"],
-              auth0id: checkoutSessionCompleted?.metadata["auth0id"],
+                metadata["Storage Used"],
+              Channel: metadata["Channel"],
+              IPv4Address: metadata["IPv4Address"],
+              UserAgent: metadata["UserAgent"],
+              Campaign: metadata["Campaign"],
+              auth0id: metadata["auth0id"],
             },
           };
           console.log("server", bodyDataIn);

@@ -412,7 +412,7 @@ app.post(
     const sig = request.headers["stripe-signature"];
 
     let event;
-
+    console.log(request.body);
     try {
       event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
       console.log(event);
@@ -1212,6 +1212,5 @@ app.post(
     response.send();
   }
 );
-app.listen(4242, () => console.log("Running on port 4242"));
 
 discordBot();

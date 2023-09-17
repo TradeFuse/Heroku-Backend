@@ -1,37 +1,7 @@
 var jsonpack = require("jsonpack/main");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-/* const putUserData = async (data) => {
-  console.log(data);
-  fetch(
-    "https://opkt3gy2of.execute-api.us-west-1.amazonaws.com/test/new-serverside",
-    {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data,
-      }),
-    }
-  );
-};
- */
-// UNCOMMENT IN PRODUCTION
 module.exports = async function putUserData(data) {
-  // increment session count everytime the user changes something
-  /*   const getDataSettingsFunction = data.data;
-  const customerId =
-    getDataSettingsFunction === null
-      ? ""
-      : getDataSettingsFunction.globalSettings.stripeId;
-  await updateStripeCustomerWrapper(
-    customerId,
-    getDataSettingsFunction,
-    "session"
-  ); */
-
   var compressedData = jsonpack.pack(data.data);
 
   function escapeSpecialCharacters(str) {

@@ -33,22 +33,3 @@ module.exports = async function getUserData(data) {
   return newData;
 };
 
-// PRODUCTION ENVIRONMENT
-/*
-const getUserData = async (data) => {
-  const request = await fetch(
-    "https://opkt3gy2of.execute-api.us-west-1.amazonaws.com/prod/new-serverside",
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data,
-      }),
-    }
-  );
-  const preReturn = await request();
-  return preReturn.json();
-}; */

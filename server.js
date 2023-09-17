@@ -24,7 +24,7 @@ const cron = require("node-cron");
 const cancelAllSubscriptions = require("./utils/stripe/cancelAllSubscriptions.js");
 const updateFacebookAdd = require("./Ads/facebook.js");
 const initialSettingsStateNew = require("./utils/AWS/initData");
-const putAWSObject = require("./utils/AWS/putS3UserObject");
+const putUserData = require("./utils/AWS/putS3UserObject");
 const getUserData = require("./utils/AWS/getS3UserObject");
 const AsyncLock = require("async-lock");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -552,7 +552,7 @@ app.post(
         const S3InputData = {
           userId: Auth0User,
         };
-/*         let intialDataPoint = "";
+        let intialDataPoint = "";
         let userData = "";
         let errorCatch = false;
         await Promise.all([getUserData(S3InputData)])
@@ -570,9 +570,9 @@ app.post(
             data: intialDataPoint,
             userId: Auth0User,
           };
-          stripeId && Auth0User && (await putAWSObject(S3Data)); 
+          stripeId && Auth0User && (await putUserData(S3Data)); 
         }
- */
+
         // Then define and call a function to handle the event checkout.session.completed
         break;
       case "checkout.session.expired":

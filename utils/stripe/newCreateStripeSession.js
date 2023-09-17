@@ -1,7 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async function createNewSession(bodyData) {
-  const customerId = bodyData.data["customerId"];
   const priceId = bodyData.data["priceId"];
   const success_url = bodyData.data["success_url"];
   const cancel_url = bodyData.data["cancel_url"];
@@ -23,7 +22,6 @@ module.exports = async function createNewSession(bodyData) {
       // is redirected to the success page.
       success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancel_url,
-      customer: customerId,
       allow_promotion_codes: true,
       customer_email: customerEmail,
       subscription_data: {

@@ -5,6 +5,7 @@ module.exports = async function createNewSession(bodyData) {
   const priceId = bodyData.data["priceId"];
   const success_url = bodyData.data["success_url"];
   const cancel_url = bodyData.data["cancel_url"];
+  const customerEmail = bodyData.data["customerEmail"];
 
   let session = "";
   try {
@@ -24,6 +25,7 @@ module.exports = async function createNewSession(bodyData) {
       cancel_url: cancel_url,
       customer: customerId,
       allow_promotion_codes: true,
+      customer_email: customerEmail,
       subscription_data: {
         trial_settings: {
           end_behavior: {

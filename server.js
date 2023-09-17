@@ -570,26 +570,23 @@ app.post(
             data: {
               name: checkoutSessionCompleted?.customer_details.name,
               email: checkoutSessionCompleted?.customer_email,
-              metadata: {
-                Logins: checkoutSessionCompleted?.metadata["Logins"],
-                "Last Login": checkoutSessionCompleted?.metadata["Last Login"],
-                "Last Session":
-                  checkoutSessionCompleted?.metadata["Last Session"],
-                Trades: checkoutSessionCompleted?.metadata["Trades"],
-                "Shared Trades":
-                  checkoutSessionCompleted?.metadata["Shared Trades"],
-                Sessions: checkoutSessionCompleted?.metadata["Sessions"],
-                "Storage Used":
-                  checkoutSessionCompleted?.metadata["Storage Used"],
-                Channel: checkoutSessionCompleted?.metadata["Channel"],
-                IPv4Address: checkoutSessionCompleted?.metadata["IPv4Address"],
-                UserAgent: checkoutSessionCompleted?.metadata["UserAgent"],
-                Campaign: checkoutSessionCompleted?.metadata["Campaign"],
-                auth0id: checkoutSessionCompleted?.metadata["auth0id"],
-              },
+              Logins: checkoutSessionCompleted?.metadata["Logins"],
+              "Last Login": checkoutSessionCompleted?.metadata["Last Login"],
+              "Last Session":
+                checkoutSessionCompleted?.metadata["Last Session"],
+              Trades: checkoutSessionCompleted?.metadata["Trades"],
+              "Shared Trades":
+                checkoutSessionCompleted?.metadata["Shared Trades"],
+              Sessions: checkoutSessionCompleted?.metadata["Sessions"],
+              "Storage Used":
+                checkoutSessionCompleted?.metadata["Storage Used"],
+              Channel: checkoutSessionCompleted?.metadata["Channel"],
+              IPv4Address: checkoutSessionCompleted?.metadata["IPv4Address"],
+              UserAgent: checkoutSessionCompleted?.metadata["UserAgent"],
+              Campaign: checkoutSessionCompleted?.metadata["Campaign"],
+              auth0id: checkoutSessionCompleted?.metadata["auth0id"],
             },
           };
-          console.log("server", bodyDataIn);
           await updateCustomer(bodyDataIn);
           const S3Data = {
             data: intialDataPoint,

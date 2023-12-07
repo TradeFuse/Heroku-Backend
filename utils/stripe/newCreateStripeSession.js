@@ -7,9 +7,10 @@ module.exports = async function createNewSession(bodyData) {
   const customerEmail = bodyData.data["customerEmail"];
   const customerName = bodyData.data["customerName"];
   const metadata = bodyData.data["metadata"];
+  const referral = bodyData.data["referral"];
   let session = "";
   try {
-    session = await stripe.checkout.sessions.create({
+    const checkout_params = {
       mode: "subscription",
       line_items: [
         {
@@ -49,7 +50,12 @@ module.exports = async function createNewSession(bodyData) {
       },
       payment_method_collection: "always", // requires a credit card
       //payment_method_collection: "if_required",
-    });
+    };
+    if (referral) {
+      checkout_params["client_reference_id"] = referral;
+    }
+
+    session = await stripe.checkout.sessions.create(checkout_params);
   } catch (err) {
     if (!session) {
       return `Invalid session`;

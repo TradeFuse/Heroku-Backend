@@ -563,9 +563,9 @@ app.post(
         // create user object on intial sign up
         const checkoutSessionCompleted = event.data.object;
         const stripeId = checkoutSessionCompleted.customer;
+        const retrievedCustomer = await getCustomer(stripeId);
         const metadata = checkoutSessionCompleted?.metadata;
-        console.log(checkoutSessionCompleted);
-        const subscription = checkoutSessionCompleted?.subscription;
+        const subscription = retrievedCustomer?.subscription[0];
         const subscriptionEnd = subscription?.current_period_end;
         const Auth0User = metadata?.auth0id;
         const S3InputData = {

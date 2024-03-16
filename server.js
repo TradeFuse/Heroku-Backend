@@ -565,8 +565,8 @@ app.post(
         const stripeId = checkoutSessionCompleted.customer;
         const retrievedCustomer = await getCustomer(stripeId);
         const metadata = checkoutSessionCompleted?.metadata;
-        const subscription = retrievedCustomer?.subscription;
-        console.log(retrievedCustomer);
+        const subscription = retrievedCustomer?.subscriptions.data[0];
+        console.log(subscription);
         const subscriptionEnd = subscription?.current_period_end;
         const Auth0User = metadata?.auth0id;
         const S3InputData = {

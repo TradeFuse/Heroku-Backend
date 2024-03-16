@@ -1,8 +1,4 @@
-module.exports = function initialSettingsStateNew(
-  stripeId,
-  cryptodotcomId,
-  subscription_end
-) {
+module.exports = function initialSettingsStateNew(stripeId, subscription_end) {
   return {
     version: 1,
     chosenPortfolios: ["Default"],
@@ -186,7 +182,7 @@ module.exports = function initialSettingsStateNew(
     globalSettings: {
       optInForRewards: false,
       stripeId: stripeId,
-      cryptodotcomId: cryptodotcomId,
+      cryptodotcomId: "",
       subscription_end: subscription_end,
       username: "",
       integrationsInfo: {},

@@ -564,6 +564,7 @@ app.post(
         const checkoutSessionCompleted = event.data.object;
         const stripeId = checkoutSessionCompleted.customer;
         const metadata = checkoutSessionCompleted?.metadata;
+        console.log(checkoutSessionCompleted);
         const subscription = checkoutSessionCompleted?.subscription;
         const subscriptionEnd = subscription?.current_period_end;
         const Auth0User = metadata?.auth0id;
@@ -583,11 +584,7 @@ app.post(
           });
         // ------------- Functions to run on initial sign up -------------
         if (!userData["data"] && errorCatch !== true) {
-          intialDataPoint = initialSettingsStateNew(
-            stripeId,
-            "",
-            subscriptionEnd
-          );
+          intialDataPoint = initialSettingsStateNew(stripeId, subscriptionEnd);
           const bodyDataIn = {
             data: {
               name: checkoutSessionCompleted?.customer_details.name,

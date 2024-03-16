@@ -118,6 +118,7 @@ module.exports = function initialSettingsStateNew(stripeId, cryptodotcomId) {
           verified: 0,
           verifiedDate: "",
           portfolioColor: "",
+          quantumConversations: [],
           calendarNotes: {},
           demoDataLoaded: false,
           integrationsInfo: {},
@@ -185,6 +186,7 @@ module.exports = function initialSettingsStateNew(stripeId, cryptodotcomId) {
       username: "",
       integrationsInfo: {},
       acceptedTerms: false,
+      quantumCounter: 0,
     },
     sharedTrades: [],
   };

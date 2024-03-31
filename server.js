@@ -619,7 +619,7 @@ app.post(
             data: intialDataPoint,
             userId: Auth0User,
           };
-          stripeId && Auth0User && (await putUserData(S3Data));
+          stripeId && Auth0User && (await putUserData(S3Data, proddev));
           fetch(
             `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
             {

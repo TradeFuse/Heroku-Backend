@@ -620,6 +620,7 @@ app.post(
           };
           stripeId && Auth0User && (await putUserData(S3Data));
           gtag("get", MEASUREMENT_ID, "client_id", (clientId) => {
+            console.log(clientId);
             fetch(
               `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
               {

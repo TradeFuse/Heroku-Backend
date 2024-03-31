@@ -17,6 +17,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "facebook-nodejs-business-sdk": "16.0.2",
+    "ga-gtag": "^1.2.0",
     "https": "1.0.0",
     "jsdom": "^21.0.0",
     "jsonpack": "https://github.com/TradeFuse/jsonpack",

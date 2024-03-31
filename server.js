@@ -30,7 +30,8 @@ const getUserData = require("./utils/AWS/getS3UserObject");
 const AsyncLock = require("async-lock");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const gtagPackage = require("ga-gtag");
-console.log(gtagPackage);
+const gtag = gtagPackage.gtag;
+const install = gtagPackage.install;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
@@ -618,40 +619,44 @@ app.post(
             userId: Auth0User,
           };
           stripeId && Auth0User && (await putUserData(S3Data));
-          fetch(
-            `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
-            {
-              method: "POST",
-              body: JSON.stringify({
-                client_id: "XXXXXXXXXX.YYYYYYYYYY", // Client ID
-                events: [
-                  {
-                    name: "sign_up",
-                    params: {},
-                  },
-                ],
-              }),
-            }
-          );
+          gtag("get", MEASUREMENT_ID, "client_id", (clientId) => {
+            fetch(
+              `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
+              {
+                method: "POST",
+                body: JSON.stringify({
+                  client_id: clientId, // Client ID
+                  events: [
+                    {
+                      name: "sign_up",
+                      params: {},
+                    },
+                  ],
+                }),
+              }
+            );
+          });
         }
 
         if (totalAmount > 0 && !subscriptionEnd2) {
           // This is a purchase event
-          fetch(
-            `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
-            {
-              method: "POST",
-              body: JSON.stringify({
-                client_id: "XXXXXXXXXX.YYYYYYYYYY", // Client ID
-                events: [
-                  {
-                    name: "purchase",
-                    params: {},
-                  },
-                ],
-              }),
-            }
-          );
+          gtag("get", MEASUREMENT_ID, "client_id", (clientId) => {
+            fetch(
+              `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
+              {
+                method: "POST",
+                body: JSON.stringify({
+                  client_id: clientId, // Client ID
+                  events: [
+                    {
+                      name: "purchase",
+                      params: {},
+                    },
+                  ],
+                }),
+              }
+            );
+          });
           // Define and call a function to handle purchases here.
           // You can insert your logic for handling a purchase event, like recording the transaction, updating user status, etc.
         } else if (totalAmount === 0 && subscriptionEnd2) {

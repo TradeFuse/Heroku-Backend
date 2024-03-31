@@ -1,9 +1,11 @@
 var jsonpack = require("jsonpack/main");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-module.exports = async function getUserData(data) {
+module.exports = async function getUserData(data, proddev) {
   const request = await fetch(
-    "https://opkt3gy2of.execute-api.us-west-1.amazonaws.com/prod/get-entries",
+    proddev === "prod"
+      ? "https://opkt3gy2of.execute-api.us-west-1.amazonaws.com/prod/get-entries"
+      : "https://c5jfnnmixj.execute-api.us-west-1.amazonaws.com/default/get-entries",
     {
       method: "POST",
       headers: {
@@ -32,4 +34,3 @@ module.exports = async function getUserData(data) {
   };
   return newData;
 };
-

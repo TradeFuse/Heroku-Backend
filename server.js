@@ -575,6 +575,7 @@ app.post(
         const subscriptionEnd2 = subscription?.trial_end;
 
         const Auth0User = metadata?.auth0id;
+        const proddev = metadata?.proddev;
         const S3InputData = {
           userId: Auth0User,
         };
@@ -584,7 +585,7 @@ app.post(
         const MEASUREMENT_ID = process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID; // GA4 Measurement ID
         const API_SECRET = process.env.GOOGLE_ANALYTICS_API_SECRET; // GA4 Measurement Protocol API secret
 
-        await Promise.all([getUserData(S3InputData)])
+        await Promise.all([getUserData(S3InputData, proddev)])
           .then((res) => {
             userData = res[0];
           })

@@ -1,7 +1,7 @@
 var jsonpack = require("jsonpack/main");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-module.exports = async function putUserData(data) {
+module.exports = async function putUserData(data, proddev) {
   var compressedData = jsonpack.pack(data.data);
 
   function escapeSpecialCharacters(str) {
@@ -32,19 +32,22 @@ module.exports = async function putUserData(data) {
       data: escapeLiterals, // compress the data
     },
   };
+
+  const url =
+    proddev === "prod"
+      ? "https://opkt3gy2of.execute-api.us-west-1.amazonaws.com/prod/put-entries-multi"
+      : "https://c5jfnnmixj.execute-api.us-west-1.amazonaws.com/default/put-entries-multi";
+
   if (!data || !data?.data || data?.data === "" || !data?.userId) {
   } else {
-    fetch(
-      "https://opkt3gy2of.execute-api.us-west-1.amazonaws.com/prod/put-entries-multi",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newData),
-      }
-    ).catch((err) => {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    }).catch((err) => {
       throw err;
     });
   }

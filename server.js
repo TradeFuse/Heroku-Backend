@@ -619,45 +619,40 @@ app.post(
             userId: Auth0User,
           };
           stripeId && Auth0User && (await putUserData(S3Data));
-          gtag("get", MEASUREMENT_ID, "client_id", (clientId) => {
-            console.log(clientId);
-            fetch(
-              `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
-              {
-                method: "POST",
-                body: JSON.stringify({
-                  client_id: clientId, // Client ID
-                  events: [
-                    {
-                      name: "sign_up",
-                      params: {},
-                    },
-                  ],
-                }),
-              }
-            );
-          });
+          fetch(
+            `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                client_id: "", // Client ID
+                events: [
+                  {
+                    name: "sign_up",
+                    params: {},
+                  },
+                ],
+              }),
+            }
+          );
         }
 
         if (totalAmount > 0 && !subscriptionEnd2) {
           // This is a purchase event
-          gtag("get", MEASUREMENT_ID, "client_id", (clientId) => {
-            fetch(
-              `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
-              {
-                method: "POST",
-                body: JSON.stringify({
-                  client_id: clientId, // Client ID
-                  events: [
-                    {
-                      name: "purchase",
-                      params: {},
-                    },
-                  ],
-                }),
-              }
-            );
-          });
+          fetch(
+            `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                client_id: "", // Client ID
+                events: [
+                  {
+                    name: "purchase",
+                    params: {},
+                  },
+                ],
+              }),
+            }
+          );
           // Define and call a function to handle purchases here.
           // You can insert your logic for handling a purchase event, like recording the transaction, updating user status, etc.
         } else if (totalAmount === 0 && subscriptionEnd2) {

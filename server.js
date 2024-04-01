@@ -625,28 +625,30 @@ app.post(
           if (metadata["Channel"] === "twitter") {
             const currentDate = new Date(); // This would be the date and time of conversion. Adjust as necessary.
 
-            fetch("https://ads-api.twitter.com/12/measurement/conversions", {
-              // Replace YOUR_VERSION with the actual API version
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                pixel_id: "o38w8",
-                conversions: [
-                  {
-                    event_id: "tw-o38w8-ol1kk",
-                    conversion_time: currentDate.toISOString(), // Replace with your conversion time in ISO 8601 format
-                    identifiers: [
-                      {
-                        hashed_email:
-                          "94d1a5821403187d81d88dfbf4d924263ab834c26fb3eb1d96f6113a1b28d141",
-                      },
-                    ],
-                  },
-                ],
-              }),
-            })
+            fetch(
+              "https://ads-api.twitter.com/12/measurement/conversions/o38w8",
+              {
+                // Replace YOUR_VERSION with the actual API version
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  conversions: [
+                    {
+                      event_id: "tw-o38w8-ol1kk",
+                      conversion_time: currentDate.toISOString(), // Replace with your conversion time in ISO 8601 format
+                      identifiers: [
+                        {
+                          hashed_email:
+                            "94d1a5821403187d81d88dfbf4d924263ab834c26fb3eb1d96f6113a1b28d141",
+                        },
+                      ],
+                    },
+                  ],
+                }),
+              }
+            )
               .then((response) => response.json())
               .then((data) => console.log("Success:", data))
               .catch((error) => console.error("Error:", error));

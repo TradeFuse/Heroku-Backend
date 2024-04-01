@@ -623,6 +623,8 @@ app.post(
 
           // increment if twitter
           if (metadata["Channel"] === "twitter") {
+            const currentDate = new Date(); // This would be the date and time of conversion. Adjust as necessary.
+
             fetch("https://ads-api.twitter.com/12/measurement/conversions", {
               // Replace YOUR_VERSION with the actual API version
               method: "POST",

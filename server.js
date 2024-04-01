@@ -626,8 +626,7 @@ app.post(
 
           // increment if twitter
           if (metadata["Channel"] === "twitter") {
-            const currentDate = new Date(); // This would be the date and time of conversion. Adjust as necessary.
-
+            const currentDate = new Date();
             const oauth = OAuth({
               consumer: {
                 key: process.env.TWITTER_CONSUMER_KEY,
@@ -642,6 +641,11 @@ app.post(
               },
             });
 
+            const token = {
+              key: process.env.TWITTER_ACCESS_TOKEN,
+              secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+            };
+
             const requestData = {
               url: "https://ads-api.twitter.com/12/measurement/conversions/o38w8",
               method: "POST",
@@ -655,35 +659,32 @@ app.post(
                         hashed_email:
                           "94d1a5821403187d81d88dfbf4d924263ab834c26fb3eb1d96f6113a1b28d141",
                       },
-                      // Include other identifiers if available
                     ],
                   },
                 ],
-              }, // Your payload here
+              },
             };
 
-            // OAuth token credentials received after completing the OAuth flow
-            const token = {
-              key: process.env.TWITTER_ACCESS_TOKEN,
-              secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
-            };
-
-            // Generate Authorization header value
             const authorization = oauth.toHeader(
-              oauth.authorize(requestData, token)
+              oauth.authorize(
+                {
+                  url: requestData.url,
+                  method: requestData.method,
+                },
+                token
+              )
             );
 
-            // Make sure to replace "YOUR_ACCESS_TOKEN" with your actual token
             fetch(requestData.url, {
               method: requestData.method,
               headers: {
+                Authorization: authorization.Authorization,
                 "Content-Type": "application/json",
-                Authorization: authorization["Authorization"],
               },
               body: JSON.stringify(requestData.data),
             })
               .then((response) => response.json())
-              .then((data) => console.log("Success:", data))
+              .then((data) => console.log(data))
               .catch((error) => console.error("Error:", error));
           }
 

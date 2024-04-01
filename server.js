@@ -623,27 +623,30 @@ app.post(
 
           // increment if twitter
           if (metadata["Channel"] === "twitter") {
-            fetch("https://ads-api.twitter.com/v1/conversions", {
+            fetch("https://ads-api.twitter.com/12/measurement/conversions", {
+              // Replace YOUR_VERSION with the actual API version
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                // 'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // You might need this, depending on your setup
               },
               body: JSON.stringify({
                 pixel_id: "o38w8",
-                events: [
+                conversions: [
                   {
                     event_id: "tw-o38w8-ol1kk",
-                    event_time: Math.floor(Date.now() / 1000), // Current time in UNIX timestamp format
-                    conversion_value: 0, // Set this as needed
-                    conversion_type: "SIGNUP", // Set the type of conversion
-                    // Add any additional parameters required for your conversion event
+                    conversion_time: currentDate.toISOString(), // Replace with your conversion time in ISO 8601 format
+                    identifiers: [
+                      {
+                        hashed_email:
+                          "94d1a5821403187d81d88dfbf4d924263ab834c26fb3eb1d96f6113a1b28d141",
+                      },
+                    ],
                   },
                 ],
               }),
             })
               .then((response) => response.json())
-              .then((data) => console.log(data))
+              .then((data) => console.log("Success:", data))
               .catch((error) => console.error("Error:", error));
           }
 

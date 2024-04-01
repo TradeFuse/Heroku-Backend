@@ -620,6 +620,33 @@ app.post(
             userId: Auth0User,
           };
           stripeId && Auth0User && (await putUserData(S3Data, proddev));
+
+          // increment if twitter
+          if (metadata["Channel"] === "twitter") {
+            fetch("https://ads-api.twitter.com/v1/conversions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                // 'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // You might need this, depending on your setup
+              },
+              body: JSON.stringify({
+                pixel_id: "o38w8",
+                events: [
+                  {
+                    event_id: "tw-o38w8-ol1kc",
+                    event_time: Math.floor(Date.now() / 1000), // Current time in UNIX timestamp format
+                    conversion_value: 0, // Set this as needed
+                    conversion_type: "SIGNUP", // Set the type of conversion
+                    // Add any additional parameters required for your conversion event
+                  },
+                ],
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => console.log(data))
+              .catch((error) => console.error("Error:", error));
+          }
+
           fetch(
             `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
             {

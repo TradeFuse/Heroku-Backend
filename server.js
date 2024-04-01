@@ -627,24 +627,9 @@ app.post(
           // increment if twitter
           if (metadata["Channel"] === "twitter") {
             const currentDate = new Date();
-            const oauth = OAuth({
-              consumer: {
-                key: process.env.TWITTER_CONSUMER_KEY,
-                secret: process.env.TWITTER_CONSUMER_KEY_SECRET,
-              },
-              signature_method: "HMAC-SHA1",
-              hash_function(base_string, key) {
-                return crypto
-                  .createHmac("sha1", key)
-                  .update(base_string)
-                  .digest("base64");
-              },
-            });
 
-            const token = {
-              key: process.env.TWITTER_ACCESS_TOKEN,
-              secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
-            };
+            // Assuming you have your Bearer token stored in an environment variable
+            const bearerToken = process.env.TWITTER_BEARER_TOKEN;
 
             const requestData = {
               url: "https://ads-api.twitter.com/12/measurement/conversions/o38w8",
@@ -665,20 +650,11 @@ app.post(
               },
             };
 
-            const authorization = oauth.toHeader(
-              oauth.authorize(
-                {
-                  url: requestData.url,
-                  method: requestData.method,
-                },
-                token
-              )
-            );
-
             fetch(requestData.url, {
               method: requestData.method,
               headers: {
-                Authorization: authorization.Authorization,
+                // Use Bearer token for authorization
+                Authorization: `Bearer ${bearerToken}`,
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(requestData.data),

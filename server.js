@@ -30,6 +30,9 @@ const getUserData = require("./utils/AWS/getS3UserObject");
 const AsyncLock = require("async-lock");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const gtagPackage = require("ga-gtag");
+const OAuth = require("oauth-1.0a");
+const crypto = require("crypto");
+
 const gtag = gtagPackage.gtag;
 const install = gtagPackage.install;
 const fetch = (...args) =>
@@ -625,30 +628,60 @@ app.post(
           if (metadata["Channel"] === "twitter") {
             const currentDate = new Date(); // This would be the date and time of conversion. Adjust as necessary.
 
-            fetch(
-              "https://ads-api.twitter.com/12/measurement/conversions/o38w8",
-              {
-                // Replace YOUR_VERSION with the actual API version
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  conversions: [
-                    {
-                      event_id: "tw-o38w8-ol1kk",
-                      conversion_time: currentDate.toISOString(), // Replace with your conversion time in ISO 8601 format
-                      identifiers: [
-                        {
-                          hashed_email:
-                            "94d1a5821403187d81d88dfbf4d924263ab834c26fb3eb1d96f6113a1b28d141",
-                        },
-                      ],
-                    },
-                  ],
-                }),
-              }
-            )
+            const oauth = OAuth({
+              consumer: {
+                key: process.env.TWITTER_CONSUMER_KEY,
+                secret: process.env.TWITTER_CONSUMER_KEY_SECRET,
+              },
+              signature_method: "HMAC-SHA1",
+              hash_function(base_string, key) {
+                return crypto
+                  .createHmac("sha1", key)
+                  .update(base_string)
+                  .digest("base64");
+              },
+            });
+
+            const requestData = {
+              url: "https://ads-api.twitter.com/12/measurement/conversions/o38w8",
+              method: "POST",
+              data: {
+                conversions: [
+                  {
+                    event_id: "tw-o38w8-ol1kk",
+                    conversion_time: currentDate.toISOString(),
+                    identifiers: [
+                      {
+                        hashed_email:
+                          "94d1a5821403187d81d88dfbf4d924263ab834c26fb3eb1d96f6113a1b28d141",
+                      },
+                      // Include other identifiers if available
+                    ],
+                  },
+                ],
+              }, // Your payload here
+            };
+
+            // OAuth token credentials received after completing the OAuth flow
+            const token = {
+              key: process.env.TWITTER_ACCESS_TOKEN,
+              secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+            };
+
+            // Generate Authorization header value
+            const authorization = oauth.toHeader(
+              oauth.authorize(requestData, token)
+            );
+
+            // Make sure to replace "YOUR_ACCESS_TOKEN" with your actual token
+            fetch(requestData.url, {
+              method: requestData.method,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: authorization["Authorization"],
+              },
+              body: JSON.stringify(requestData.data),
+            })
               .then((response) => response.json())
               .then((data) => console.log("Success:", data))
               .catch((error) => console.error("Error:", error));

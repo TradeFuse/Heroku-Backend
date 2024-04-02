@@ -688,7 +688,7 @@ app.post(
               .catch((error) => console.error("Error:", error));
           }
 
-          fetch(
+/*           fetch(
             `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
             {
               method: "POST",
@@ -702,12 +702,12 @@ app.post(
                 ],
               }),
             }
-          );
+          ); */
         }
 
         if (totalAmount > 0 && !subscriptionEnd2) {
           // This is a purchase event
-          fetch(
+/*           fetch(
             `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
             {
               method: "POST",
@@ -721,7 +721,7 @@ app.post(
                 ],
               }),
             }
-          );
+          ); */
           // Define and call a function to handle purchases here.
           // You can insert your logic for handling a purchase event, like recording the transaction, updating user status, etc.
         } else if (totalAmount === 0 && subscriptionEnd2) {

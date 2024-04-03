@@ -704,7 +704,7 @@ app.post(
           }
 
           // This is a sign-up event
-          fetch(
+          await fetch(
             `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
             {
               method: "POST",
@@ -723,7 +723,7 @@ app.post(
 
         if (totalAmount > 0 && !subscriptionEnd2) {
           // This is a purchase event
-          fetch(
+          await fetch(
             `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
             {
               method: "POST",

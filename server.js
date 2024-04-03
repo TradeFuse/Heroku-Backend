@@ -703,6 +703,7 @@ app.post(
               .catch((error) => console.error("Error:", error));
           }
 
+          // This is a sign-up event
           fetch(
             `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
             {

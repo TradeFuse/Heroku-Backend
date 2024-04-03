@@ -732,7 +732,7 @@ app.post(
                 events: [
                   {
                     name: "payment",
-                    params: { value: 1 },
+                    params: { value: 1, revenue: totalAmount },
                   },
                 ],
               }),

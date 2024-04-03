@@ -5,6 +5,7 @@ module.exports = async function createDirectSession(bodyData) {
   const success_url = bodyData.data["success_url"];
   const cancel_url = bodyData.data["cancel_url"];
   const customerId = bodyData.data["customerId"];
+  const metadata = bodyData.data["metadata"];
 
   let session = "";
   try {
@@ -24,7 +25,21 @@ module.exports = async function createDirectSession(bodyData) {
       cancel_url: cancel_url,
       allow_promotion_codes: true,
       customer: customerId,
-
+      metadata: {
+        Logins: metadata["Logins"],
+        "Last Login": metadata["Last Login"],
+        "Last Session": metadata["Last Session"],
+        Trades: metadata["Trades"],
+        "Shared Trades": metadata["hared Trades"],
+        Sessions: metadata["Sessions"],
+        "Storage Used": metadata["Storage Used"],
+        Channel: metadata["Channel"],
+        IPv4Address: metadata["IPv4Address"],
+        UserAgent: metadata["UserAgent"],
+        Campaign: metadata["Campaign"],
+        auth0id: metadata["auth0id"],
+        clientId: metadata["clientId"],
+      },
       payment_method_collection: "always", // requires a credit card
       //payment_method_collection: "if_required",
     });

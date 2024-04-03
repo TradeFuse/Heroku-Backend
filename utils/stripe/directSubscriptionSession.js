@@ -30,7 +30,7 @@ module.exports = async function createDirectSession(bodyData) {
         "Last Login": metadata["Last Login"],
         "Last Session": metadata["Last Session"],
         Trades: metadata["Trades"],
-        "Shared Trades": metadata["hared Trades"],
+        "Shared Trades": metadata["Shared Trades"],
         Sessions: metadata["Sessions"],
         "Storage Used": metadata["Storage Used"],
         Channel: metadata["Channel"],

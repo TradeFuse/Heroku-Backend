@@ -39,6 +39,7 @@ module.exports = async function createNewSession(bodyData) {
         UserAgent: metadata["UserAgent"],
         Campaign: metadata["Campaign"],
         auth0id: metadata["auth0id"],
+        clientId: metadata["clientId"],
       },
       subscription_data: {
         trial_settings: {

@@ -593,6 +593,8 @@ app.post(
 
         const Auth0User = metadata?.auth0id;
         const proddev = metadata?.proddev;
+        const clientId = metadata?.clientId;
+
         const S3InputData = {
           userId: Auth0User,
         };
@@ -707,11 +709,11 @@ app.post(
             {
               method: "POST",
               body: JSON.stringify({
-                client_id: "", // Client ID
+                client_id: clientId, // Client ID
                 events: [
                   {
                     name: "sign_up",
-                    params: {},
+                    params: { value: 1 },
                   },
                 ],
               }),
@@ -726,11 +728,11 @@ app.post(
             {
               method: "POST",
               body: JSON.stringify({
-                client_id: "", // Client ID
+                client_id: clientId, // Client ID
                 events: [
                   {
-                    name: "purchase",
-                    params: {},
+                    name: "payment",
+                    params: { value: 1 },
                   },
                 ],
               }),

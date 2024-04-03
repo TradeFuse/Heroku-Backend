@@ -713,7 +713,7 @@ app.post(
                 events: [
                   {
                     name: "sign_up",
-                    params: { value: 1 },
+                    params: { signups: 1 },
                   },
                 ],
               }),
@@ -732,7 +732,7 @@ app.post(
                 events: [
                   {
                     name: "payment",
-                    params: { value: 1, revenue: totalAmount },
+                    params: { payments: 1, revenue: totalAmount },
                   },
                 ],
               }),

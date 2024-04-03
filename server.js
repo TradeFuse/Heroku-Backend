@@ -709,7 +709,7 @@ app.post(
             {
               method: "POST",
               body: JSON.stringify({
-                client_id: clientId, // Client ID
+                client_id: String(clientId), // Client ID
                 events: [
                   {
                     name: "sign_up",
@@ -728,7 +728,7 @@ app.post(
             {
               method: "POST",
               body: JSON.stringify({
-                client_id: clientId, // Client ID
+                client_id: String(clientId), // Client ID
                 events: [
                   {
                     name: "payment",

@@ -672,8 +672,7 @@ app.post(
                     conversion_time: currentDate.toISOString(),
                     identifiers: [
                       {
-                        hashed_email:
-                          "14fb010845cb3293651f86b11391d11be1c00faca9d6cc9f24b08592d04379d4",
+                        hashed_email: process.env.TWITTER_ACCESS_HASHED_EMAIL,
                       },
                     ],
                   },

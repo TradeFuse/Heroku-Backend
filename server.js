@@ -715,8 +715,8 @@ app.post(
                     name: "sign_up",
                     params: {
                       signups: 1,
-                      source: metadata["Channel"],
-                      campaign: metadata["Campaign"],
+/*                       source: metadata["Channel"],
+                      campaign: metadata["Campaign"], */
                     },
                   },
                 ],
@@ -739,8 +739,8 @@ app.post(
                     params: {
                       payments: 1,
                       revenue: totalAmount,
-                      source: metadata["Channel"],
-                      campaign: metadata["Campaign"],
+/*                       source: metadata["Channel"],
+                      campaign: metadata["Campaign"], */
                     },
                   },
                 ],

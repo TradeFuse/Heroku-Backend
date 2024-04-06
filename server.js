@@ -34,7 +34,7 @@ const OAuth = require("oauth-1.0a");
 const crypto = require("crypto");
 const handleOpenAIRequests3_5 = require("./utils/handleOpenAIRequests3_5.js");
 const handleOpenAITUNEDrequests = require("./utils/handleOpenAITUNEDrequests.js");
-
+const getLast3YearsSP500Data = require("./utils/getSP500Data.js");
 const gtag = gtagPackage.gtag;
 const install = gtagPackage.install;
 const fetch = (...args) =>
@@ -43,12 +43,24 @@ const fetch = (...args) =>
 let lock = new AsyncLock();
 
 let riskFreeRate = { rate: 2.0 };
+let SP500Data = [];
 
 const getRiskFreeRateEveryHour = async () => {
   await lock.acquire("lockKey", async () => {
     try {
       const gotRiskFreeRate = await getRiskFreeRate();
       riskFreeRate = gotRiskFreeRate;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+};
+
+const getSP500DataEveryDay = async () => {
+  await lock.acquire("lockKey", async () => {
+    try {
+      const gotLast3YearsSP500Data = await getLast3YearsSP500Data();
+      SP500Data = gotLast3YearsSP500Data;
     } catch (error) {
       console.log(error);
     }
@@ -88,9 +100,15 @@ app.use((req, res, next) => {
 
 cron.schedule("00 17 * * * *", async () => {
   await getRiskFreeRateEveryHour();
+  await getSP500DataEveryDay();
 });
+
 getRiskFreeRate().then((res) => {
   riskFreeRate = res;
+});
+
+getLast3YearsSP500Data().then((res) => {
+  SP500Data = res;
 });
 
 app.listen(PORT);
@@ -404,15 +422,25 @@ app.post("/getRobinhoodCryptoInstruments", async (req, res) => {
 
 // Get Risk Free Rate
 app.post("/getRiskFreeRate", async (req, res) => {
-  const bodyData = req.body;
   if (req.method == "OPTIONS") {
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.set("Access-Control-Allow-Methods", "POST");
     res.status(204).send("");
   } else {
-    console.log(riskFreeRate);
     res.json(riskFreeRate);
+  }
+});
+
+// Get SP500 Data
+app.post("/getSP500Data", async (req, res) => {
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    res.json(SP500Data);
   }
 });
 

@@ -56,7 +56,7 @@ const getRiskFreeRateEveryHour = async () => {
   });
 };
 
-/* const getSP500DataEveryDay = async () => {
+const getSP500DataEveryDay = async () => {
   await lock.acquire("lockKey", async () => {
     try {
       const gotLast3YearsSP500Data = await getLast3YearsSP500Data();
@@ -65,7 +65,7 @@ const getRiskFreeRateEveryHour = async () => {
       console.log(error);
     }
   });
-}; */
+};
 
 // Constants
 const PORT = process.env.PORT || 3000;
@@ -100,17 +100,18 @@ app.use((req, res, next) => {
 
 cron.schedule("00 17 * * * *", async () => {
   await getRiskFreeRateEveryHour();
-  //await getSP500DataEveryDay();
+  await getSP500DataEveryDay();
 });
 
 getRiskFreeRate().then((res) => {
   riskFreeRate = res;
 });
 
-/* getLast3YearsSP500Data().then((res) => {
+getLast3YearsSP500Data().then((res) => {
   SP500Data = res;
+  console.log(SP500Data);
 });
- */
+
 app.listen(PORT);
 
 app.get("/", (req, res) => {

@@ -33,6 +33,7 @@ const gtagPackage = require("ga-gtag");
 const OAuth = require("oauth-1.0a");
 const crypto = require("crypto");
 const handleOpenAIRequests3_5 = require("./utils/handleOpenAIRequests3_5.js");
+const handleOpenAITUNEDrequests = require("./utils/handleOpenAITUNEDrequests.js");
 
 const gtag = gtagPackage.gtag;
 const install = gtagPackage.install;
@@ -124,6 +125,19 @@ app.post("/handleOpenAImessage3_5", async (req, res) => {
     res.status(204).send("");
   } else {
     const handleOpenAIRequester = await handleOpenAIRequests3_5(bodyData);
+    res.json(handleOpenAIRequester);
+  }
+});
+
+app.post("/handleOpenAITUNEDrequests", async (req, res) => {
+  const bodyData = req.body;
+  if (req.method == "OPTIONS") {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.status(204).send("");
+  } else {
+    const handleOpenAIRequester = await handleOpenAITUNEDrequests(bodyData);
     res.json(handleOpenAIRequester);
   }
 });
@@ -715,7 +729,7 @@ app.post(
                     name: "sign_up",
                     params: {
                       signups: 1,
-/*                       source: metadata["Channel"],
+                      /*                       source: metadata["Channel"],
                       campaign: metadata["Campaign"], */
                     },
                   },
@@ -739,7 +753,7 @@ app.post(
                     params: {
                       payments: 1,
                       revenue: totalAmount,
-/*                       source: metadata["Channel"],
+                      /*                       source: metadata["Channel"],
                       campaign: metadata["Campaign"], */
                     },
                   },

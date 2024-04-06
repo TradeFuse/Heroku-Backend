@@ -112,6 +112,22 @@ getLast3YearsSP500Data().then((res) => {
   console.log(SP500Data);
 });
 
+//Keep awake mechanism
+const keepAppAwake = async () => {
+  try {
+    const url = "https://tranquil-reaches-51121.herokuapp.com/";
+    await fetch(url); // Use the dynamic import you've set up
+    console.log("Keep-alive request sent.");
+  } catch (error) {
+    console.error("Error sending keep-alive request:", error);
+  }
+};
+
+// Schedule the keep-alive function; adjust the timing as needed
+cron.schedule("*/25 * * * *", () => { // This runs every 25 minutes
+  keepAppAwake();
+});
+
 app.listen(PORT);
 
 app.get("/", (req, res) => {

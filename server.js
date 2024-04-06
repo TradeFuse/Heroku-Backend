@@ -109,7 +109,7 @@ getRiskFreeRate().then((res) => {
 
 getLast3YearsSP500Data().then((res) => {
   SP500Data = res;
-  console.log(SP500Data);
+  //console.log(SP500Data);
 });
 
 //Keep awake mechanism

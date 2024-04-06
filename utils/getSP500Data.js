@@ -15,15 +15,7 @@ module.exports = async function getLast3YearsSP500Data() {
 
       const data = await response.json();
       const dailyData = data["Time Series (Daily)"];
-
-      // Filter the entries by your date range
-      const filteredData = Object.entries(dailyData)
-        .filter(([date]) => date >= startDate && date <= endDate)
-        .map(([date, value]) => ({
-          date,
-          close: value["4. close"],
-        }));
-      return filteredData;
+      return dailyData;
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }

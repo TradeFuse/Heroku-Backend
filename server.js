@@ -98,9 +98,9 @@ app.use((req, res, next) => {
   }
 });
 
-cron.schedule("00 17 * * * *", async () => {
+cron.schedule("0 0 * * * *", async () => {
   await getRiskFreeRateEveryHour();
-  await getSP500DataEveryDay();
+  //await getSP500DataEveryDay();
 });
 
 getRiskFreeRate().then((res) => {

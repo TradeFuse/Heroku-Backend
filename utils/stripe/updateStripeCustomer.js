@@ -1,11 +1,11 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async function updateCustomer(bodyData) {
-  const updatecustomerId = bodyData.data.customerId;
   let updatedCustomer = "";
   console.log("function", bodyData);
 
   try {
+    const updatecustomerId = bodyData.data.customerId;
     updatedCustomer = await stripe.customers.update(updatecustomerId, {
       name: bodyData.data.name,
       email: bodyData.data.email,

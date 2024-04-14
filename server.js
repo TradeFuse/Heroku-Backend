@@ -1127,7 +1127,9 @@ app.post(
       case "payment_intent.succeeded":
         const paymentIntentSucceeded = event.data.object;
         // This is a purchase event
-        if (paymentIntentSucceeded.amount_received > 0) {
+        const amount_total = paymentIntentSucceeded.amount_received;
+
+        if (amount_total > 0) {
           await fetch(
             `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
             {
@@ -1139,7 +1141,7 @@ app.post(
                     name: "payment",
                     params: {
                       payments: 1,
-                      revenue: totalAmount,
+                      revenue: amount_total,
                       /*                       source: metadata["Channel"],
                               campaign: metadata["Campaign"], */
                     },

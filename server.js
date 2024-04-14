@@ -124,7 +124,8 @@ const keepAppAwake = async () => {
 };
 
 // Schedule the keep-alive function; adjust the timing as needed
-cron.schedule("*/25 * * * *", () => { // This runs every 25 minutes
+cron.schedule("*/25 * * * *", () => {
+  // This runs every 25 minutes
   keepAppAwake();
 });
 
@@ -785,27 +786,6 @@ app.post(
         }
 
         if (totalAmount > 0 && !subscriptionEnd2) {
-          // This is a purchase event
-          await fetch(
-            `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
-            {
-              method: "POST",
-              body: JSON.stringify({
-                client_id: String(clientId), // Client ID
-                events: [
-                  {
-                    name: "payment",
-                    params: {
-                      payments: 1,
-                      revenue: totalAmount,
-                      /*                       source: metadata["Channel"],
-                      campaign: metadata["Campaign"], */
-                    },
-                  },
-                ],
-              }),
-            }
-          );
           // Define and call a function to handle purchases here.
           // You can insert your logic for handling a purchase event, like recording the transaction, updating user status, etc.
         } else if (totalAmount === 0 && subscriptionEnd2) {
@@ -1146,6 +1126,31 @@ app.post(
         break;
       case "payment_intent.succeeded":
         const paymentIntentSucceeded = event.data.object;
+        // This is a purchase event
+        if (paymentIntentSucceeded.amount_received > 0) {
+          await fetch(
+            `https://www.google-analytics.com/mp/collect?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                client_id: String(clientId), // Client ID
+                events: [
+                  {
+                    name: "payment",
+                    params: {
+                      payments: 1,
+                      revenue: totalAmount,
+                      /*                       source: metadata["Channel"],
+                              campaign: metadata["Campaign"], */
+                    },
+                  },
+                ],
+              }),
+            }
+          );
+        } else {
+          console.log("PaymentIntent was successful but no amount was paid.");
+        }
         // Then define and call a function to handle the event payment_intent.succeeded
         break;
       case "payment_link.created":

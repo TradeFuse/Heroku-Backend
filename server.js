@@ -1127,7 +1127,7 @@ app.post(
       case "payment_intent.succeeded":
         const paymentIntentSucceeded = event.data.object;
         // This is a purchase event
-        const amount_total = paymentIntentSucceeded.amount_received;
+        const amount_total = paymentIntentSucceeded.amount;
 
         if (amount_total > 0) {
           await fetch(

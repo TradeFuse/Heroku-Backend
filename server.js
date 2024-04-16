@@ -1141,7 +1141,7 @@ app.post(
                     name: "payment",
                     params: {
                       payments: 1,
-                      revenue: amount_total,
+                      revenue: amount_total / 100,
                       /*                       source: metadata["Channel"],
                               campaign: metadata["Campaign"], */
                     },

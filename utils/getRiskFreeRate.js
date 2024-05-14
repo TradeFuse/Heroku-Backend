@@ -30,7 +30,9 @@ module.exports = async function getRiskFreeRate() {
   const xmlText = await response.text();
   const dom = new JSDOM(xmlText);
   const bc4Month = dom.window.document.querySelectorAll("BC_4MONTH");
-  const latestBC4Month = bc4Month[bc4Month.length - 1].textContent;
+  const latestBC4Month = bc4Month[bc4Month.length - 1]?.textContent
+    ? (latestBC4Month = bc4Month[bc4Month.length - 1]?.textContent)
+    : 2.0;
   returnObj.rate = latestBC4Month;
   return returnObj;
 };

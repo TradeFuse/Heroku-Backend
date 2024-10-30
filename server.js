@@ -132,7 +132,7 @@ cron.schedule("*/25 * * * *", () => {
 app.listen(PORT);
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Hello World!");
 });
 
 // Set your secret key. Remember to switch to your live secret key in production.

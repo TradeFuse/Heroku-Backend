@@ -115,7 +115,7 @@ getLast3YearsSP500Data().then((res) => {
 //Keep awake mechanism
 const keepAppAwake = async () => {
   try {
-    const url = "https://tranquil-reaches-51121.herokuapp.com/";
+    const url = "https://tradefuse-backend-4178567f8564.herokuapp.com/";
     await fetch(url); // Use the dynamic import you've set up
     console.log("Keep-alive request sent.");
   } catch (error) {
